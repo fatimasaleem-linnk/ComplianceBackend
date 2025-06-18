@@ -1,0 +1,11 @@
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.deps.json
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.AssemblyInfoInputs.cache
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.AssemblyInfo.cs
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.csproj.CoreCompileInputs.cache
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\refint\ComplianceAndPeformanceSystem.Core.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ComplianceAndPeformanceSystem.Core.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Core\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.Core.dll

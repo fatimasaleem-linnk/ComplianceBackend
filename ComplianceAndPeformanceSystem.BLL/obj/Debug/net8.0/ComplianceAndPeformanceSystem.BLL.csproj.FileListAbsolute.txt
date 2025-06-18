@@ -1,0 +1,17 @@
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.deps.json
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.csproj.AssemblyReference.cache
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.AssemblyInfoInputs.cache
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.AssemblyInfo.cs
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\Complian.66590998.Up2Date
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\refint\ComplianceAndPeformanceSystem.BLL.dll
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.pdb
+C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BLL\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.BLL.dll

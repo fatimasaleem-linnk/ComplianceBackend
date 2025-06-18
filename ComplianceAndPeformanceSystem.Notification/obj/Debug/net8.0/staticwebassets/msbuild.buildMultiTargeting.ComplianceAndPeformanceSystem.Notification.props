@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ComplianceAndPeformanceSystem.Notification.props" />
+</Project>
