@@ -435,6 +435,299 @@
         }
       }
     },
+    "/api/ComplianceVisit/GetComplianceVisits": {
+      "get": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/AddExtensionRequest/AddExtensionRequest": {
+      "post": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "parameters": [
+          {
+            "name": "complianceDetailsId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/GetExtensionRequest/GetExtensionRequest": {
+      "get": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/GetExtensionRequestByEntityId/GetExtensionRequestByEntityId": {
+      "get": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "parameters": [
+          {
+            "name": "entityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/UpdateExtensionRequest/UpdateExtensionRequest": {
+      "put": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "managerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionReviewDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionReviewDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExtensionReviewDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/GetExtensionRequestHistory/GetExtensionRequestHistory": {
+      "get": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/CancelVisitByManager/CancelVisitByManager": {
+      "put": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelVisitDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelVisitDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelVisitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/RequestReschedule/RescheduleRequest": {
+      "post": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestRescheduleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestRescheduleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestRescheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/ReviewReschedule/RescheduleReview": {
+      "put": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRescheduleDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRescheduleDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRescheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ComplianceVisit/UpdateVisitStatus/UpdateVisitStatus": {
+      "put": {
+        "tags": [
+          "ComplianceVisit"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitStatusDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitStatusDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Lookup/GetLookupValueByCategoryID": {
       "get": {
         "tags": [
@@ -528,6 +821,299 @@
         },
         "additionalProperties": false
       },
+      "CancelVisitDto": {
+        "type": "object",
+        "properties": {
+          "complianceDetailsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryLookup": {
+        "required": [
+          "nameAr",
+          "nameEn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nameEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "lookupValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LookupValue"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceApproval": {
+        "required": [
+          "isApproved",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "complianceRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "approvalUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "approvalEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "isApproved": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "daysForFinish": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "complianceRequest": {
+            "$ref": "#/components/schemas/ComplianceRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "seq": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "complianceRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "licensedEntityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "activityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "plantNameId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "quarterPlannedForVisitId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "visitTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "visitDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "designedCapacity": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "visitReferenceNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitStatusId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "scheduledDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "rescheduleReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelledAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "visitStatus": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "licensedEntity": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "activity": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "plantName": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "location": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "quarterPlannedForVisit": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "visitType": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "complianceRequest": {
+            "$ref": "#/components/schemas/ComplianceRequest"
+          },
+          "complianceRequestActivities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceRequestActivity"
+            },
+            "nullable": true
+          },
+          "complianceVisitSpecialists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceVisitSpecialist"
+            },
+            "nullable": true
+          },
+          "visitStatusHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitStatusHistory"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CompliancePlanModel": {
         "required": [
           "activityId",
@@ -571,6 +1157,239 @@
           "visitTypeId": {
             "type": "integer",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceRequest": {
+        "required": [
+          "assignTaskNameAr",
+          "assignTaskNameEn"
+        ],
+        "type": "object",
+        "properties": {
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "seq": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "assignTaskNameEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "assignTaskNameAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "remainingDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "assignedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "passedDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastSendDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/LookupValue"
+          },
+          "complianceDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "complianceRequestActivities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceRequestActivity"
+            },
+            "nullable": true
+          },
+          "complianceApprovals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceApproval"
+            },
+            "nullable": true
+          },
+          "complianceSpecialists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceSpecialist"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceRequestActivity": {
+        "required": [
+          "actionAr",
+          "actionEn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "complianceRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdByUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "detailsAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "detailsEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "complianceRequest": {
+            "$ref": "#/components/schemas/ComplianceRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceSpecialist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "complianceRequestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "specialistUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialistUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialistUserEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "complianceRequest": {
+            "$ref": "#/components/schemas/ComplianceRequest"
           }
         },
         "additionalProperties": false
@@ -620,8 +1439,614 @@
             "type": "integer",
             "format": "int64"
           },
-          "visitReferenceNumber": {
+          "satatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "statusName": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ComplianceVisitSpecialist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "complianceDetailsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "specialistUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialistUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialistUserEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "surveyNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobileNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "complianceDetails": {
+            "$ref": "#/components/schemas/ComplianceDetails"
+          },
+          "visitSurveyAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitSurveyAnswer"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentExtensionRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "complianceDetailsID": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requestedDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "licensedEntityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "complianceDetails": {
+            "$ref": "#/components/schemas/ComplianceDetails"
+          },
+          "extensionStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "decisionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "finalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "extensionStatusHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExtensionStatusHistoryDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentExtensionReviewDto": {
+        "type": "object",
+        "properties": {
+          "newStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "newFinalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExtensionStatusHistoryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "oldStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "newStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "newFinalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "actionByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LookupValue": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "valueEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryLookup"
+          },
+          "licensedEntities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "plantNames": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "quarterPlannedForVisits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "visitTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceRequest"
+            },
+            "nullable": true
+          },
+          "visitStatus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceDetails"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestRescheduleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complianceDetailsID": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "licensedEntityId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "requestedByUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "proposedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reviewedByUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reviewReason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReviewRescheduleDto": {
+        "type": "object",
+        "properties": {
+          "complianceDetailsID": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "approve": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "approvalWithEdit": {
+            "type": "string",
+            "nullable": true
+          },
+          "newProposedDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateVisitStatusDto": {
+        "type": "object",
+        "properties": {
+          "newStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "complianceDetailsID": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitStatusHistory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complianceDetailsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "complianceDetails": {
+            "$ref": "#/components/schemas/ComplianceDetails"
+          },
+          "actionByUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "oldStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "newStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestedNewDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitSurveyAnswer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "complianceVisitSpecialistId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "visitSurveyQuestionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "answer": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "complianceVisitSpecialist": {
+            "$ref": "#/components/schemas/ComplianceVisitSpecialist"
+          },
+          "visitSurveyQuestion": {
+            "$ref": "#/components/schemas/VisitSurveyQuestion"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitSurveyQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedByID": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedByEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "questionAr": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionEn": {
+            "type": "string",
+            "nullable": true
+          },
+          "visitSurveyAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitSurveyAnswer"
+            },
             "nullable": true
           }
         },

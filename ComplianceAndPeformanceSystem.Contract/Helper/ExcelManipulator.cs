@@ -88,7 +88,7 @@ public static class ExcelManipulator
             .Where(p => Attribute.IsDefined(p, typeof(ExcelExportAttribute)))
             .ToArray();
 
-        return @this.LoadFromCollection<T>(collection, false,
+        return @this.LoadFromCollection(collection, false,
             OfficeOpenXml.Table.TableStyles.None,
             BindingFlags.Instance | BindingFlags.Public,
             membersToInclude);

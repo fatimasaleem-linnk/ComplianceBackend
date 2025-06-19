@@ -37,7 +37,7 @@ public class UnitOfWork(
         get
         {
             if (_complianceRequestRepository == null)
-                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService,currentLanguageService);
+                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService,currentLanguageService, _blobService);
             return _complianceRequestRepository;
         }
     }

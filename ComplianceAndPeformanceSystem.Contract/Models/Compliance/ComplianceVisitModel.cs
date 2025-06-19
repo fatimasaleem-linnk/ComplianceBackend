@@ -12,5 +12,6 @@ public class ComplianceVisitModel
     public long VisitTypeId { get; set; }
     public DateTime VisitDate { get; set; }
     public long DesignedCapacity  { get; set; }
-    public string? VisitReferenceNumber { get; set; }
+    public int? Satatus { get; set; }
+    public string? StatusName { get; set; }
 }

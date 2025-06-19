@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ComplianceAndPeformanceSystem.BootStrapper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36d75ccda9e0065962225333ac21e6484bbcd2a6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c69f691aa2f7f2ad8906bfd09eeeceef5e77395")]
 [assembly: System.Reflection.AssemblyProductAttribute("ComplianceAndPeformanceSystem.BootStrapper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ComplianceAndPeformanceSystem.BootStrapper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

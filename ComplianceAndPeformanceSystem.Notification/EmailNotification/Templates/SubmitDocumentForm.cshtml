@@ -35,7 +35,7 @@ background: #07DDB9;  font-weight: 700;">
                     <p>
                         <span>الموضوع: </span>
                         <!-- DYNAMIC FROM BACKEND -->
-                        <span>تحميل المستندات الخاصة بزيارةالإمتثال</span>
+                        <span>تحميل المستندات الخاصة بزيارة الإمتثال</span>
                     </p>
                 </td>
             </tr>
@@ -47,9 +47,7 @@ background: #07DDB9;  font-weight: 700;">
                         <span>عزيزي: </span>
                         <!-- DYNAMIC FROM BACKEND -->
                         <span>@Model.Content["EmployeeName"] </span>
-                        <!-- DYNAMIC FROM BACKEND -->
-@*                         <span> لقد تم تحميل مستنداتك الخاصة بزيارةالإمتثال بتاريخ @Model.Content["SenderName"] بنجاح شكراً لك.</span>
- *@                    </p>
+                   </p>
                 </td>
             </tr>
             <!-- subtitle end -->
@@ -120,7 +118,9 @@ background: #07DDB9;  font-weight: 700;">
                                 رابط تفاصيل الزيارة 
                             </a>
                         </span>
-                        <span> لقد تم تحميل مستنداتك الخاصة بزيارةالإمتثال بتاريخ @Model.Content["VisitDate"] بنجاح شكراً لك.</span>
+@*                         <span> لقد تم تحميل المستندات الخاصة بزيارةالإمتثال بتاريخ @Model.Content["VisitDate"] بنجاح شكراً لك.</span>
+ *@
+                        <span>@Model.Body"</span>
                     </div>
                 </td>
             </tr>

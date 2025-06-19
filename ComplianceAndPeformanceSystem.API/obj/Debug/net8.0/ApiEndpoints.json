@@ -274,6 +274,175 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "AddExtensionRequest",
+    "RelativePath": "api/ComplianceVisit/AddExtensionRequest/AddExtensionRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "complianceDetailsId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "request",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.DocumentExtensionRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "CancelVisitByManager",
+    "RelativePath": "api/ComplianceVisit/CancelVisitByManager/CancelVisitByManager",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.CancelVisitDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "GetComplianceVisits",
+    "RelativePath": "api/ComplianceVisit/GetComplianceVisits",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "GetExtensionRequest",
+    "RelativePath": "api/ComplianceVisit/GetExtensionRequest/GetExtensionRequest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "GetExtensionRequestByEntityId",
+    "RelativePath": "api/ComplianceVisit/GetExtensionRequestByEntityId/GetExtensionRequestByEntityId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "entityId",
+        "Type": "System.Int64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "GetExtensionRequestHistory",
+    "RelativePath": "api/ComplianceVisit/GetExtensionRequestHistory/GetExtensionRequestHistory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "RequestReschedule",
+    "RelativePath": "api/ComplianceVisit/RequestReschedule/RescheduleRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rescheduleDto",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.RequestRescheduleDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "ReviewReschedule",
+    "RelativePath": "api/ComplianceVisit/ReviewReschedule/RescheduleReview",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reviewRescheduleDto",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.ReviewRescheduleDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "UpdateExtensionRequest",
+    "RelativePath": "api/ComplianceVisit/UpdateExtensionRequest/UpdateExtensionRequest",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.DocumentExtensionReviewDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "requestId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "managerId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.ComplianceVisitController",
+    "Method": "UpdateVisitStatus",
+    "RelativePath": "api/ComplianceVisit/UpdateVisitStatus/UpdateVisitStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "statusDto",
+        "Type": "ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit.UpdateVisitStatusDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ComplianceAndPeformanceSystem.API.Controllers.LookupController",
     "Method": "GetCategoryLookup",
     "RelativePath": "api/Lookup/GetCategoryLookup",

@@ -31,8 +31,8 @@ public static class ServiceExtension
         });
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<ICurrentLanguageService, CurrentLanguageService>();
         services.AddScoped<IBlobService, BlobService>();
+        services.AddScoped<ICurrentLanguageService, CurrentLanguageService>();
     }
 
     public static class TokenValidationParametersFactory

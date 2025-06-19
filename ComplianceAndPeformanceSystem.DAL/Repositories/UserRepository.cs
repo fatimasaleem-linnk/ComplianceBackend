@@ -84,6 +84,17 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 UserName = "Saeed Khan"
             });
         }
+        if (rolesName.Contains(RoleEnum.LicensedEntity))
+        {
+
+            users.Add(new UserDto()
+            {
+                Roles = new List<string>() { RoleEnum.LicensedEntity },
+                Email = "Mabkar@swa.gov.sa",
+                Id = 11.ToString(),
+                UserName = "Mohamed Abkar"
+            });
+        }
 
         return ResponseResult<List<UserDto>>.Success(users);
     }
@@ -113,7 +124,7 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
         {
             Email = "MAbkar@swa.gov.sa",
             Id = 3.ToString(),
-            Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
+            Roles = new List<string>() { RoleEnum.LicensedEntity },
             UserName = "Mohammed kamal Abkar"
         });
 
