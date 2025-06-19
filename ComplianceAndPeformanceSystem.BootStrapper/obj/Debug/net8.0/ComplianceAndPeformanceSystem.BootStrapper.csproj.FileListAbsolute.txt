@@ -47,28 +47,3 @@ C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\refint\ComplianceAndPeformanceSystem.BootStrapper.dll
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.pdb
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.BootStrapper.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Notification.staticwebassets.endpoints.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.deps.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Notification.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.BLL.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Notification.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.csproj.AssemblyReference.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.AssemblyInfoInputs.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.AssemblyInfo.cs
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.csproj.CoreCompileInputs.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.sourcelink.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\Complian.1F95AB2D.Up2Date
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\refint\ComplianceAndPeformanceSystem.BootStrapper.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ComplianceAndPeformanceSystem.BootStrapper.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.BootStrapper\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.BootStrapper.dll

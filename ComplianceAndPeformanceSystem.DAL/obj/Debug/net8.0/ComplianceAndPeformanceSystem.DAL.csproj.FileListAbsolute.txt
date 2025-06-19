@@ -37,23 +37,3 @@ C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.pdb
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.genruntimeconfig.cache
 C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.DAL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.deps.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.runtimeconfig.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Contract.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\bin\Debug\net8.0\ComplianceAndPeformanceSystem.Core.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.csproj.AssemblyReference.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.AssemblyInfoInputs.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.AssemblyInfo.cs
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.csproj.CoreCompileInputs.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.sourcelink.json
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\Complian.AFFECF2B.Up2Date
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\refint\ComplianceAndPeformanceSystem.DAL.dll
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.pdb
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ComplianceAndPeformanceSystem.DAL.genruntimeconfig.cache
-C:\Users\Fatima Saleem AZM\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.DAL\obj\Debug\net8.0\ref\ComplianceAndPeformanceSystem.DAL.dll
