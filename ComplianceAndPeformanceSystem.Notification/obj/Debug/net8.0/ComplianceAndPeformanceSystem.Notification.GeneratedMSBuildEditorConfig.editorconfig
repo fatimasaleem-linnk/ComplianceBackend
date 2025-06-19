@@ -9,53 +9,53 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ComplianceAndPeformanceSystem.Notification
 build_property.RootNamespace = ComplianceAndPeformanceSystem.Notification
-build_property.ProjectDir = C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Notification\
+build_property.ProjectDir = C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.Notification\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Notification
+build_property.MSBuildProjectDirectory = C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.Notification
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/Areas/MyFeature/Pages/Page1.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/Areas/MyFeature/Pages/Page1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTXlGZWF0dXJlXFBhZ2VzXFBhZ2UxLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/AssignComplianceSpecialist.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/AssignComplianceSpecialist.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXEFzc2lnbkNvbXBsaWFuY2VTcGVjaWFsaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/AssignVisitSpecialists.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/AssignVisitSpecialists.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXEFzc2lnblZpc2l0U3BlY2lhbGlzdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/CreateComplianceRequest.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/CreateComplianceRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXENyZWF0ZUNvbXBsaWFuY2VSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/QuarterlyVisitSchedule.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/QuarterlyVisitSchedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFF1YXJ0ZXJseVZpc2l0U2NoZWR1bGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/ReturnComplianceRequest.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/ReturnComplianceRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFJldHVybkNvbXBsaWFuY2VSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/SendComplianceRequest.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/SendComplianceRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFNlbmRDb21wbGlhbmNlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/SubmitDocumentForm.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/SubmitDocumentForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFN1Ym1pdERvY3VtZW50Rm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/VisitSchedule.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/VisitSchedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFZpc2l0U2NoZWR1bGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/u983495/Documents/Repos/ComplianceBackend/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/VisitTeamAssignment.cshtml]
+[C:/Users/u983495/Documents/Repos/ComplianceBE_Temp/ComplianceAndPeformanceSystem.Notification/EmailNotification/Templates/VisitTeamAssignment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = RW1haWxOb3RpZmljYXRpb25cVGVtcGxhdGVzXFZpc2l0VGVhbUFzc2lnbm1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

@@ -165,8 +165,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -179,7 +191,7 @@
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
               "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
-              "ViewState": "AgIAALEEAAAAAAAAAAAkwMAEAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-12T06:24:54.736Z",
               "EditorCaption": ""
