@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj": {}
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj",
         "projectName": "ComplianceAndPeformanceSystem.API",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -33,11 +33,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj"
               },
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
               }
             }
           }
@@ -110,20 +110,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj",
         "projectName": "ComplianceAndPeformanceSystem.BLL",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -139,8 +139,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
               }
             }
           }
@@ -186,20 +186,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj",
         "projectName": "ComplianceAndPeformanceSystem.BootStrapper",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BootStrapper\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\ComplianceAndPeformanceSystem.BootStrapper.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BootStrapper\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -215,14 +215,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj"
               },
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj"
               },
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj"
               }
             }
           }
@@ -262,20 +262,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj",
         "projectName": "ComplianceAndPeformanceSystem.Contract",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -291,8 +291,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj"
               }
             }
           }
@@ -342,20 +342,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
         "projectName": "ComplianceAndPeformanceSystem.Core",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -408,20 +408,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj",
         "projectName": "ComplianceAndPeformanceSystem.DAL",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -437,11 +437,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
               },
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj"
               }
             }
           }
@@ -515,20 +515,20 @@
         }
       }
     },
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj",
         "projectName": "ComplianceAndPeformanceSystem.Notification",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -544,8 +544,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
-                "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
+              "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj": {
+                "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj"
               }
             }
           }

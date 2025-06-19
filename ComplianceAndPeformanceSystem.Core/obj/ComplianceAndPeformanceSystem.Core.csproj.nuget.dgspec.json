@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {}
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
+    "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
         "projectName": "ComplianceAndPeformanceSystem.Core",
-        "projectPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
-        "packagesPath": "C:\\Users\\u983495\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\obj\\",
+        "projectPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj",
+        "packagesPath": "C:\\Users\\Fatima Saleem AZM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\u983495\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fatima Saleem AZM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

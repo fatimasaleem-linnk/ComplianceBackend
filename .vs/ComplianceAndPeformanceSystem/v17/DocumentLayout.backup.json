@@ -1,160 +1,161 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\",
+  "WorkspaceRootPath": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\repositories\\compliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\compliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E954528-4F5B-42AE-A151-AA998CF5B445}|ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.bll\\services\\compliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8E954528-4F5B-42AE-A151-AA998CF5B445}|ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj|solutionrelative:complianceandpeformancesystem.bll\\services\\compliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.api\\controllers\\compliancerequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\controllers\\compliancerequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\irepositories\\icompliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\irepositories\\icompliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\models\\compliance\\compliancevisitspecialistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\models\\compliance\\compliancevisitspecialistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\compliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\enums\\visitstatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\visitstatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\sevices\\emailnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\emailnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\emailnotification\\templates\\assignvisitspecialists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\assignvisitspecialists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\repositories\\lookuprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\lookuprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\iservices\\icompliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\iservices\\icompliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\enums\\compliancestatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\compliancestatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\dtos\\compliance\\compliancespecialistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\compliancespecialistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\dtos\\compliance\\complianceplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\complianceplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\seeds\\lookupvalueseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\lookupvalueseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\compliancedetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancedetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\lookup\\lookupvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\lookup\\lookupvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\compliancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\emailnotification\\templates\\visitteamassignment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\visitteamassignment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\compliancespecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancespecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\dtos\\compliance\\getcompliancespecialistlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\getcompliancespecialistlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\seeds\\categorylookupseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\categorylookupseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\enums\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\sevices\\viewrender\\viewrendererservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\viewrender\\viewrendererservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\sevices\\smsnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\smsnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\emailnotification\\templates\\visitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\visitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\dtos\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.contract\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.api\\common\\adminfilterattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\common\\adminfilterattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\seeds\\compliancenotificationmassageseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\compliancenotificationmassageseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.notification\\emailnotification\\templates\\quarterlyvisitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\quarterlyvisitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\visitsurveyanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\visitsurveyanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.core\\entities\\request\\compliancenotificationmassage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancenotificationmassage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\complianceandpeformancedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\complianceandpeformancedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\complianceandpeformancedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\u983495\\documents\\repos\\compliancebe_temp\\complianceandpeformancesystem.dal\\migrations\\20250617112838_visitstatusidcompliancedetails_seedlookup_mobilenumbercompliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\repositories\\compliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\compliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E954528-4F5B-42AE-A151-AA998CF5B445}|ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.bll\\services\\compliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8E954528-4F5B-42AE-A151-AA998CF5B445}|ComplianceAndPeformanceSystem.BLL\\ComplianceAndPeformanceSystem.BLL.csproj|solutionrelative:complianceandpeformancesystem.bll\\services\\compliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.api\\controllers\\compliancerequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\controllers\\compliancerequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\irepositories\\icompliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\irepositories\\icompliancerequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\models\\compliance\\compliancevisitspecialistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\models\\compliance\\compliancevisitspecialistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\compliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\enums\\visitstatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\visitstatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\sevices\\emailnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\emailnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\emailnotification\\templates\\assignvisitspecialists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\assignvisitspecialists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\repositories\\lookuprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\lookuprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\iservices\\icompliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\iservices\\icompliancerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\enums\\compliancestatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\compliancestatusenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\dtos\\compliance\\compliancespecialistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\compliancespecialistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\dtos\\compliance\\complianceplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\complianceplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\seeds\\lookupvalueseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\lookupvalueseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\compliancedetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancedetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\lookup\\lookupvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\lookup\\lookupvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\compliancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\emailnotification\\templates\\visitteamassignment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\visitteamassignment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\compliancespecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancespecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\dtos\\compliance\\getcompliancespecialistlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\compliance\\getcompliancespecialistlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\seeds\\categorylookupseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\categorylookupseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\enums\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\enums\\roleenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\sevices\\viewrender\\viewrendererservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\viewrender\\viewrendererservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\sevices\\smsnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\sevices\\smsnotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\emailnotification\\templates\\visitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\visitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\dtos\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\dtos\\user\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.contract\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0086E5FE-0FFC-4F67-930D-902503E1B9BA}|ComplianceAndPeformanceSystem.Contract\\ComplianceAndPeformanceSystem.Contract.csproj|solutionrelative:complianceandpeformancesystem.contract\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.api\\common\\adminfilterattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A74BB59-B1BF-48C5-AFF1-A2957C5D98B0}|ComplianceAndPeformanceSystem.API\\ComplianceAndPeformanceSystem.API.csproj|solutionrelative:complianceandpeformancesystem.api\\common\\adminfilterattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\seeds\\compliancenotificationmassageseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\seeds\\compliancenotificationmassageseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.notification\\emailnotification\\templates\\quarterlyvisitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7968F220-72F2-4E89-9115-C5478ADA6F99}|ComplianceAndPeformanceSystem.Notification\\ComplianceAndPeformanceSystem.Notification.csproj|solutionrelative:complianceandpeformancesystem.notification\\emailnotification\\templates\\quarterlyvisitschedule.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\visitsurveyanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\visitsurveyanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.core\\entities\\request\\compliancenotificationmassage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0613D5EF-DBB1-48CE-A0D0-6DF19CF3EBEA}|ComplianceAndPeformanceSystem.Core\\ComplianceAndPeformanceSystem.Core.csproj|solutionrelative:complianceandpeformancesystem.core\\entities\\request\\compliancenotificationmassage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|c:\\users\\fatima saleem azm\\documents\\repos\\compliancebackend\\complianceandpeformancesystem.dal\\migrations\\20250617112838_visitstatusidcompliancedetails_seedlookup_mobilenumbercompliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A369A9A3-FC9E-4CC4-A073-BD2F9F971198}|ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceSystem.DAL.csproj|solutionrelative:complianceandpeformancesystem.dal\\migrations\\20250617112838_visitstatusidcompliancedetails_seedlookup_mobilenumbercompliancevisitspecialist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -165,44 +166,66 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ComplianceRequestRepository.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Repositories\\ComplianceRequestRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMwCAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAxwBMFAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-12T06:24:54.736Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ComplianceRequestService.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
-              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
-              "RelativeToolTip": "ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
-              "ViewState": "AgIAAAUDAAAAAAAAAAAjwA0DAAAEAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "IComplianceRequestRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
+              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
+              "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAD4vxcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T10:53:32.128Z"
+              "WhenOpened": "2025-06-15T10:22:11.023Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\appsettings.json",
+              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\appsettings.json",
+              "RelativeToolTip": "ComplianceAndPeformanceSystem.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABrAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-18T08:46:54.591Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ComplianceAndPeformanceDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
+              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
+              "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T06:46:14.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ComplianceRequestController.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.API\\Controllers\\ComplianceRequestController.cs",
               "ViewState": "AgIAAJAAAAAAAAAAAAAjwJgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -211,22 +234,22 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IComplianceRequestRepository.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
-              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
-              "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IComplianceRequestRepository.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAD4vxcAAAAfAAAAAAAAAA==",
+              "Title": "ComplianceRequestService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
+              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
+              "RelativeToolTip": "ComplianceAndPeformanceSystem.BLL\\Services\\ComplianceRequestService.cs",
+              "ViewState": "AgIAAAUDAAAAAAAAAAAjwA0DAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T10:22:11.023Z"
+              "WhenOpened": "2025-06-04T10:53:32.128Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.API\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAAwBMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -234,23 +257,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\appsettings.json",
-              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\appsettings.json",
-              "RelativeToolTip": "ComplianceAndPeformanceSystem.API\\appsettings.json",
-              "ViewState": "AgIAABkAAAAAAAAAAAAAABkAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-18T08:46:54.591Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ComplianceVisitSpecialist.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceVisitSpecialist.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -258,11 +269,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ComplianceVisitSpecialistModel.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Models\\Compliance\\ComplianceVisitSpecialistModel.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAiwA8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -270,11 +281,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "VisitStatusEnum.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Enums\\VisitStatusEnum.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -282,11 +293,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EmailNotificationService.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\Sevices\\EmailNotificationService.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAA1wBoAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -294,11 +305,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AssignVisitSpecialists.cshtml",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\AssignVisitSpecialists.cshtml",
               "ViewState": "AgIAAJsAAAAAAAAAAAAmwKYAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -306,11 +317,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "LookupRepository.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Repositories\\LookupRepository.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -318,11 +329,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "IComplianceRequestService.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\IServices\\IComplianceRequestService.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAASwB4AAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -330,11 +341,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ComplianceStatusEnum.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Enums\\ComplianceStatusEnum.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -342,11 +353,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ComplianceSpecialistDto.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\ComplianceSpecialistDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -354,11 +365,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "CompliancePlanDto.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\CompliancePlanDto.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAAAwBsAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -368,9 +379,9 @@
               "$type": "Document",
               "DocumentIndex": 38,
               "Title": "20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112838_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "ViewState": "AgIAAF4HAAAAAAAAAAAAAGIHAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -378,11 +389,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "ComplianceRequest.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceRequest.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAIA9wA4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -390,11 +401,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "ComplianceDetails.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceDetails.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAzwBkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -402,23 +413,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
+              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
+              "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Migrations\\20250617112502_VisitStatusIdComplianceDetails_SeedLookup_MobileNumberComplianceVisitSpecialist.cs",
               "ViewState": "AgIAAKMDAAAAAAAAAAAQwAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-17T11:25:02.375Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "LookupValueSeed.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Seeds\\LookupValueSeed.cs",
               "ViewState": "AgIAAN4EAAAAAAAAAAArwOYEAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -426,11 +437,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "LookupValue.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Lookup\\LookupValue.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAA7wA8AAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -438,11 +449,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "VisitTeamAssignment.cshtml",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitTeamAssignment.cshtml",
               "ViewState": "AgIAAC4AAAAAAAAAAAAAALEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -450,11 +461,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "ComplianceSpecialist.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceSpecialist.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -462,11 +473,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "GetComplianceSpecialistListDto.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Dtos\\Compliance\\GetComplianceSpecialistListDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -474,11 +485,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "CategoryLookupSeed.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Seeds\\CategoryLookupSeed.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAwwDgAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -486,11 +497,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "RoleEnum.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Enums\\RoleEnum.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -498,11 +509,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "ViewRendererService.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\Sevices\\ViewRender\\ViewRendererService.cs",
               "ViewState": "AgIAABEAAAAAAAAAAIA9wBsAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -510,11 +521,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "SMSNotificationService.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\Sevices\\SMSNotificationService.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAiwCEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -522,11 +533,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "VisitSchedule.cshtml",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\VisitSchedule.cshtml",
               "ViewState": "AgIAAJUAAAAAAAAAAAAiwJ4AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -534,11 +545,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\IRepositories\\IUserRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -546,11 +557,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Repositories\\UserRepository.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAwwCMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -558,11 +569,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "UserDto.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Contract\\Dtos\\User\\UserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -570,11 +581,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "AdminFilterAttribute.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.API\\Common\\AdminFilterAttribute.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAgwBEAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -582,11 +593,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "QuarterlyVisitSchedule.cshtml",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Notification\\EmailNotification\\Templates\\QuarterlyVisitSchedule.cshtml",
               "ViewState": "AgIAAFQAAAAAAAAAAADwv2UAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -594,11 +605,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "ComplianceNotificationMassageSeed.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\Seeds\\ComplianceNotificationMassageSeed.cs",
               "ViewState": "AgIAAFoBAAAAAAAAAADwv2QBAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -606,11 +617,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "VisitSurveyAnswer.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\VisitSurveyAnswer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -618,27 +629,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "ComplianceNotificationMassage.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
+              "DocumentMoniker": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
               "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
+              "ToolTip": "C:\\Users\\Fatima Saleem AZM\\Documents\\Repos\\ComplianceBackend\\ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
               "RelativeToolTip": "ComplianceAndPeformanceSystem.Core\\Entities\\Request\\ComplianceNotificationMassage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-11T13:10:47.341Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "ComplianceAndPeformanceDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
-              "RelativeDocumentMoniker": "ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
-              "ToolTip": "C:\\Users\\u983495\\Documents\\Repos\\ComplianceBE_Temp\\ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
-              "RelativeToolTip": "ComplianceAndPeformanceSystem.DAL\\ComplianceAndPeformanceDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T06:46:14.574Z"
             }
           ]
         }
