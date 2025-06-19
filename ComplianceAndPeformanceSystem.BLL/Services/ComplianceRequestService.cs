@@ -7,9 +7,6 @@ using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
 using Hangfire;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
-using System.Globalization;
-using System.Linq;
 
 namespace ComplianceAndPeformanceSystem.BLL.Services;
 
@@ -136,7 +133,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     var today = DateTime.UtcNow.Date;
                     var notificationDates = new List<DateTime>
                     {
-                        today,
+                        //today,
                         new DateTime(today.Year, 1, 1).AddDays(-7),
                         new DateTime(today.Year, 4, 1).AddDays(-7),
                         new DateTime(today.Year, 7, 1).AddDays(-7),
@@ -285,7 +282,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     var today = DateTime.UtcNow.Date;
                     var notificationDates = new List<DateTime>
                     {
-                        today,
+                        //today,
                         new DateTime(today.Year, 1, 1).AddDays(-7),
                         new DateTime(today.Year, 4, 1).AddDays(-7),
                         new DateTime(today.Year, 7, 1).AddDays(-7),
@@ -310,8 +307,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
                     foreach(var visit in scheduledVisits)
                     {
-                        //var visitSpecialists = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitSpecialists(visit.Id));
-                        if (visit.VisitStatusId.Equals((long)VisitStatusEnum.New))// && visitSpecialists == null || visitSpecialists?.Model?.Count() <= 0)
+                        if (visit.VisitStatusId.Equals((long)VisitStatusEnum.New))
                         {
                             var notification = notifications.FirstOrDefault(s => s.Id == 26);
 
@@ -717,7 +713,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var today = DateTime.UtcNow.Date;
         var notificationDates = new List<DateTime>
         {
-            today,
+            //today,
             new DateTime(today.Year, 1, 1).AddDays(-7),
             new DateTime(today.Year, 4, 1).AddDays(-7),
             new DateTime(today.Year, 7, 1).AddDays(-7),
@@ -729,8 +725,8 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
 
-        string currentMonthName = DateTime.Now.ToString("MMMM");//,new CultureInfo(currentLanguageService.Language.ToString().ToLower()));
-        
+        string currentMonthName = DateTime.Now.ToString("MMMM");
+
         var quarterName = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitName;
         
         var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
@@ -748,8 +744,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 Content = new Dictionary<string, object>() { { "EmployeeName", "مدير الادارة" }, { "QuarterName", quarterName }, { "RequestNumber", request.Model.Seq }, { "PendingVisits", pendingVists }, { "ActionUrl", "#" } },
                 ViewName = "QuarterlyVisitSchedule.cshtml",
                 Subject = "مطلوب جدولة الزيارة ربع السنوية",
-                To = complianceManagers.Model.Where(c=> c.Id.Equals(7.ToString()))
-                    .Select(s => s.Email).ToList(),
+                To = complianceManagers.Model.Select(s => s.Email).ToList(),
                 CC = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList()
             });
         }
@@ -800,8 +795,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 },
                 ViewName = "VisitTeamAssignment.cshtml",
                 Subject = $"إشعار الزيارة القادمة – {visit.LicensedEntityName}",
-                To = complianceManagers.Model.Where(c => c.Id.Equals(7.ToString()))
-                    .Select(s => s.Email).ToList(),               
+                To = complianceManagers.Model.Select(s => s.Email).ToList(),               
             });
         }
     }
@@ -842,8 +836,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 },
                     ViewName = "VisitSchedule.cshtml",
                     Subject = "إشعار الزيارة القادمة",
-                    To = complianceManagers.Model.Where(c => c.Id.Equals(7.ToString()))
-                        .Select(s => s.Email).ToList(),
+                    To = complianceManagers.Model.Select(s => s.Email).ToList(),
                     CC = listCC
                 });
             }
@@ -868,7 +861,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 return;
                         
             List<string> listSendTo = complianceManagers?.Model?
-                            .Where(c => c.Id.Equals(7.ToString()) && !String.IsNullOrEmpty(c.MobileNumber))
+                            .Where(c => !String.IsNullOrEmpty(c.MobileNumber))
                             .Select(s => s.MobileNumber).ToList() ?? new List<string>();
 
             var visitSpecialists = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitSpecialists(visit.Id));

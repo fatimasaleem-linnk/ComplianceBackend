@@ -1,7 +1,12 @@
-﻿using ComplianceAndPeformanceSystem.Contract.Enums;
+﻿using Azure.Core;
+using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.ComponentModel;
+using System.Numerics;
 
 namespace ComplianceAndPeformanceSystem.DAL.Seeds;
 
@@ -111,7 +116,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageBodyAR = "يرجي  التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا فوريًا لحل هذه المهمة المتأخرة.",
                 MessageBodyEn = "Please intervene to ensure the plan is reviewed. Immediate attention is required to resolve this delayed task.",
                 ActionUrl = "/",
-              
+
             },
             new ComplianceNotificationMassage()
             {
@@ -282,6 +287,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             },
             #endregion
 
+
             #region Phase 2
 
             new ComplianceNotificationMassage()
@@ -339,7 +345,6 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageBodyEn = "The reason is {Reason}.",
                 ActionUrl = "/",
             },
-            
             new ComplianceNotificationMassage()
             {
                 Id = 30,
@@ -353,7 +358,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             },
             new ComplianceNotificationMassage()
             {
-                Id = 31,
+                Id = 38,
                 Role = "ComplianceSpecialist",
                 MessageType = "info",
                 MessageTitleAR = "تذكير بجدولة الزيارات الربع سنوية",
@@ -364,6 +369,84 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             },
 
             
+            // Part 03,04
+            new ComplianceNotificationMassage()
+            {
+                Id = 31,
+                Role = "LicensedEntity",
+                MessageType = "info",
+                MessageTitleAR = "{VisitDate}زيارة مجدولة يوم",
+                MessageTitleEn = "Scheduled visit on {VisitDate}",
+                MessageBodyAR = "و نوع الزيارة : تدقيق والمستندات المطلوبة تجدونها برفقة الإيميل الرسمي الخاص بكم {VisitDate} زيارة مجدولة يوم",
+                MessageBodyEn = "You have Scheduled visit on {VisitDate}, Visit Type: Audit and required documents send To Your Personal Email, ensure you submit your Documents within 5 days.",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 32,
+                Role = "LicensedEntity",
+                MessageType = "info",
+                MessageTitleAR = "تحميل المستندات الخاصة بزيارةالإمتثال",
+                MessageTitleEn = "Upload documents for compliance visit",
+                MessageBodyAR = "لقد تم تحميل مستنداتك الخاصة بزيارةالإمتثال بتاريخ (VisitDate) بنجاح شكراً لك.",
+                MessageBodyEn = "Your visit documents On (VisitDate) have been uploaded successfully. Thank you.",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 33,
+                Role = "ComplianceManager",
+                MessageType = "info",
+                MessageTitleAR = "تحميل المستندات الخاصة بزيارةالإمتثال",
+                MessageTitleEn = "Upload documents for compliance visit",
+                MessageBodyAR = "لم يقدم الكيان المرخص له [LicensedEntityName]المستندات المطلوبة لزيارة الإمتثال المقررة في (VisitDate), يرجى المتابعة مع الكيان  فوراً ",
+                MessageBodyEn = "The licensed entity [LicensedEntityName] has not submitted the required documents for the compliance visit scheduled in (VisitDate), please follow up with the entity immediately",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 34,
+                Role = "LicensedEntity",
+                MessageType = "info",
+                MessageTitleAR = "تمديد تحميل المستندات الخاصة بزيارةالإمتثال",
+                MessageTitleEn = "Extension for Upload documents for compliance visit",
+                MessageBodyAR = "لقد تم تقديم طلبك لتمديد (ExtensionDays) يوماً و هو الأن في إنتظار المراجعة. سيتم إخطارك بالقرار قريباً",
+                MessageBodyEn = "Your Extension request has been submitted (ExtensionDays) and is currently Under review. You will be notified of the decision soon.",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 35,
+                Role = "ComplianceManager",
+                MessageType = "info",
+                MessageTitleAR = "لقد تم تقديم طلب للتمديد إسم المرخص له (LicensedEntityName) و عددالأيام (ExtensionDays) يوم, يرجى المراجعة و إختيار القرار المناسب",
+                MessageTitleEn = "An extension request has been submitted for (LicensedEntityName ) and the number of days is (ExtensionDays) days. Please review and choose the appropriate decision.",
+                MessageBodyAR = $" عزيزي { "ComplianceManager"} ,\"لقد تم تقديم طلب للتمديد إسم المرخص له (LicensedEntityName) و عددالأيام (ExtensionDays) يرجى المراجعة و قبوله أو رفضه مع سبب الرفض\"",
+                MessageBodyEn = $" Dear { "ComplianceManager"} , \"A request for extension has been submitted for (LicensedEntityName) and Number of Days (ExtensionDays). Please review and accept or reject it with the reason for rejection\"",
+                ActionUrl = "/",
+             },
+            new ComplianceNotificationMassage()
+            {
+                Id = 36,
+                Role = "ComplianceSpecialist",
+                MessageType = "info",
+                MessageTitleAR = "لقد تم تقديم طلب للتمديد إسم المرخص له (LicensedEntityName) و عددالأيام (ExtensionDays) يوم, يرجى مراجعة الأمر",
+                MessageTitleEn = "An extension request has been submitted for (LicensedEntityName ) and the number of days is (ExtensionDays) days. Please review.",
+                MessageBodyAR = $" عزيزي { "ComplianceSpecialist"} ,\"لقد تم تقديم طلب للتمديد إسم المرخص له (LicensedEntityName) و عددالأيام (ExtensionDays) يرجى مراجعة الأمر  \"",
+                MessageBodyEn = $" Dear { "ComplianceSpecialist"} , \"A request for extension has been submitted for (LicensedEntityName) and Number of Days (ExtensionDays). Please review \"",
+                ActionUrl = "/",
+             },
+            new ComplianceNotificationMassage()
+            {
+                Id = 37,
+                Role = "LicensedEntity",
+                MessageType = "info",
+                MessageTitleAR =  $"لقد تمت الموافقة على طلبك لتمديد (ExtensionDays) يوماً,الموعد النهائي الجديد للتقديم هو تاريخ (ExtensionDate) ",
+                MessageTitleEn = "Your request for an extension of (ExtensionDays) has been approved. The new deadline to apply is (ExtensionDate).",
+                MessageBodyAR = $"لقد تمت الموافقة على طلبك لتمديد (ExtensionDays) يوماً,الموعد النهائي الجديد للتقديم هو تاريخ (ExtensionDate) ",
+                MessageBodyEn = "Your request for an extension of (ExtensionDays) has been approved. The new deadline to apply is (ExtensionDate).",
+                ActionUrl = "/",
+             },
             #endregion
 
         });

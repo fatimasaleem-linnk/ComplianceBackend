@@ -3,8 +3,6 @@ using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Notification.Services;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Numeric;
-using System.Net;
 using System.Net.Mail;
 
 
@@ -27,9 +25,7 @@ public class EmailNotificationService : INotificationService
             var html = await _viewRendererService.RenderPartialToStringAsync("EmailNotification/Templates/" + message.ViewName, message);
 
             MailMessage mail = new MailMessage();
-            //mail.From = new MailAddress(_emailConfigurationModel.From, message.Subject);
-
-            mail.From = new MailAddress("fatima.saleem@linnkarabia.com", message.Subject);
+            mail.From = new MailAddress(_emailConfigurationModel.From, message.Subject);
 
             if (message.To != null)
             {
@@ -43,19 +39,11 @@ public class EmailNotificationService : INotificationService
             }
 
             mail.IsBodyHtml = true;
-            //SmtpClient client = new SmtpClient();
-            //client.Port = _emailConfigurationModel.Port;
-            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            ////client.UseDefaultCredentials = true;
-            //client.Host = _emailConfigurationModel.SmtpServer;
-
-            var client = new SmtpClient("smtp.office365.com", 587)
-            {
-                Credentials = new NetworkCredential("fatima.saleem@linnkarabia.com", "Fatazm@97"),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network
-            };
-
+            SmtpClient client = new SmtpClient();
+            client.Port = _emailConfigurationModel.Port;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //client.UseDefaultCredentials = true;
+            client.Host = _emailConfigurationModel.SmtpServer;
             mail.Subject = message.Subject;
             mail.Body = html;
             await client.SendMailAsync(mail);

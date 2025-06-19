@@ -14,7 +14,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "ComplianceNotificationMassage",
                 columns: new[] { "Id", "ActionUrl", "MessageBodyAR", "MessageBodyEn", "MessageTitleAR", "MessageTitleEn", "MessageType", "Role" },
-                values: new object[] { 31, "/", "حان الوقت لجدولة زيارات لـ {QuarterName}. يرجى تحديد تواريخ الزيارات المعلقة في خطة الانتقال السنوية.", "It's time to schedule visits for {QuarterName}. Please indicate the dates of your pending visits in your annual transition plan.", "تذكير بجدولة الزيارات الربع سنوية", "Quarterly Visit Scheduling Reminder", "info", "ComplianceSpecialist" });
+                values: new object[] { 38, "/", "حان الوقت لجدولة زيارات لـ {QuarterName}. يرجى تحديد تواريخ الزيارات المعلقة في خطة الانتقال السنوية.", "It's time to schedule visits for {QuarterName}. Please indicate the dates of your pending visits in your annual transition plan.", "تذكير بجدولة الزيارات الربع سنوية", "Quarterly Visit Scheduling Reminder", "info", "ComplianceSpecialist" });
 
             migrationBuilder.UpdateData(
                 table: "LookupValue",
@@ -926,7 +926,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
             migrationBuilder.DeleteData(
                 table: "ComplianceNotificationMassage",
                 keyColumn: "Id",
-                keyValue: 31);
+                keyValue: 38);
 
             migrationBuilder.UpdateData(
                 table: "LookupValue",

@@ -804,7 +804,6 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
         if (!currentQuarterNameEn.Contains(modelVisitMonthEn))
             return ResponseResult<bool>.Failure(new List<string> { "Visit Date is outside its designated Quarter." }, false);
 
-        //if (complianceDetailsRecord != null && currentUserService.User.Role.Contains(RoleEnum.ComplianceManager))
         if (complianceDetailsRecord != null && currentUserService.User.Role.Any(role=> role.Equals(RoleEnum.ComplianceSpecialist) || role.Equals(RoleEnum.ComplianceManager))) 
         {
             List<KeyValuePair<string, string>> detailsAr = new List<KeyValuePair<string, string>>();
@@ -873,37 +872,41 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
             {
                 detailsAr.Add(new KeyValuePair<string, string>("VisitDate", $"تاريخ الزيارة الحالي: {model.VisitDate}"));
                 detailsEn.Add(new KeyValuePair<string, string>("VisitDate", $"Current Visit Date: {model.VisitDate}"));
+
+            }
+            else if (complianceDetailsRecord.VisitDate != null) 
+            {
+                if (complianceDetailsRecord.VisitStatusId != null)
+                {
+
+                    if (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New)
+                    {
+                        detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
+                        detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
+
+                        complianceDetailsRecord.VisitStatusId = (long)VisitStatusEnum.Scheduled;
+                    }
+                    else
+                    {
+                        if (VisitStatusId != null)
+                        {
+                            detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == VisitStatusId)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
+                            detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == VisitStatusId)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
+
+                            complianceDetailsRecord.VisitStatusId = VisitStatusId;
+                        }
+                    }
+
+                }
             }
             else if (complianceDetailsRecord.VisitDate != model.VisitDate)
             {
                 detailsAr.Add(new KeyValuePair<string, string>("VisitDate", $"تاريخ الزيارة الحالي: {model.VisitDate} , تاريخ الزيارة السابق : {complianceDetailsRecord.VisitDate}"));
                 detailsEn.Add(new KeyValuePair<string, string>("VisitDate", $"Current Visit Date: {model.VisitDate} , Old Visit Date : {complianceDetailsRecord.VisitDate}"));
 
-                
-            }
-
-            if (complianceDetailsRecord.VisitStatusId != null)
-            {
-
-                if (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New)
-                {
-                    detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
-                    detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
-
-                    complianceDetailsRecord.VisitStatusId = (long)VisitStatusEnum.Scheduled;
-                }
-                else
-                {
-                    if (VisitStatusId != null) 
-                    {
-                        detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == VisitStatusId)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
-                        detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == VisitStatusId)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
-
-                        complianceDetailsRecord.VisitStatusId = VisitStatusId;
-                    }                    
-                }
 
             }
+            
 
             if (complianceDetailsRecord.DesignedCapacity == null)
             {
@@ -1265,7 +1268,7 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
                     SpecialistUserEmail = user.Email,
                     SpecialistUserName = user.UserName,
                     MobileNumber = user.MobileNumber,
-                    SurveyNotes = null,
+                    SurveyNotes = String.Empty,
                 };
                 await dbContext.ComplianceVisitSpecialist.AddAsync(record);
             }

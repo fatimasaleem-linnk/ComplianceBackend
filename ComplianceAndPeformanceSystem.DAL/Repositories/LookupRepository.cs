@@ -30,5 +30,4 @@ public class LookupRepository(IComplianceAndPeformanceDbContext dbContext,ICurre
         var result = await list?.ToListAsync();
         return result.Select(s => new LookupValueDto () { Id = s.Id, CategoryName = currentLanguageService.Language == LanguageEnum.En ? s.Category.NameEn : s.Category.NameAr  , Value = currentLanguageService.Language == LanguageEnum.En ? s.ValueEn : s.ValueAr })?.ToList();
     }
-
 }

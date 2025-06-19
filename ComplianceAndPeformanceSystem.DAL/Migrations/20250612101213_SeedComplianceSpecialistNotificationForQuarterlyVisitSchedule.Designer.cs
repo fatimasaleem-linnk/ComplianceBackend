@@ -763,7 +763,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 38,
                             ActionUrl = "/",
                             MessageBodyAR = "حان الوقت لجدولة زيارات لـ {QuarterName}. يرجى تحديد تواريخ الزيارات المعلقة في خطة الانتقال السنوية.",
                             MessageBodyEn = "It's time to schedule visits for {QuarterName}. Please indicate the dates of your pending visits in your annual transition plan.",

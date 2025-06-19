@@ -8,6 +8,7 @@ using ComplianceAndPeformanceSystem.Contract.IServices;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using ComplianceAndPeformanceSystem.Contract.Helper;
 
 namespace ComplianceAndPeformanceSystem.API.Extensions;
 
@@ -31,6 +32,7 @@ public static class ServiceExtension
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<ICurrentLanguageService, CurrentLanguageService>();
+        services.AddScoped<IBlobService, BlobService>();
     }
 
     public static class TokenValidationParametersFactory

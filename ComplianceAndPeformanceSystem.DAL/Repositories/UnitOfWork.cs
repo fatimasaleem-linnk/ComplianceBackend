@@ -1,4 +1,5 @@
-﻿using ComplianceAndPeformanceSystem.Contract.IRepositories;
+﻿using ComplianceAndPeformanceSystem.Contract.Helper;
+using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 
 namespace ComplianceAndPeformanceSystem.DAL.Repositories;
@@ -8,8 +9,8 @@ public class UnitOfWork(
     IComplianceAndPeformanceDbContext context,
     ISWAESContext eswaContext,
     ICurrentUserService currentUserService,
-    ICurrentLanguageService currentLanguageService
-
+    ICurrentLanguageService currentLanguageService,
+    IBlobService blobService
     ) : IUnitOfWork
 {
     private readonly IComplianceAndPeformanceDbContext _context = context;
@@ -17,6 +18,7 @@ public class UnitOfWork(
     private ILookupRepository _lookupRepository;
     private IComplianceRequestRepository _complianceRequestRepository;
     private IUserRepository _userRepository;
+    private IBlobService _blobService;
 
     public ILookupRepository LookupRepository
     {

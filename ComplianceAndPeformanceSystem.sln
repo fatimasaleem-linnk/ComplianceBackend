@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplianceAndPeformanceSyst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplianceAndPeformanceSystem.Contract", "ComplianceAndPeformanceSystem.Contract\ComplianceAndPeformanceSystem.Contract.csproj", "{0086E5FE-0FFC-4F67-930D-902503E1B9BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplianceAndPeformanceSystem.Notification", "ComplianceAndPeformanceSystem.Notification\ComplianceAndPeformanceSystem.Notification.csproj", "{7968F220-72F2-4E89-9115-C5478ADA6F99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplianceAndPeformanceSystem.Notification", "ComplianceAndPeformanceSystem.Notification\ComplianceAndPeformanceSystem.Notification.csproj", "{7968F220-72F2-4E89-9115-C5478ADA6F99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -108,7 +108,6 @@ RecurringJob.AddOrUpdate<IComplianceRequestService>(
     "SendQuarterlyNotificationsToScheduleComplianceVisitsJob",
     service => service.SendQuarterlyNotificationsToScheduleComplianceVisitsAsync(),
     Cron.Daily // Runs daily to check if it's 7 days before a quarter
-    //TimeZoneInfo.Utc
 );
 
 RecurringJob.AddOrUpdate<IComplianceRequestService>(

@@ -15,7 +15,6 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
 
             users.Add(new UserDto()
             {
-                //Email = "KAlasmary@swa.gov.sa",
                 Email = "fsaleem@swcc.gov.sa",
                 Id = 1.ToString(),
                 Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
@@ -79,8 +78,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             users.Add(new UserDto()
             {
                 Roles = new List<string>() { RoleEnum.ComplianceManager },
-                Email = "SKhan7@swa.gov.sa",
-                //Email = "Q3@swa.gov.sa",
+                //Email = "SKhan7@swa.gov.sa",
+                Email = "Q3@swa.gov.sa",
                 Id = 5.ToString(),
                 UserName = "Saeed Khan"
             });
@@ -95,7 +94,6 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
 
         users.Add(new UserDto()
         {
-            //Email = "KAlasmary@swa.gov.sa",
             Email = "fsaleem@swcc.gov.sa",
             Id = 1.ToString(),
             Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
@@ -140,8 +138,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
         users.Add(new UserDto()
         {
             Roles = new List<string>() { RoleEnum.ComplianceManager },
-            Email = "SKhan7@swa.gov.sa",
-            //Email = "Q3@swa.gov.sa",
+            //Email = "SKhan7@swa.gov.sa",
+            Email = "Q3@swa.gov.sa",
             Id = 5.ToString(),
             UserName = "Saeed Khan"
         });
