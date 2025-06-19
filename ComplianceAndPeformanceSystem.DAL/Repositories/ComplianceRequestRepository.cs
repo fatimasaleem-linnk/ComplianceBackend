@@ -957,7 +957,8 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
         var visitIds = await dbContext.ComplianceVisitSpecialist.Where(vs => vs.SpecialistUserId.Equals(LoggedInUserId)).Select(vs=> vs.ComplianceDetailsId).Distinct().ToListAsync();
 
         var visits = await dbContext.ComplianceDetails.Include(c=> c.ComplianceVisitSpecialists)
-            .Where(c => visitIds.Contains(c.Id) && c.VisitStatusId.Equals(visitStatusId)).ToListAsync();
+                            .ThenInclude(c=>c.ComplianceVisitDisclosure)
+                        .Where(c => visitIds.Contains(c.Id) && c.VisitStatusId.Equals(visitStatusId)).ToListAsync();
         
         if (visits!=null && visits.Count() > 0) 
         {
@@ -1013,8 +1014,16 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
                             SpecialistUserId = s.SpecialistUserId,
                             SpecialistUserName = s.SpecialistUserName,
                             SpecialistUserEmail = s.SpecialistUserEmail,
-                            SurveyNotes = s.SurveyNotes,
                             MobileNumber = s.MobileNumber,
+                            ComplianceVisitDisclosure = s.ComplianceVisitDisclosure !=  null 
+                            ? new ComplianceVisitDisclosureModel() 
+                                {
+                                   Id = s.ComplianceVisitDisclosure.Id,
+                                   ComplianceVisitSpecialistId = s.ComplianceVisitDisclosure.ComplianceVisitSpecialistId,
+                                   SurveyNotes = s.ComplianceVisitDisclosure.SurveyNotes,
+                                   HasConflicts = s.ComplianceVisitDisclosure.HasConflicts,
+                                }
+                            : null,
 
                         }).ToList(),
 
@@ -1128,7 +1137,6 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
                         SpecialistUserId = s.SpecialistUserId ,
                         SpecialistUserName = s.SpecialistUserName,
                         SpecialistUserEmail = s.SpecialistUserEmail,
-                        SurveyNotes = s.SurveyNotes,
                         MobileNumber = s.MobileNumber,
 
                     }).ToList() ?? null,
@@ -1155,7 +1163,6 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
                     SpecialistUserId = specialist.SpecialistUserId,
                     SpecialistUserName = specialist.SpecialistUserName,
                     SpecialistUserEmail = specialist.SpecialistUserEmail,
-                    SurveyNotes = specialist.SurveyNotes,
                 };
 
                 result.Add(specialistModel);
@@ -1268,7 +1275,6 @@ internal class ComplianceRequestRepository(IComplianceAndPeformanceDbContext dbC
                     SpecialistUserEmail = user.Email,
                     SpecialistUserName = user.UserName,
                     MobileNumber = user.MobileNumber,
-                    SurveyNotes = String.Empty,
                 };
                 await dbContext.ComplianceVisitSpecialist.AddAsync(record);
             }

@@ -162,7 +162,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                         foreach (var visit in scheduledVisits.Model)
                         {
                             //to do: change schema and modify code for check if specialist has filled disclosure form or not.
-                            if (String.IsNullOrEmpty(visit.ComplianceVisitSpecialists?.FirstOrDefault(vs=> vs.SpecialistUserId.Equals(currentUserService.User.UserId))?.SurveyNotes))
+                            if (visit.ComplianceVisitSpecialists?.FirstOrDefault(vs=> vs.SpecialistUserId.Equals(currentUserService.User.UserId))?.ComplianceVisitDisclosure == null)
                             {
                                 var visitnotification = notifications.FirstOrDefault(s => s.Id == 30);
 
