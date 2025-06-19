@@ -98,4 +98,3 @@ C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem
 C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Notification\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Notification\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\u983495\Documents\Repos\ComplianceBackend\ComplianceAndPeformanceSystem.Notification\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\u983495\Documents\Repos\ComplianceBE_Temp\ComplianceAndPeformanceSystem.Notification\obj\Debug\net8.0\staticwebassets.build.json
