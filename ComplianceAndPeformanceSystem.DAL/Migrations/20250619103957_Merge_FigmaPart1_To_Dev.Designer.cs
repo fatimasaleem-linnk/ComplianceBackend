@@ -4,6 +4,7 @@ using ComplianceAndPeformanceSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComplianceAndPeformanceSystem.DAL.Migrations
 {
     [DbContext(typeof(ComplianceAndPeformanceDbContext))]
-    partial class ComplianceAndPeformanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619103957_Merge_FigmaPart1_To_Dev")]
+    partial class Merge_FigmaPart1_To_Dev
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

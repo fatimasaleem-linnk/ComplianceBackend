@@ -1,4 +1,6 @@
-﻿namespace ComplianceAndPeformanceSystem.Core.Entities;
+﻿using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
+
+namespace ComplianceAndPeformanceSystem.Core.Entities;
 
 public class ComplianceDetails : TrackedEntity
 {
@@ -14,8 +16,14 @@ public class ComplianceDetails : TrackedEntity
     public long? DesignedCapacity { get; set; }
     public string? VisitReferenceNumber { get; set; }
     public long? VisitStatusId { get; set; }
-
     public bool IsDeleted { get; set; }
+    public DateTime ScheduledDate { get; set; }
+    public int Status { get; set; }
+    public string? CancellationReason { get; set; }
+    public string? RescheduleReason { get; set; }
+    public string? UpdatedReason { get; set; }
+    public DateTime? CancelledAt { get; set; }
+
     public virtual LookupValue VisitStatus { get; set; }
     public virtual LookupValue LicensedEntity { get; set; }
     public virtual LookupValue Activity { get; set; }
@@ -28,5 +36,9 @@ public class ComplianceDetails : TrackedEntity
     public virtual ICollection<ComplianceRequestActivity>? ComplianceRequestActivities { get; set; }
 
     public virtual ICollection<ComplianceVisitSpecialist>? ComplianceVisitSpecialists { get; set; }
+
+    public virtual ICollection<VisitStatusHistory>? VisitStatusHistory { get; set; }
+
+
 
 }

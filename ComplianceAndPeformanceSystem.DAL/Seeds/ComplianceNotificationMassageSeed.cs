@@ -356,18 +356,6 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageBodyEn = "You have been appointed for visit {VisitDate} Please note that the time limit for downloading the forms and sending them to us is two days. To download the form, use the link below.",
                 ActionUrl = "/",
             },
-            new ComplianceNotificationMassage()
-            {
-                Id = 38,
-                Role = "ComplianceSpecialist",
-                MessageType = "info",
-                MessageTitleAR = "تذكير بجدولة الزيارات الربع سنوية",
-                MessageTitleEn = "Quarterly Visit Scheduling Reminder",
-                MessageBodyAR = "حان الوقت لجدولة زيارات لـ {QuarterName}. يرجى تحديد تواريخ الزيارات المعلقة في خطة الانتقال السنوية.",
-                MessageBodyEn = "It's time to schedule visits for {QuarterName}. Please indicate the dates of your pending visits in your annual transition plan.",
-                ActionUrl = "/",
-            },
-
             
             // Part 03,04
             new ComplianceNotificationMassage()
@@ -446,7 +434,18 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageBodyAR = $"لقد تمت الموافقة على طلبك لتمديد (ExtensionDays) يوماً,الموعد النهائي الجديد للتقديم هو تاريخ (ExtensionDate) ",
                 MessageBodyEn = "Your request for an extension of (ExtensionDays) has been approved. The new deadline to apply is (ExtensionDate).",
                 ActionUrl = "/",
-             },
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 38,
+                Role = "ComplianceSpecialist",
+                MessageType = "info",
+                MessageTitleAR = "تذكير بجدولة الزيارات الربع سنوية",
+                MessageTitleEn = "Quarterly Visit Scheduling Reminder",
+                MessageBodyAR = "حان الوقت لجدولة زيارات لـ {QuarterName}. يرجى تحديد تواريخ الزيارات المعلقة في خطة الانتقال السنوية.",
+                MessageBodyEn = "It's time to schedule visits for {QuarterName}. Please indicate the dates of your pending visits in your annual transition plan.",
+                ActionUrl = "/",
+            },
             #endregion
 
         });

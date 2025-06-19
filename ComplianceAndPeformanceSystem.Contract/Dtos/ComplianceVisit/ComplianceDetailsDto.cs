@@ -1,4 +1,5 @@
 ﻿using ComplianceAndPeformanceSystem.Core.Entities;
+using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit
         public long? DesignedCapacity { get; set; }
         public string? VisitReferenceNumber { get; set; }
 
+        public DateTime ScheduledDate { get; set; }
+        public int Status { get; set; }
+        public string? StatusName { get; set; }
+        public string? CancellationReason { get; set; }
+        public DateTime? CancelledAt { get; set; }
+
+
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
         public DateTime? AssignedOn { get; set; }
@@ -43,6 +51,7 @@ namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit
 
         public virtual ComplianceRequest ComplianceRequest { get; set; }
         public virtual ICollection<ComplianceRequestActivity>? ComplianceRequestActivities { get; set; }
+        public virtual ICollection<VisitStatusHistory>? VisitStatusHistory { get; set; }
 
         public virtual ICollection<ComplianceVisitSpecialist>? ComplianceVisitSpecialists { get; set; }
 

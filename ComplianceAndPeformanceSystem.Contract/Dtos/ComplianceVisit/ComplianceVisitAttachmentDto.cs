@@ -1,6 +1,6 @@
 ﻿namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit
 {
-    public class ComplianceVisitAttachmentDto
+    public class VisitDocumentDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

@@ -1,15 +1,16 @@
 ﻿using ComplianceAndPeformanceSystem.Core.Entities;
-using ComplianceAndPeformanceSystem.Core.Entities.Request;
+using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ComplianceAndPeformanceSystem.DAL.Configurations
 {
-    class ComplianceVisitAttachmentConfiguration : IEntityTypeConfiguration<ComplianceVisitAttachment>
+    class VisitDocumentConfiguration : IEntityTypeConfiguration<VisitDocument>
     {
-        public void Configure(EntityTypeBuilder<ComplianceVisitAttachment> builder)
+        public void Configure(EntityTypeBuilder<VisitDocument> builder)
         {
             builder.HasKey(s => s.Id);
+            builder.HasOne(d => d.ComplianceDetails);
         }
     }
 }

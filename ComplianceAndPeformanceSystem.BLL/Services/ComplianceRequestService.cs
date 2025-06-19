@@ -1,12 +1,14 @@
 ﻿using ComplianceAndPeformanceSystem.Contract.Common.Exceptions;
 using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
 using Hangfire;
+using Microsoft.AspNetCore.Http;
 
 namespace ComplianceAndPeformanceSystem.BLL.Services;
 
@@ -939,6 +941,86 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             });
         }
     }
+
+    public async Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> attachmentvm, Guid ComplianceDetailsID)
+    {
+        var request = await unitOfWork.ComplianceRequestRepository.AddAttachment(attachmentvm, ComplianceDetailsID);
+        if (!request.Succeeded)
+            throw new ValidationException([new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Visit documents cannot be saved." : "لا يمكن حفظ  مستندات الزيارة ")]);
+        else
+            BackgroundJob.Enqueue(() => SendNotificationToLicensedEntityforUploadDocument(ComplianceDetailsID, currentUserService.User.UserName));
+        return request;
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToLicensedEntityforUploadDocument(Guid ComplianceDetailsID, string senderName)
+    {
+        var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
+        var request = visit?.Model?.Where(a => a.Id == ComplianceDetailsID).FirstOrDefault();
+
+        var LicensedEntity = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity });
+        if (LicensedEntity != null && LicensedEntity.Model != null)
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", request?.LicensedEntityName ?? ""},
+                    { "VisitNumber", request?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", request?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+                Body = "",
+                ViewName = "SubmitDocumentForm.cshtml",
+                Subject = "تحميل المستندات الخاصة بزيارة الإمتثال",
+                To = LicensedEntity.Model.Select(s => s.Email).ToList()
+            });
+            return ResponseResult<bool>.Success(true);
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+    public async Task<ResponseResult<ComplianceDetailsDto>>? GetComplianceVisitByComplianceDetailsID(Guid ComplianceDetailsID)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
+
+        if (result != null && result.Model != null)
+        {
+            var res = result.Model.Where(a => a.Id == ComplianceDetailsID).FirstOrDefault();
+            return ResponseResult<ComplianceDetailsDto>.Success(res);
+        }
+        else
+            return null;
+    }
+
+    public async Task<ResponseResult<List<ComplianceDetailsDto>>> GetComplianceVisit()
+        => await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
+
+    public async Task<ResponseResult<DocumentExtensionRequestDto>> AddExtensionRequest(DocumentExtensionRequestDto request, Guid complianceDetailsId)
+        => await unitOfWork.ComplianceRequestRepository.AddExtensionRequest(request, complianceDetailsId);
+
+    public async Task<ResponseResult<DocumentExtensionRequestDto>> GetExtensionRequest(Guid id)
+        => await unitOfWork.ComplianceRequestRepository.GetExtensionRequest(id);
+
+    public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> GetExtensionRequestByEntityId(long licensedEntityId)
+        => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestByEntityId(licensedEntityId);
+
+    public async Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto dto, Guid requestId, Guid managerId)
+        => await unitOfWork.ComplianceRequestRepository.UpdateExtensionRequest(dto, requestId, managerId);
+
+    public async Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid requestId)
+        => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestHistory(requestId);
+
+    public async Task<ResponseResult<ComplianceDetailsDto>> CancelVisitByManager(CancelVisitDto dto)
+        => await unitOfWork.ComplianceRequestRepository.CancelVisitByManager(dto);
+
+    public async Task<ResponseResult<ComplianceDetailsDto>> RequestReschedule(RequestRescheduleDto dto)
+        => await unitOfWork.ComplianceRequestRepository.RequestReschedule(dto);
+
+    public async Task<ResponseResult<ComplianceDetailsDto>> ReviewReschedule(ReviewRescheduleDto dto)
+        => await unitOfWork.ComplianceRequestRepository.ReviewRescheduleAsync(dto);
+
+    public async Task<ResponseResult<ComplianceDetailsDto>> UpdateVisitStatus(UpdateVisitStatusDto statusDto)
+        => await unitOfWork.ComplianceRequestRepository.UpdateVisitStatus(statusDto);
+
+
 
 
     #endregion

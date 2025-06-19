@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ComplianceAndPeformanceSystem.Core.Entities;
+using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
 
 namespace ComplianceAndPeformanceSystem.DAL;
 
@@ -16,6 +17,13 @@ public interface IComplianceAndPeformanceDbContext
     DbSet<ComplianceVisitSpecialist> ComplianceVisitSpecialist { get; set; }
     DbSet<VisitSurveyAnswer> VisitSurveyAnswer { get; set; }
     DbSet<VisitSurveyQuestion> VisitSurveyQuestion { get; set; }
+    DbSet<VisitDocument> VisitDocuments { get; set; }
+    DbSet<DocumentExtensionRequest> DocumentExtensionRequest { get; set; }
+    DbSet<ExtensionStatusHistory> ExtensionStatusHistories { get; set; }
+    DbSet<VisitStatusHistory> VisitStatusHistories  { get; set; }
+    DbSet<RescheduleRequest> RescheduleRequests   { get; set; }
+
+
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
 
