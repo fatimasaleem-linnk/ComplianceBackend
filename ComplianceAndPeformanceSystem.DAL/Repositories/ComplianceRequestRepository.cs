@@ -1,25 +1,20 @@
-﻿using Azure.Core;
-using ComplianceAndPeformanceSystem.Contract.Common.Exceptions;
+﻿using ComplianceAndPeformanceSystem.Contract.Common.Exceptions;
 using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Enums;
+using ComplianceAndPeformanceSystem.Contract.Helper;
 using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
 using ComplianceAndPeformanceSystem.Core.Entities;
+using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
 using System.Globalization;
-using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
-using ComplianceAndPeformanceSystem.Contract.Helper;
-using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
-using Microsoft.AspNetCore.Http;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using System.Drawing;
 
 namespace ComplianceAndPeformanceSystem.DAL.Repositories;
 
@@ -43,7 +38,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
     public async Task CreateComplianceRequest()
     {
 
-        var record = await dbContext.ComplianceRequest
+        var record = await dbContext.ComplianceRequest.Where(s => s.IsDeleted != true)
                .OrderByDescending(s => s.CreatedOn).FirstOrDefaultAsync();
 
         if (record == null)
@@ -293,13 +288,35 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
     public async Task<ResponseResult<bool>> SaveCompliancePlan(CompliancePlanModel model)
     {
+        bool anyMatch = false;
         var complianceSpecialist = await dbContext.ComplianceSpecialist.Where(s => s.ComplianceRequestId == model.ComplianceRequestId).ToListAsync();
         if (complianceSpecialist.Any(s => s.SpecialistUserId == currentUserService.User.UserId))
         {
             ComplianceDetails complianceDetailsRecord = await dbContext.ComplianceDetails.FirstOrDefaultAsync(s => s.Id == model.Id);
+
             List<KeyValuePair<string, string>> detailsAr = new List<KeyValuePair<string, string>>();
             List<KeyValuePair<string, string>> detailsEn = new List<KeyValuePair<string, string>>();
+
             var categoryLookupValue = await dbContext.LookupValue.ToListAsync();
+
+            if (complianceDetailsRecord != null && model != null)
+            {
+                anyMatch =
+                    (model.LicensedEntityId == complianceDetailsRecord.LicensedEntityId) ||
+                    (model.ActivityId == complianceDetailsRecord.ActivityId) ||
+                    (model.PlantNameId == complianceDetailsRecord.PlantNameId) ||
+                    (model.LocationId.HasValue && model.LocationId == complianceDetailsRecord.LocationId) ||
+                    (model.QuarterPlannedForVisitId.HasValue && model.QuarterPlannedForVisitId == complianceDetailsRecord.QuarterPlannedForVisitId) ||
+                    (model.VisitTypeId == complianceDetailsRecord.VisitTypeId) ||
+                    (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New);
+
+                if (anyMatch)
+                {
+                    throw new Exception("Can't Saved a Plan, one property in the model matches the existing record.");
+                }
+                return ResponseResult<bool>.Success(false);
+            }
+
             if (complianceDetailsRecord != null)
             {
                 detailsAr.Add(new KeyValuePair<string, string>("Seq", $"تم اجراء تعديل {complianceDetailsRecord.Seq} "));
@@ -803,21 +820,21 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         return results;
     }
     public async Task<ResponseResult<bool>> SaveComplianceVisit(ComplianceVisitModel model, long? VisitStatusId = null)
-    {        
+    {
         ComplianceDetails complianceDetailsRecord = await dbContext.ComplianceDetails.FirstOrDefaultAsync(s => s.Id == model.Id);
         var categoryLookupValue = await dbContext.LookupValue.ToListAsync();
-        
+
         var currentQuarterNameEn = categoryLookupValue.FirstOrDefault(a => a.Id == model.QuarterPlannedForVisitId)?.ValueEn;
         var modelVisitMonthEn = model.VisitDate.ToString("MMMM", new CultureInfo("en"));
 
         if (!currentQuarterNameEn.Contains(modelVisitMonthEn))
             return ResponseResult<bool>.Failure(new List<string> { "Visit Date is outside its designated Quarter." }, false);
 
-        if (complianceDetailsRecord != null && currentUserService.User.Role.Any(role=> role.Equals(RoleEnum.ComplianceSpecialist) || role.Equals(RoleEnum.ComplianceManager))) 
+        if (complianceDetailsRecord != null && currentUserService.User.Role.Any(role => role.Equals(RoleEnum.ComplianceSpecialist) || role.Equals(RoleEnum.ComplianceManager)))
         {
             List<KeyValuePair<string, string>> detailsAr = new List<KeyValuePair<string, string>>();
             List<KeyValuePair<string, string>> detailsEn = new List<KeyValuePair<string, string>>();
-            
+
             if (complianceDetailsRecord.VisitDate == null)
             {
                 if (string.IsNullOrWhiteSpace(complianceDetailsRecord.VisitReferenceNumber))
@@ -882,7 +899,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 detailsAr.Add(new KeyValuePair<string, string>("VisitDate", $"تاريخ الزيارة الحالي: {model.VisitDate}"));
                 detailsEn.Add(new KeyValuePair<string, string>("VisitDate", $"Current Visit Date: {model.VisitDate}"));
             }
-            else if (complianceDetailsRecord.VisitDate != null) 
+            else if (complianceDetailsRecord.VisitDate != null)
             {
                 if (complianceDetailsRecord.VisitStatusId != null)
                 {
@@ -914,7 +931,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
 
             }
-                        
+
 
             if (complianceDetailsRecord.DesignedCapacity == null)
             {
@@ -959,15 +976,14 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
         throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
     }
-
     public async Task<ResponseResult<List<CompliancePlanDto>>> GetVisitsByStatusForLoggedInUser(string LoggedInUserId, long visitStatusId)
     {
-        var visitIds = await dbContext.ComplianceVisitSpecialist.Where(vs => vs.SpecialistUserId.Equals(LoggedInUserId)).Select(vs=> vs.ComplianceDetailsId).Distinct().ToListAsync();
+        var visitIds = await dbContext.ComplianceVisitSpecialist.Where(vs => vs.SpecialistUserId.Equals(LoggedInUserId)).Select(vs => vs.ComplianceDetailsId).Distinct().ToListAsync();
 
-        var visits = await dbContext.ComplianceDetails.Include(c=> c.ComplianceVisitSpecialists)
+        var visits = await dbContext.ComplianceDetails.Include(c => c.ComplianceVisitSpecialists)
             .Where(c => visitIds.Contains(c.Id) && c.VisitStatusId.Equals(visitStatusId)).ToListAsync();
-        
-        if (visits!=null && visits.Count() > 0) 
+
+        if (visits != null && visits.Count() > 0)
         {
             var categoryLookupValue = await dbContext.LookupValue.ToListAsync();
 
@@ -1033,8 +1049,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
         return null;
     }
-
-
     public async Task<List<CompliancePlanDto>> GetNewVisitsForCurrentQuarter()
     {
         var request = await GetComplianceRequest(isEmail: true);
@@ -1043,21 +1057,27 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
         //get current quarter name excluding month
         //e.g: get "First Quarter" from "First Quarter - January"
-        var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
-        quarterNameEnForPendingVisits = string.Join(" ", quarterNameEnForPendingVisits.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2));
+        var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p =>
+            p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)
+        ).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
 
-        //get scheduled visits for current quarter
-        List<CompliancePlanDto>? scheduledVisits = request.Model?.CompliancePlans?.Where(p =>
-            p.QuarterPlannedForVisitNameEn.StartsWith(quarterNameEnForPendingVisits)
-            && p.VisitStatusId.Equals((long)VisitStatusEnum.New)
-            && !String.IsNullOrEmpty(p.VisitReferenceNumber)
-        ).ToList();
+        if (quarterNameEnForPendingVisits != null)
+        {
+            quarterNameEnForPendingVisits = string.Join(" ", quarterNameEnForPendingVisits?.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2));
 
-        return scheduledVisits;
+            //get scheduled visits for current quarter
+            List<CompliancePlanDto>? scheduledVisits = request.Model?.CompliancePlans?.Where(p =>
+                p.QuarterPlannedForVisitNameEn.StartsWith(quarterNameEnForPendingVisits)
+                && p.VisitStatusId.Equals((long)VisitStatusEnum.New)
+                && !String.IsNullOrEmpty(p.VisitReferenceNumber)
+            ).ToList();
+
+            return scheduledVisits;
+        }
+
+        return null;
     }
-
-
-    public async Task<List<CompliancePlanDto>> GetUnscheduledVisitsForCurrentQuarter() 
+    public async Task<List<CompliancePlanDto>> GetUnscheduledVisitsForCurrentQuarter()
     {
         var request = await GetComplianceRequest(isEmail: true);
 
@@ -1065,24 +1085,31 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
         //get current quarter name excluding month
         //e.g: get "First Quarter" from "First Quarter - January"
-        var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
-        quarterNameEnForPendingVisits = string.Join(" ", quarterNameEnForPendingVisits.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2));
+        var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p =>
+            p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)
+        ).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
 
-        //get unscheduled visits for current quarter
-        List<CompliancePlanDto>? unscheduledVisits = request.Model?.CompliancePlans?.Where(p =>
-            p.QuarterPlannedForVisitNameEn.StartsWith(quarterNameEnForPendingVisits)
-            && p.VisitStatusId == null
-            && String.IsNullOrEmpty(p.VisitReferenceNumber)
-        ).ToList();
+        if (quarterNameEnForPendingVisits != null)
+        {
+            quarterNameEnForPendingVisits = string.Join(" ", quarterNameEnForPendingVisits.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2));
 
-        return unscheduledVisits;
+            //get unscheduled visits for current quarter
+            List<CompliancePlanDto>? unscheduledVisits = request.Model?.CompliancePlans?.Where(p =>
+                p.QuarterPlannedForVisitNameEn.StartsWith(quarterNameEnForPendingVisits)
+                && p.VisitStatusId == null
+                && String.IsNullOrEmpty(p.VisitReferenceNumber)
+            ).ToList();
+
+            return unscheduledVisits;
+        }
+
+        return null;
     }
-
-    public async Task<ResponseResult<CompliancePlanDto>> GetComplianceVisitDetail (Guid id) 
-    {        
+    public async Task<ResponseResult<CompliancePlanDto>> GetComplianceVisitDetail(Guid id)
+    {
         var complianceVisit = dbContext.ComplianceDetails?.Where(s => s.Id == id)
             .Include(s => s.ComplianceVisitSpecialists).FirstOrDefault();
-        
+
         if (complianceVisit != null)
         {
             var categoryLookupValue = await dbContext.LookupValue.ToListAsync();
@@ -1118,22 +1145,22 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 VisitDate = complianceVisit.VisitDate,
                 VisitReferenceNumber = complianceVisit.VisitReferenceNumber,
 
-                VisitStatusId = complianceVisit.VisitStatusId,                
-                VisitStatusName = (complianceVisit.VisitStatusId != null) 
-                    ? (currentLanguageService.Language == LanguageEnum.En 
-                        ? categoryLookupValue.FirstOrDefault(a => a.Id == complianceVisit.VisitStatusId)?.ValueEn 
+                VisitStatusId = complianceVisit.VisitStatusId,
+                VisitStatusName = (complianceVisit.VisitStatusId != null)
+                    ? (currentLanguageService.Language == LanguageEnum.En
+                        ? categoryLookupValue.FirstOrDefault(a => a.Id == complianceVisit.VisitStatusId)?.ValueEn
                         : categoryLookupValue.FirstOrDefault(a => a.Id == complianceVisit.VisitStatusId)?.ValueAr
                     ) : null,
 
 
-                UnscheduledVisitsForCurrentQuarter = GetUnscheduledVisitsForCurrentQuarter().Result.Count(),
-                
+                UnscheduledVisitsForCurrentQuarter = GetUnscheduledVisitsForCurrentQuarter().Result?.Count() ?? null,
+
                 ComplianceVisitSpecialists = complianceVisit.ComplianceVisitSpecialists?.Where(s => s.IsDeleted == false)
-                    .Select(s => new ComplianceVisitSpecialistModel() 
+                    .Select(s => new ComplianceVisitSpecialistModel()
                     {
                         Id = s.Id,
-                        ComplianceDetailsId = s.ComplianceDetailsId ,
-                        SpecialistUserId = s.SpecialistUserId ,
+                        ComplianceDetailsId = s.ComplianceDetailsId,
+                        SpecialistUserId = s.SpecialistUserId,
                         SpecialistUserName = s.SpecialistUserName,
                         SpecialistUserEmail = s.SpecialistUserEmail,
                         SurveyNotes = s.SurveyNotes,
@@ -1145,8 +1172,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         }
         return null;
     }
-
-
     public async Task<ResponseResult<List<ComplianceVisitSpecialistModel>>> GetComplianceVisitSpecialists(Guid complianceDetailId)
     {
         var complianceVisitSpecialists = dbContext.ComplianceVisitSpecialist?.Where(s => s.ComplianceDetailsId == complianceDetailId).ToListAsync();
@@ -1154,7 +1179,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         if (complianceVisitSpecialists != null && complianceVisitSpecialists.Result.Count() > 0)
         {
             List<ComplianceVisitSpecialistModel> result = new List<ComplianceVisitSpecialistModel>();
-            foreach (var specialist in complianceVisitSpecialists.Result) 
+            foreach (var specialist in complianceVisitSpecialists.Result)
             {
                 ComplianceVisitSpecialistModel specialistModel = new ComplianceVisitSpecialistModel()
                 {
@@ -1172,7 +1197,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         }
         return null;
     }
-
     public async Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists()
     {
         var record = await dbContext.ComplianceRequest
@@ -1197,7 +1221,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         }
         return null;
     }
-
     private async Task<List<string>> CheckSpecialistsAvailablity(AssignComplianceVisitSpecialistModel model, DateTime? ModelComplianceVisitDate)
     {
         List<string> unavailableUserErrors = new List<string>();
@@ -1301,37 +1324,41 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
     }
 
-
-    // Part 03
+    #region Part 03
     public async Task<ResponseResult<bool>> AddAttachment(List<IFormFile> attachmentvm, Guid? ComplianceDetailsID)
     {
         try
         {
-            if (attachmentvm.Count > 0)
+            if (currentUserService.User.Role.Any(s => s.Contains(RoleEnum.LicensedEntity)))
             {
-                List<VisitDocument> _object = new List<VisitDocument>();
-                foreach (IFormFile file in attachmentvm)
+                if (attachmentvm.Count > 0)
                 {
-                    var _File = await _blobService.UploadFile(file);
-                    _object.Add(new VisitDocument
+                    List<VisitDocument> _object = new List<VisitDocument>();
+                    foreach (IFormFile file in attachmentvm)
                     {
-                        Id = Guid.NewGuid(),
-                        ComplianceDetailsID = ComplianceDetailsID,
-                        Name = file.FileName,
-                        Type = file.ContentType,
-                        Path = _File.Path,
-                        Url = _File?.fileUrl?.ToString(),
-                        CreatedByID = currentUserService.User.UserId,
-                        CreatedByEmail = currentUserService.User.UserEmail,
-                        CreatedByUserName = currentUserService.User.UserName,
-                        CreatedOn = DateTime.Now
-                    });
-                }
+                        var _File = await _blobService.UploadFile(file);
+                        _object.Add(new VisitDocument
+                        {
+                            Id = Guid.NewGuid(),
+                            ComplianceDetailsID = ComplianceDetailsID,
+                            Name = file.FileName,
+                            Type = file.ContentType,
+                            Path = _File.Path,
+                            Url = _File?.fileUrl?.ToString(),
+                            CreatedByID = currentUserService.User.UserId,
+                            CreatedByEmail = currentUserService.User.UserEmail,
+                            CreatedByUserName = currentUserService.User.UserName,
+                            CreatedOn = DateTime.Now
+                        });
+                    }
 
-                await dbContext.VisitDocuments.AddRangeAsync(_object);
-                return ResponseResult<bool>.Success(true);
+                    await dbContext.VisitDocuments.AddRangeAsync(_object);
+                    await dbContext.SaveChangesAsync();
+                    return ResponseResult<bool>.Success(true);
+                }
+                return ResponseResult<bool>.Success(false);
             }
-            return ResponseResult<bool>.Success(false);
+            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
         }
         catch (Exception)
         {
@@ -1342,101 +1369,131 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
     {
         var categoryLookupValue = await dbContext.LookupValue.ToListAsync();
 
-        var Visits = await dbContext.ComplianceDetails.Where(s => s.IsDeleted == false)
-        .Select(record => new ComplianceDetailsDto
-        {
-            Id = record.Id,
-            Seq = record.Seq,
-            ActivityId = record.ActivityId,
-            ActivityName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.ActivityId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.ActivityId).FirstOrDefault().ValueAr,
+        var lookupDictEn = categoryLookupValue.ToDictionary(x => x.Id, x => x.ValueEn);
+        var lookupDictAr = categoryLookupValue.ToDictionary(x => x.Id, x => x.ValueAr);
 
-            ComplianceRequestId = record.ComplianceRequestId,
-            LicensedEntityId = record.LicensedEntityId,
-            LocationId = record.LocationId,
-
-            LocationName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.LocationId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.LocationId).FirstOrDefault().ValueAr,
-            LicensedEntityName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.LicensedEntityId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.LicensedEntityId).FirstOrDefault().ValueAr,
-
-            //PlantName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.PlantNameId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.PlantNameId).FirstOrDefault().ValueAr,
-
-            QuarterPlannedForVisitName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.QuarterPlannedForVisitId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.QuarterPlannedForVisitId).FirstOrDefault().ValueAr,
-            VisitTypeName = currentLanguageService.Language == LanguageEnum.En ? categoryLookupValue.Where(a => a.Id == record.VisitTypeId).FirstOrDefault().ValueEn : categoryLookupValue.Where(a => a.Id == record.VisitTypeId).FirstOrDefault().ValueAr,
-
-            PlantNameId = record.PlantNameId,
-            QuarterPlannedForVisitId = record.QuarterPlannedForVisitId,
-            VisitTypeId = record.VisitTypeId,
-            ModifiedOn = record.ModifiedOn,
-            CreatedOn = record.CreatedOn,
-
-            ScheduledDate = record.ScheduledDate,
-            CancelledAt = record.CancelledAt,
-            CancellationReason = record.CancellationReason,
-            DesignedCapacity = record.DesignedCapacity,
-            Status = record.Status,
-            StatusName = VisitStatusMapper.ToFriendlyString(record.Status, currentLanguageService),
-
-            VisitStatusHistory = record.VisitStatusHistory.Select(a => new VisitStatusHistory
+        var visits = await dbContext.ComplianceDetails
+            .Where(s => !s.IsDeleted)
+            .Select(record => new ComplianceDetailsDto
             {
-                Id = a.Id,
-                ActionAt = a.ActionAt,
-                ActionByUserId = a.ActionByUserId,
-                ActionReason = a.ActionReason,
-                ComplianceDetailsId = a.ComplianceDetailsId,
-                NewStatus = a.NewStatus,
-                OldStatus = a.OldStatus,
-                RequestedNewDate = a.RequestedNewDate
-            }).ToList(),
+                Id = record.Id,
+                Seq = record.Seq,
+                ActivityId = record.ActivityId,
+                ComplianceRequestId = record.ComplianceRequestId,
+                LicensedEntityId = record.LicensedEntityId,
+                LocationId = record.LocationId,
+                QuarterPlannedForVisitId = record.QuarterPlannedForVisitId,
+                VisitTypeId = record.VisitTypeId,
+                PlantNameId = record.PlantNameId,
+                ModifiedOn = record.ModifiedOn,
+                CreatedOn = record.CreatedOn,
+                ScheduledDate = record.ScheduledDate,
+                CancelledAt = record.CancelledAt,
+                CancellationReason = record.CancellationReason,
+                RescheduleReason = record.RescheduleReason,
+                DesignedCapacity = record.DesignedCapacity,
+                VisitStatusId = record.VisitStatusId,
+                // VisitStatusHistory, VisitDocuments, etc. can be added similarly
 
-        }).OrderByDescending(s => s.Seq).ToListAsync();
+                VisitStatusHistory = record.VisitStatusHistory.Select(a => new VisitStatusHistory
+                {
+                    Id = a.Id,
+                    ActionAt = a.ActionAt,
+                    ActionByUserId = a.ActionByUserId,
+                    ActionReason = a.ActionReason,
+                    ComplianceDetailsId = a.ComplianceDetailsId,
+                    NewStatus = a.NewStatus,
+                    OldStatus = a.OldStatus,
+                    RequestedNewDate = a.RequestedNewDate
+                }).ToList(),
 
-        if (Visits == null) throw new NotFoundException("Compliance Visits", "Not found");
+                VisitDocuments = record.VisitDocuments.Select(a => new VisitDocument
+                {
+                    Id = a.Id,
+                    ComplianceDetailsID = a.ComplianceDetailsID,
+                    Name = a.Name,
+                    Type = a.Type,
+                    Url = a.Url,
+                    Path = a.Path
+                }).ToList(),
+
+            }).ToListAsync();
+
+        foreach (var visit in visits)
+        {
+            if (currentLanguageService.Language == LanguageEnum.En)
+            {
+                visit.ActivityName = lookupDictEn.TryGetValue(visit.ActivityId, out var an) ? an : "";
+                visit.LocationName = lookupDictEn.TryGetValue(visit.LocationId ?? 0, out var ln) ? ln : "";
+                visit.LicensedEntityName = lookupDictEn.TryGetValue(visit.LicensedEntityId, out var le) ? le : "";
+                visit.QuarterPlannedForVisitName = lookupDictEn.TryGetValue(visit.QuarterPlannedForVisitId ?? 0, out var qn) ? qn : "";
+                visit.VisitTypeName = lookupDictEn.TryGetValue(visit.VisitTypeId, out var vt) ? vt : "";
+                visit.VisitStatusName = lookupDictEn.TryGetValue(visit.VisitStatusId ?? 0, out var vsn) ? vsn : "";
+            }
+            else
+            {
+                visit.ActivityName = lookupDictAr.TryGetValue(visit.ActivityId, out var an) ? an : "";
+                visit.LocationName = lookupDictAr.TryGetValue(visit.LocationId ?? 0, out var ln) ? ln : "";
+                visit.LicensedEntityName = lookupDictAr.TryGetValue(visit.LicensedEntityId, out var le) ? le : "";
+                visit.QuarterPlannedForVisitName = lookupDictAr.TryGetValue(visit.QuarterPlannedForVisitId ?? 0, out var qn) ? qn : "";
+                visit.VisitTypeName = lookupDictAr.TryGetValue(visit.VisitTypeId, out var vt) ? vt : "";
+                visit.VisitStatusName = lookupDictAr.TryGetValue(visit.VisitStatusId ?? 0, out var vsn) ? vsn : "";
+            }
+        }
+        if (visits == null) throw new NotFoundException("Compliance Visits", "Not found");
         else
-            return ResponseResult<List<ComplianceDetailsDto>>.Success(Visits);
+        return ResponseResult<List<ComplianceDetailsDto>>.Success(visits);
     }
     public async Task<ResponseResult<DocumentExtensionRequestDto>>? AddExtensionRequest(DocumentExtensionRequestDto request, Guid ComplianceDetailsID)
     {
         var _Visit = await dbContext.ComplianceDetails.FindAsync(ComplianceDetailsID);
         DocumentExtensionRequestDto? requestDto = null;
-
-        if (_Visit == null)
+        if(currentUserService.User.Role.Any(a=> a.Contains(RoleEnum.LicensedEntity)))
         {
-            var _obj = new DocumentExtensionRequest
+            if (_Visit != null)
             {
-                Id = Guid.NewGuid(),
-                LicensedEntityId = _Visit.LicensedEntityId,
-                ComplianceDetailsID = ComplianceDetailsID,
-                RequestedDays = request.RequestedDays,
-                Reason = request.Reason,
-                ExtensionStatus = (int?)ExtensionStatusEnum.Pending,
+                var _obj = new DocumentExtensionRequest
+                {
+                    Id = Guid.NewGuid(),
+                    LicensedEntityId = _Visit.LicensedEntityId,
+                    ComplianceDetailsID = ComplianceDetailsID,
+                    RequestedDays = request.RequestedDays,
+                    Reason = request.Reason,
+                    ExtensionStatus = (int?)ExtensionStatusEnum.Pending,
 
-                CreatedByEmail = currentUserService.User.UserEmail,
-                CreatedByID = currentUserService.User.UserId,
-                CreatedByUserName = currentUserService.User.UserName,
-                CreatedOn = DateTime.UtcNow,
-            };
-            await dbContext.DocumentExtensionRequest.AddAsync(_obj);
-            requestDto = new DocumentExtensionRequestDto
-            {
-                Id = _obj.Id,
-                LicensedEntityId = _obj.LicensedEntityId,
-                ComplianceDetailsID = _obj.ComplianceDetailsID,
-                RequestedDays = _obj.RequestedDays,
+                    CreatedByEmail = currentUserService.User.UserEmail,
+                    CreatedByID = currentUserService.User.UserId,
+                    CreatedByUserName = currentUserService.User.UserName,
+                    CreatedOn = DateTime.UtcNow,
+                };
+                await dbContext.DocumentExtensionRequest.AddAsync(_obj);
+                await dbContext.SaveChangesAsync();
 
-                ExtensionStatus = ExtensionStatusMapper.ToFriendlyString(_obj.ExtensionStatus, currentLanguageService),
-                ReviewedAt = _obj.ReviewedAt,
-                Reason = _obj.Reason,
+                requestDto = new DocumentExtensionRequestDto
+                {
+                    Id = _obj.Id,
+                    LicensedEntityId = _obj.LicensedEntityId,
+                    ComplianceDetailsID = _obj.ComplianceDetailsID,
+                    RequestedDays = _obj.RequestedDays,
 
-                DecisionReason = _obj.DecisionReason,
-                FinalDays = _obj.FinalDays,
+                    ExtensionStatus = ExtensionStatusMapper.ToFriendlyString(_obj.ExtensionStatus, currentLanguageService),
+                    ReviewedAt = _obj.ReviewedAt,
+                    Reason = _obj.Reason,
 
-                CreatedByEmail = _obj.CreatedByEmail,
-                CreatedByID = _obj.CreatedByID,
-                CreatedByUserName = _obj.CreatedByUserName,
-                CreatedOn = _obj.CreatedOn.ToShortDateString(),
-            };
+                    DecisionReason = _obj.DecisionReason,
+                    FinalDays = _obj.FinalDays,
+
+                    CreatedByEmail = _obj.CreatedByEmail,
+                    CreatedByID = _obj.CreatedByID,
+                    CreatedByUserName = _obj.CreatedByUserName,
+                    CreatedOn = _obj.CreatedOn.ToShortDateString(),
+                };
+                var Message = $"لقد تم تقديم طلبك لتمديد {requestDto.RequestedDays} يوما و هو الأن في إنتظار المراجعة. سيتم إخطارك بالقرار قريباً.";
+                return ResponseResult<DocumentExtensionRequestDto>.Success(requestDto);
+            }
             return ResponseResult<DocumentExtensionRequestDto>.Success(requestDto);
         }
-        return ResponseResult<DocumentExtensionRequestDto>.Success(requestDto);
+        throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
     }
     public async Task<ResponseResult<DocumentExtensionRequestDto>> GetExtensionRequest(Guid id)
     {
@@ -1513,62 +1570,73 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
     }
     public async Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto dto, Guid requestId, Guid managerId)
     {
-        if (dto != null)
+        if (currentUserService.User.Role.Any(a => a.Contains(RoleEnum.ComplianceManager) || a.Contains(RoleEnum.ComplianceSpecialist)))
         {
-            var request = await GetExtensionRequest(requestId);
-            if (request == null)
-                throw new Exception("Request not found.");
-
-            var oldStatus = request?.Model?.Status;
-            var newStatus = dto.NewStatus;
-
-            // Business rules
-            if (newStatus == 3 && string.IsNullOrWhiteSpace(dto.ActionReason))
-                throw new Exception("Reason is required for rejection.");
-
-            if (newStatus == 4 && (dto.NewFinalDays == null || string.IsNullOrWhiteSpace(dto.ActionReason)))
-                throw new Exception("Modified must provide new days and reason.");
-
-            if (newStatus == 2 && dto.NewFinalDays == null)
-                dto.NewFinalDays = request?.Model?.RequestedDays;
-
-            // Update main request
-            var MainRequest = await dbContext.DocumentExtensionRequest.FindAsync(requestId);
-
-            if (MainRequest != null)
+            if (dto != null)
             {
-                MainRequest.ExtensionStatus = newStatus;
-                MainRequest.ReviewedAt = DateTime.UtcNow;
-                MainRequest.DecisionReason = dto.ActionReason;
-                MainRequest.FinalDays = dto.NewFinalDays;
-                MainRequest.Reason = dto.ActionReason;
+                var request = await GetExtensionRequest(requestId);
+                var VisitID = request?.Model?.ComplianceDetailsID;
+
+                if (request == null)
+                    throw new BadRequestException("Request not found.");
+
+                var oldStatus = request?.Model?.Status;
+                var newStatus = dto.NewStatus;
+
+                // Business rules
+                if (newStatus == 3 && string.IsNullOrWhiteSpace(dto.ActionReason))
+                    throw new Exception("Reason is required for rejection.");
+
+                if (newStatus == 4 && (dto.NewFinalDays == null || string.IsNullOrWhiteSpace(dto.ActionReason)))
+                    throw new Exception("Modified must provide new days and reason.");
+
+                if (newStatus == 2 && dto.NewFinalDays == null)
+                {
+                    bool isTenDays = await IsTotalFinalDaysForVisitEqualTo(VisitID, 10);
+                    if (isTenDays)
+                    {
+                        throw new Exception("The sum of approved FinalDays for this visit is exactly 10");
+                    }
+                    dto.NewFinalDays = request?.Model?.RequestedDays;
+
+                    // update visit date 
+                    var visit = await dbContext.ComplianceDetails.FindAsync(VisitID);
+                    visit.VisitDate = visit?.VisitDate?.AddDays(dto.NewFinalDays.Value);
+                }
+
+                // Update main request
+                var MainRequest = await dbContext.DocumentExtensionRequest.FindAsync(requestId);
+
+                if (MainRequest != null)
+                {
+                    MainRequest.ExtensionStatus = newStatus;
+                    MainRequest.ReviewedAt = DateTime.UtcNow;
+                    MainRequest.DecisionReason = dto.ActionReason;
+                    MainRequest.FinalDays = dto.NewFinalDays;
+                    MainRequest.Reason = dto.ActionReason;
+                }
+
+                // Track history
+                var history = new ExtensionStatusHistory
+                {
+                    RequestId = request.Model.Id,
+                    ActionByUserId = managerId,
+                    ActionAt = DateTime.UtcNow,
+                    OldStatus = oldStatus,
+                    NewStatus = newStatus,
+                    ActionReason = dto.ActionReason,
+                    NewFinalDays = dto.NewFinalDays
+                };
+                await dbContext.ExtensionStatusHistories.AddAsync(history);
                 await dbContext.SaveChangesAsync();
+
+                dto.FinalStatus = MainRequest?.ExtensionStatus;
+                dto.RequestId = MainRequest.Id;
+                return ResponseResult<DocumentExtensionReviewDto>.Success(dto);
             }
-
-            // Track history
-            var history = new ExtensionStatusHistory
-            {
-                RequestId = request.Model.Id,
-                ActionByUserId = managerId,
-                ActionAt = DateTime.UtcNow,
-                OldStatus = oldStatus,
-                NewStatus = newStatus,
-                ActionReason = dto.ActionReason,
-                NewFinalDays = dto.NewFinalDays
-            };
-            await dbContext.ExtensionStatusHistories.AddAsync(history);
-            await dbContext.SaveChangesAsync();
-
-            string message = newStatus switch
-            {
-                2 => $"تمت الموافقة على طلب التمديد ({dto.NewFinalDays} يوم).",
-                3 => $"تم رفض طلب التمديد. السبب: {dto.ActionReason}",
-                4 => $"تم تعديل طلب التمديد إلى ({dto.NewFinalDays} يوم). السبب: {dto.ActionReason}",
-                _ => "تم تحديث حالة الطلب."
-            };
             return ResponseResult<DocumentExtensionReviewDto>.Success(dto);
         }
-        return ResponseResult<DocumentExtensionReviewDto>.Success(dto);
+        throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
     }
     public async Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid RequestId)
     {
@@ -1597,63 +1665,66 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
     {
         try
         {
-            var visit = await dbContext.ComplianceDetails.FindAsync(Dto.ComplianceDetailsId)
-            ??
-            throw new Exception("Visit not found.");
-
-            if (visit.Status == 5)
-                throw new Exception("Visit already cancelled.");
-
-            if (string.IsNullOrWhiteSpace(Dto.Reason))
-                throw new Exception("Reason is required for cancellation.");
-
-            var oldStatus = visit.Status;
-
-            visit.Status = (int)VisitStatusEnum.Cancelled;
-            visit.CancellationReason = Dto.Reason;
-            visit.CancelledAt = DateTime.UtcNow;
-
-            await dbContext.SaveChangesAsync();
-
-            // Tracking
-            var history = new VisitStatusHistory
+            if (currentUserService.User.Role.Any(a => a.Contains(RoleEnum.ComplianceManager)))
             {
-                ComplianceDetailsId = visit.Id,
-                ActionByUserId = currentUserService.User.UserId,
-                ActionAt = DateTime.UtcNow,
-                OldStatus = oldStatus.ToString(),
-                NewStatus = VisitStatusEnum.Cancelled.ToString(),
-                ActionReason = Dto?.Reason,
-            };
-            await dbContext.VisitStatusHistories.AddAsync(history);
-            await dbContext.SaveChangesAsync();
+                var visit = await dbContext.ComplianceDetails.FindAsync(Dto.ComplianceDetailsId) ?? throw new Exception("Visit not found.");
 
-            string message = $"تم إلغاء الزيارة رقم {visit.Id}. السبب: {Dto.Reason}";
-            var _res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == Dto.ComplianceDetailsId).FirstOrDefault();
-            return ResponseResult<ComplianceDetailsDto>.Success(_res);
+                if (visit.Status == 5)
+                    throw new Exception("Visit already cancelled.");
+
+                if (string.IsNullOrWhiteSpace(Dto.Reason))
+                    throw new Exception("Reason is required for cancellation.");
+
+                var oldStatus = visit.Status;
+
+                visit.Status = (int)VisitStatusEnum.Cancelled;
+                visit.CancellationReason = Dto.Reason;
+                visit.CancelledAt = DateTime.UtcNow;
+
+                await dbContext.SaveChangesAsync();
+
+                // Tracking
+                var history = new VisitStatusHistory
+                {
+                    ComplianceDetailsId = visit.Id,
+                    ActionByUserId = currentUserService.User.UserId,
+                    ActionAt = DateTime.UtcNow,
+                    OldStatus = oldStatus.ToString(),
+                    NewStatus = VisitStatusEnum.Cancelled.ToString(),
+                    ActionReason = Dto?.Reason,
+                };
+                await dbContext.VisitStatusHistories.AddAsync(history);
+                await dbContext.SaveChangesAsync();
+
+                string message = $"تم إلغاء الزيارة رقم {visit.Id}. السبب: {Dto.Reason}";
+                var _res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == Dto.ComplianceDetailsId).FirstOrDefault();
+                return ResponseResult<ComplianceDetailsDto>.Success(_res);
+            }
+            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
         }
         catch
         {
             return ResponseResult<ComplianceDetailsDto>.Success(new ComplianceDetailsDto());
         }
     }
-    public async Task<ResponseResult<ComplianceDetailsDto>>? RequestReschedule(RequestRescheduleDto rescheduleDto)
+    public async Task<ResponseResult<ReviewRescheduleDto>>? RequestReschedule(RequestRescheduleDto rescheduleDto)
     {
         try
         {
+            ReviewRescheduleDto _request = null;
             string message = "";
             var visit = await dbContext.ComplianceDetails.FindAsync(rescheduleDto.ComplianceDetailsID)
             ??
             throw new Exception("Visit not found.");
 
-            if (visit.Status == (int)VisitStatusEnum.Cancelled || visit.Status == (int)VisitStatusEnum.Completed)
+            if (visit.VisitStatusId == (int)VisitStatusEnum.Cancelled || visit.VisitStatusId == (int)VisitStatusEnum.Completed)
                 throw new Exception("Visit cannot be rescheduled.");
-            if (/*visit.Status != (int)VisitStatusEnum.Scheduled &&*/ visit.Status != (int)VisitStatusEnum.Rescheduled)
+            if (visit.VisitStatusId != (int)VisitStatusEnum.Scheduled && visit.VisitStatusId != (int)VisitStatusEnum.Rescheduled)
                 throw new Exception("Cannot request reschedule at this stage.");
 
             var oldStatus = visit.Status;
 
-            if (currentUserService.User.Role.Contains(RoleEnum.ComplianceManager))
+            if (currentUserService.User.Role.Any( a=> a.Contains(RoleEnum.ComplianceManager) || a.Contains(RoleEnum.ComplianceSpecialist)))
             {
                 visit.ScheduledDate = rescheduleDto.ProposedDate;
                 visit.RescheduleReason = rescheduleDto.Reason;
@@ -1662,9 +1733,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 visit.ModifiedByUserName = currentUserService.User.UserName;
                 visit.VisitDate = rescheduleDto.ProposedDate;
                 visit.Status = (int)VisitStatusEnum.Rescheduled;
-
-                await dbContext.SaveChangesAsync();
-
+                
                 // Tracking
                 var history = new VisitStatusHistory
                 {
@@ -1680,6 +1749,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 await dbContext.VisitStatusHistories.AddAsync(history);
                 await dbContext.SaveChangesAsync();
                 message = $"تمت إعادة جدولة الزيارة رقم {visit.VisitReferenceNumber} من قبل مدير الإمتثال";
+                return ResponseResult<ReviewRescheduleDto>.Success(_request);
             }
             else if (currentUserService.User.Role.Contains(RoleEnum.LicensedEntity))
             {
@@ -1699,14 +1769,16 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 visit.Status = (int)VisitStatusEnum.RescheduleRequested;
                 await dbContext.SaveChangesAsync();
 
+                var REQUESTID = request.Entity.Id;
                 message = $"تم تقديم طلب إعادة الجدولة للزيارة رقم {visit.VisitReferenceNumber} بنجاح و هو في إنتظار المراجعة";
+                _request = GetRescheduleRequests(rescheduleDto?.LicensedEntityId)?.Result?.Model?.Where(a => a.RequestId == REQUESTID).FirstOrDefault();
+                return ResponseResult<ReviewRescheduleDto>.Success(_request);
             }
-            var res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == visit.Id).FirstOrDefault();
-            return ResponseResult<ComplianceDetailsDto>.Success(res);
+            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
         }
         catch
         {
-            return ResponseResult<ComplianceDetailsDto>.Success(new ComplianceDetailsDto());
+            return ResponseResult<ReviewRescheduleDto>.Success(new ReviewRescheduleDto());
         }
     }
     public async Task<ResponseResult<ComplianceDetailsDto>>? ReviewRescheduleAsync(ReviewRescheduleDto reviewRescheduleDto)
@@ -1743,7 +1815,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                     _rescheduleRequest.ReviewedByUserId = currentUserService.User.UserId;
 
                     await dbContext.SaveChangesAsync();
-                    message = $"تمت الموافقة مع تعديل التايخ, على إعادة جدولة الزيارة، والتاريخ الجديد هو {reviewRescheduleDto.NewProposedDate:yyyy-MM-dd}.";
+                    message = $"تمت الموافقة مع تعديل التاريخ, على إعادة جدولة الزيارة، والتاريخ الجديد هو {reviewRescheduleDto.NewProposedDate:yyyy-MM-dd}.";
                 }
                 else if (!string.IsNullOrEmpty(reviewRescheduleDto.ApprovalWithEdit))
                 {
@@ -1797,9 +1869,10 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 };
                 await dbContext.VisitStatusHistories.AddAsync(history);
                 await dbContext.SaveChangesAsync();
+                var res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == visit.Id).FirstOrDefault();
+                return ResponseResult<ComplianceDetailsDto>.Success(res);
             }
-            var res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == visit.Id).FirstOrDefault();
-            return ResponseResult<ComplianceDetailsDto>.Success(res);
+            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
         }
         catch
         {
@@ -1810,45 +1883,81 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
     {
         try
         {
-            string message = "";
-            var visit = await dbContext.ComplianceDetails.FindAsync(statusDto.ComplianceDetailsID)
-            ??
-            throw new Exception("Visit not found.");
-            var oldStatus = visit?.Status;
-
-            if (oldStatus == (int)VisitStatusEnum.Completed || oldStatus == (int)VisitStatusEnum.Cancelled)
-                throw new Exception("Visit cannot be updated.");
-
-            visit.Status = statusDto.NewStatus;
-            visit.UpdatedReason = statusDto.Note;
-            visit.ModifiedByID = currentUserService.User.UserId;
-            visit.ModifiedByEmail = currentUserService.User.UserEmail;
-            visit.ModifiedByUserName = currentUserService.User.UserName;
-            visit.ModifiedOn = DateTime.UtcNow;
-
-            // Tracking
-            var history = new VisitStatusHistory
+            if (currentUserService.User.Role.Any(a => a.Contains(RoleEnum.ComplianceSpecialist)))
             {
-                ComplianceDetailsId = visit.Id,
-                ActionByUserId = currentUserService.User.UserId,
-                ActionAt = DateTime.UtcNow,
-                OldStatus = oldStatus.ToString(),
-                NewStatus = visit.Status.ToString(),
-                ActionReason = statusDto.Note
-            };
+                string message = "";
+                var visit = await dbContext.ComplianceDetails.FindAsync(statusDto.ComplianceDetailsID)
+                ??
+                throw new Exception("Visit not found.");
+                var oldStatus = visit?.Status;
 
-            await dbContext.VisitStatusHistories.AddAsync(history);
-            await dbContext.SaveChangesAsync();
-            message = "تم تحديث حالة الزيارة. يرجى مراجعة النظام.";
+                if (oldStatus == (int)VisitStatusEnum.Completed || oldStatus == (int)VisitStatusEnum.Cancelled)
+                    throw new Exception("Visit cannot be updated.");
 
-            var res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == visit.Id).FirstOrDefault();
-            return ResponseResult<ComplianceDetailsDto>.Success(res);
+                visit.Status = statusDto.NewStatus;
+                visit.UpdatedReason = statusDto.Note;
+                visit.ModifiedByID = currentUserService.User.UserId;
+                visit.ModifiedByEmail = currentUserService.User.UserEmail;
+                visit.ModifiedByUserName = currentUserService.User.UserName;
+                visit.ModifiedOn = DateTime.UtcNow;
+
+                // Tracking
+                var history = new VisitStatusHistory
+                {
+                    ComplianceDetailsId = visit.Id,
+                    ActionByUserId = currentUserService.User.UserId,
+                    ActionAt = DateTime.UtcNow,
+                    OldStatus = oldStatus.ToString(),
+                    NewStatus = visit.Status.ToString(),
+                    ActionReason = statusDto.Note
+                };
+
+                await dbContext.VisitStatusHistories.AddAsync(history);
+                await dbContext.SaveChangesAsync();
+                message = "تم تحديث حالة الزيارة. يرجى مراجعة النظام.";
+
+                var res = GetComplianceVisit()?.Result.Model?.Where(a => a.Id == visit.Id).FirstOrDefault();
+                return ResponseResult<ComplianceDetailsDto>.Success(res);
+            }
+            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
         }
         catch
         {
             return ResponseResult<ComplianceDetailsDto>.Success(new ComplianceDetailsDto());
         }
     }
+    public async Task<bool> IsTotalFinalDaysForVisitEqualTo(Guid? complianceDetailsId, int expectedTotal)
+    {
+        var totalFinalDays = await dbContext.DocumentExtensionRequest
+            .Where(r => r.ComplianceDetailsID == complianceDetailsId && r.ExtensionStatus == 2 && r.FinalDays.HasValue)
+            .SumAsync(r => r.FinalDays.Value);
 
+        return totalFinalDays == expectedTotal;
+    }
+    public async Task<ResponseResult<List<ReviewRescheduleDto>>>? GetRescheduleRequests(long? LicensedID)
+    {
+        try
+        {
+            var _Request = await dbContext.RescheduleRequests
+            .Where(a => a.LicensedEntityId == LicensedID)
+            .Select(a => new ReviewRescheduleDto
+            {
+                ApprovalWithEdit = a.ProposedDate.ToString(),
+                Reason = a.Reason,
+                LicensedEntityId = a.LicensedEntityId,
+                ComplianceDetailsID = a.ComplianceDetails.Id,
+                RequestId = a.Id,
+                Status = a.Status,
+                NewProposedDate = a.ProposedDate
+            }).ToListAsync()
+            ?? throw new Exception("No Reschedule Requests ..");
+            return ResponseResult<List<ReviewRescheduleDto>>.Success(_Request);
+        }
+        catch
+        {
+            return ResponseResult<List<ReviewRescheduleDto>>.Success(new List<ReviewRescheduleDto>());
+        }
+    }
+    #endregion
     #endregion
 }

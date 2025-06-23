@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 
-    public class RequestRescheduleDto
-    {
+public class RequestRescheduleDto
+{
     public int Id { get; set; }
     public Guid ComplianceDetailsID { get; set; }
     public long LicensedEntityId { get; set; }
@@ -20,16 +20,18 @@ namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
     public DateTime? ReviewedAt { get; set; }
     public int? ReviewedByUserId { get; set; }
     public string? ReviewReason { get; set; }
-    }
-   
-    public class ReviewRescheduleDto
-    {
+}
+
+public class ReviewRescheduleDto
+{
     public Guid ComplianceDetailsID { get; set; }
-    public Guid RequestId { get; set; }
+    public long LicensedEntityId { get; set; }
+    public int RequestId { get; set; }
     public bool Approve { get; set; }
-    public string? Reason { get; set; } 
+    public string? Reason { get; set; }
     public string? ApprovalWithEdit { get; set; }
     public DateTime NewProposedDate { get; set; }
-    }
+    public int? Status { get; set; }
+}
 
 

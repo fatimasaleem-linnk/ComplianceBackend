@@ -4,6 +4,7 @@ using ComplianceAndPeformanceSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComplianceAndPeformanceSystem.DAL.Migrations
 {
     [DbContext(typeof(ComplianceAndPeformanceDbContext))]
-    partial class ComplianceAndPeformanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250623070442_Part0305")]
+    partial class Part0305
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1495,8 +1498,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 1L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2031),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2041),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4133),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4142),
                             ValueAr = "مرافق البحر الأحمر المشتركة",
                             ValueEn = "Red Sea Joint Facilities"
                         },
@@ -1504,8 +1507,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 2L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2044),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2044),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4145),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4146),
                             ValueAr = "نيوم",
                             ValueEn = "NEOM"
                         },
@@ -1513,8 +1516,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 3L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2046),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2046),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4147),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4147),
                             ValueAr = "شركة المياه الوطنية",
                             ValueEn = "National Water Company"
                         },
@@ -1522,8 +1525,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 4L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2047),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2048),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4151),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4151),
                             ValueAr = "شركة الفتح الدولية لأعمال المياه والكهرباء",
                             ValueEn = "Al-Fath International Water and Electricity Works Company"
                         },
@@ -1531,8 +1534,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 5L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2053),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2053),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4152),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4152),
                             ValueAr = "المؤسسة العامة لتحلية مياه الشرب",
                             ValueEn = "Public Corporation for Potable Water Conversion"
                         },
@@ -1540,8 +1543,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 6L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2055),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2055),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4154),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4155),
                             ValueAr = "شركة الركاب للكهرباء في الجبيل وينبع",
                             ValueEn = "Al-Rakab Electricity Company in Jubail and Yanbu"
                         },
@@ -1549,8 +1552,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 7L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2056),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2057),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4156),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4156),
                             ValueAr = "شركة مشروع شيبة لتنمية المياه",
                             ValueEn = "Shaiba Project Company for Water Development"
                         },
@@ -1558,8 +1561,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 8L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2058),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2058),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4157),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4157),
                             ValueAr = "الشركة الشقيقة الثالثة",
                             ValueEn = "Third Sister Company"
                         },
@@ -1567,8 +1570,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 9L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2059),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2060),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4158),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4159),
                             ValueAr = "شركة رابغ الثالثة",
                             ValueEn = "Rabigh Third Company"
                         },
@@ -1576,8 +1579,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 10L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2061),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2061),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4160),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4161),
                             ValueAr = "الشركة السعودية لشراكات المياه",
                             ValueEn = "Saudi Water Partnership Company"
                         },
@@ -1585,8 +1588,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 11L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2063),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2063),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4162),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4162),
                             ValueAr = "شركة محطة العلم العلمية",
                             ValueEn = "Al-Alam Scientific Station Company"
                         },
@@ -1594,8 +1597,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 12L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2064),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2064),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4163),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4163),
                             ValueAr = "شركة جزالة",
                             ValueEn = "Jazalah Company"
                         },
@@ -1603,8 +1606,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 13L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2065),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2066),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4164),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4165),
                             ValueAr = "كندا",
                             ValueEn = "Canada"
                         },
@@ -1612,8 +1615,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 14L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2067),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2067),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4166),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4166),
                             ValueAr = "سواكو",
                             ValueEn = "SWACO"
                         },
@@ -1621,8 +1624,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 15L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2068),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2069),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4167),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4168),
                             ValueAr = "شركة شاس للمقاولات",
                             ValueEn = "Shas Contracting"
                         },
@@ -1630,8 +1633,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 16L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2070),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2070),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4169),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4169),
                             ValueAr = "شركة شاس لخدمات المياه",
                             ValueEn = "Shas Water Services"
                         },
@@ -1639,8 +1642,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 17L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2071),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2072),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4170),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4170),
                             ValueAr = "درر أبشر",
                             ValueEn = "Durar Absher"
                         },
@@ -1648,8 +1651,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 18L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2073),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2073),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4172),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4172),
                             ValueAr = "شركة عبد العزيز بن عثمان بن سلمة وشركاؤه للمياه",
                             ValueEn = "Abdulaziz bin Othman bin Salma and Partners Water Company"
                         },
@@ -1657,8 +1660,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 19L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2074),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2075),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4173),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4174),
                             ValueAr = "شركة عبد العزيز بن عثمان بن سلمة وشركاؤه للتجارة",
                             ValueEn = "Abdulaziz bin Othman bin Salma and Partners for Trade"
                         },
@@ -1666,8 +1669,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 20L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2076),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2076),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4175),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4175),
                             ValueAr = "المقاولات والنقل",
                             ValueEn = "Contracting and Transport"
                         },
@@ -1675,8 +1678,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 21L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2077),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2078),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4176),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4176),
                             ValueAr = "مؤسسة عبد الله محمد السعد لتحلية المياه",
                             ValueEn = "Abdullah Mohammed Al-Saad Water Desalination Establishment"
                         },
@@ -1684,8 +1687,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 22L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2079),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2079),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4177),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4178),
                             ValueAr = "مؤسسة عبد الرزاق العبد الكريم علي بن عبد الرزاق العبد الكريم للمقاولات",
                             ValueEn = "Abdulrazaq Al-Abdulkarim Ali bin Abdulrazaq Al-Abdulkarim Contracting Establishment"
                         },
@@ -1693,8 +1696,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 23L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2080),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2081),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4179),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4179),
                             ValueAr = "حسن عبد الله العماري",
                             ValueEn = "Hassan Abdullah Al-Amari"
                         },
@@ -1702,8 +1705,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 24L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2083),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2083),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4180),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4180),
                             ValueAr = "شركة ينبع الدولية للطيران",
                             ValueEn = "Yanbu International Aviation Company"
                         },
@@ -1711,8 +1714,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 25L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2084),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2084),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4181),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4182),
                             ValueAr = "شركة نقل وتقنية المياه",
                             ValueEn = "Water Transport and Technology Company"
                         },
@@ -1720,8 +1723,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 26L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2085),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2086),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4183),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4183),
                             ValueAr = "أخرى",
                             ValueEn = "Another"
                         },
@@ -1729,8 +1732,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 27L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2087),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2087),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4184),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4184),
                             ValueAr = "إنتاج المياه المحلاة",
                             ValueEn = "Desalinated water production"
                         },
@@ -1738,8 +1741,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 28L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2088),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2089),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4186),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4186),
                             ValueAr = "معالجة مياه الصرف الصحي",
                             ValueEn = "Wastewater treatment"
                         },
@@ -1747,8 +1750,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 29L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2090),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2090),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4187),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4187),
                             ValueAr = "التخزين الاستراتيجي",
                             ValueEn = "Strategic storage"
                         },
@@ -1756,8 +1759,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 30L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2091),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2091),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4188),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4189),
                             ValueAr = "إنتاج المياه النقية",
                             ValueEn = "Purified water production"
                         },
@@ -1765,8 +1768,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 31L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2092),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2093),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4190),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4190),
                             ValueAr = "التخزين الاستراتيجي",
                             ValueEn = "Strategic storage"
                         },
@@ -1774,8 +1777,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 32L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2094),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2094),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4191),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4191),
                             ValueAr = "توزيع المياه المحلاة والمنقاة",
                             ValueEn = "Desalinated and purified water distribution"
                         },
@@ -1783,8 +1786,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 33L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2095),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2096),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4192),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4193),
                             ValueAr = "المشتري الرئيسي",
                             ValueEn = "Main buyer"
                         },
@@ -1792,8 +1795,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 34L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2097),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2098),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4194),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4195),
                             ValueAr = "المحطات الصغيرة",
                             ValueEn = "Mini-stations"
                         },
@@ -1801,8 +1804,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 35L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2099),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2099),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4196),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4196),
                             ValueAr = "RO",
                             ValueEn = "RO"
                         },
@@ -1810,8 +1813,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 36L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2100),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2100),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4197),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4197),
                             ValueAr = "محطة معالجة مياه الصرف الصحي ١",
                             ValueEn = "STP1"
                         },
@@ -1819,8 +1822,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 37L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2102),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2102),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4198),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4199),
                             ValueAr = "محطة ضباء",
                             ValueEn = "Duba Station"
                         },
@@ -1828,8 +1831,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 38L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2103),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2103),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4202),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4202),
                             ValueAr = "محطة سعد",
                             ValueEn = "Saad Station"
                         },
@@ -1837,8 +1840,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 39L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2107),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2108),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4203),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4203),
                             ValueAr = "محطة الخبر ١",
                             ValueEn = "Al Khobar Station 1"
                         },
@@ -1846,8 +1849,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 40L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2109),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2109),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4204),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4205),
                             ValueAr = "محطة الخبر ٢",
                             ValueEn = "Al Khobar Station 2"
                         },
@@ -1855,8 +1858,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 41L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2110),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2111),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4206),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4206),
                             ValueAr = "بريمان - المرحلة ١ و٢",
                             ValueEn = "Breiman Phase 1 and 2"
                         },
@@ -1864,8 +1867,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 42L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2112),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2112),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4207),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4207),
                             ValueAr = "لم يُحدد بعد",
                             ValueEn = "TBD"
                         },
@@ -1873,8 +1876,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 43L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2113),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2113),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4208),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4209),
                             ValueAr = "خزانات عرعر",
                             ValueEn = "Arar Tanks"
                         },
@@ -1882,8 +1885,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 44L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2114),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2115),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4210),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4210),
                             ValueAr = "خزانات طريف",
                             ValueEn = "Turaif Tanks"
                         },
@@ -1891,8 +1894,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 45L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2116),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2116),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4211),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4212),
                             ValueAr = "مشروع النرجس",
                             ValueEn = "Al Narjis Project"
                         },
@@ -1900,8 +1903,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 46L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2117),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2118),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4213),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4213),
                             ValueAr = "أبها (أم الركب)",
                             ValueEn = "Abha (Umm Al Rukb)"
                         },
@@ -1909,8 +1912,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 47L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2119),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2119),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4214),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4214),
                             ValueAr = "خزان بلجرشي",
                             ValueEn = "Baljurashi Tank"
                         },
@@ -1918,8 +1921,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 48L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2120),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2120),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4215),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4216),
                             ValueAr = "خزان جازان",
                             ValueEn = "Jazan Tank"
                         },
@@ -1927,8 +1930,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 49L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2122),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2122),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4217),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4217),
                             ValueAr = "محطة تحلية مياه البحر الفاتح",
                             ValueEn = "Al Fateh Seawater Desalination Plant"
                         },
@@ -1936,8 +1939,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 50L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2123),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2123),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4218),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4218),
                             ValueAr = "جدة RO٣",
                             ValueEn = "Jeddah RO3"
                         },
@@ -1945,8 +1948,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 51L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2124),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2125),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4219),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4220),
                             ValueAr = "محطة تحلية مياه الخبر RO٢",
                             ValueEn = "Al Khobar RO 2"
                         },
@@ -1954,8 +1957,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 52L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2126),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2126),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4221),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4221),
                             ValueAr = "محطة تحلية مياه البحر في مدينة الجبيل الصناعية - المرحلة ١",
                             ValueEn = "Jubail Industrial City SWRO Stage 1"
                         },
@@ -1963,8 +1966,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 53L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2127),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2127),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4222),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4222),
                             ValueAr = "المرحلتان ٢-٣",
                             ValueEn = "Stage 2-3"
                         },
@@ -1972,8 +1975,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 54L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2128),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2129),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4223),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4224),
                             ValueAr = "المرحلة ٥",
                             ValueEn = "Stage 5"
                         },
@@ -1981,8 +1984,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 55L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2130),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2130),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4225),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4225),
                             ValueAr = "شبكة مياه الشرب",
                             ValueEn = "Drinking Water Network"
                         },
@@ -1990,8 +1993,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 56L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2131),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2131),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4226),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4226),
                             ValueAr = "خزانات مياه ينبع العامة في مشروع تطوير مياه الشعيبة - المرحلة السادسة",
                             ValueEn = "Yanbu PRW Tanks at PSDP-6"
                         },
@@ -1999,8 +2002,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 57L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2132),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2133),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4227),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4228),
                             ValueAr = "شركة مشروع تطوير مياه الشعيبة الثاني",
                             ValueEn = "Shuaiba 2nd Water Development Project Company"
                         },
@@ -2008,8 +2011,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 58L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2134),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2134),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4229),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4229),
                             ValueAr = "شركة الشقيق الثالثة للمياه",
                             ValueEn = "Al Shuqaiq 3rd Water Company"
                         },
@@ -2017,8 +2020,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 59L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2135),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2135),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4230),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4230),
                             ValueAr = "شركة رابغ الثالثة",
                             ValueEn = "Rabigh 3rd Company"
                         },
@@ -2026,8 +2029,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 60L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2138),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2138),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4232),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4233),
                             ValueAr = "العقود",
                             ValueEn = "Contracts"
                         },
@@ -2035,8 +2038,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 61L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2139),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2139),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4234),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4234),
                             ValueAr = "محطة مياه الطائف المستقلة",
                             ValueEn = "Taif Independent Water Plant"
                         },
@@ -2044,8 +2047,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 62L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2140),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2141),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4235),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4236),
                             ValueAr = "محطة جزلة",
                             ValueEn = "Jazlah Station"
                         },
@@ -2053,8 +2056,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 63L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2142),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2142),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4237),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4237),
                             ValueAr = "محطة رابغ",
                             ValueEn = "Rabigh Station"
                         },
@@ -2062,8 +2065,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 64L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2143),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2143),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4238),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4238),
                             ValueAr = "محطة ميناء جدة الإسلامي",
                             ValueEn = "Jeddah Islamic Port Station"
                         },
@@ -2071,8 +2074,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 65L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2144),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2145),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4239),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4240),
                             ValueAr = "أبحر الشمالية",
                             ValueEn = "North Obhur"
                         },
@@ -2080,8 +2083,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 66L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2146),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2147),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4241),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4241),
                             ValueAr = "محطة إنتاج ومعالجة مياه شآس",
                             ValueEn = "Shaas Water Production and Treatment Plant"
                         },
@@ -2089,8 +2092,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 67L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2148),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2148),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4242),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4243),
                             ValueAr = "شركة شآس لخدمات المياه المحدودة",
                             ValueEn = " Shaas Water Services Company Limited"
                         },
@@ -2098,8 +2101,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 68L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2149),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2150),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4244),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4244),
                             ValueAr = "محطة تحلية المقبل",
                             ValueEn = "Al Muqbil Desalination Plant"
                         },
@@ -2107,8 +2110,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 69L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2151),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2151),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4245),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4245),
                             ValueAr = "شركة عبد العزيز بن سلمى",
                             ValueEn = "Abdulaziz Bin Salma Company"
                         },
@@ -2116,8 +2119,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 70L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2152),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2152),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4246),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4247),
                             ValueAr = "شركة عبد العزيز بن سلمى، محطة سعد",
                             ValueEn = "Abdulaziz Bin Salma Company, Saad Station"
                         },
@@ -2125,8 +2128,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 71L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2153),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2154),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4248),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4248),
                             ValueAr = "محطة عبد الكريم",
                             ValueEn = "Abdulkarim Station"
                         },
@@ -2134,8 +2137,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 72L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2155),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2155),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4249),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4249),
                             ValueAr = "المحطة ١",
                             ValueEn = "Station 1"
                         },
@@ -2143,8 +2146,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 73L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2156),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2157),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4252),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4253),
                             ValueAr = "محطة ينبع المستقلة لإنتاج المياه",
                             ValueEn = "Yanbu Independent Water Production Plant"
                         },
@@ -2152,8 +2155,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 74L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2160),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2160),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4254),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4254),
                             ValueAr = "شبكة الجبيل",
                             ValueEn = "Jubail System"
                         },
@@ -2161,8 +2164,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 75L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2161),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2162),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4255),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4255),
                             ValueAr = "نظام رأس الخير",
                             ValueEn = "System Ras Al Khair"
                         },
@@ -2170,8 +2173,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 76L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2163),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2163),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4256),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4257),
                             ValueAr = "نظام ينبع - المدينة المنورة",
                             ValueEn = "Yanbu - Madinah System"
                         },
@@ -2179,8 +2182,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 77L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2164),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2164),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4258),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4258),
                             ValueAr = "نظام نقل الشقيق",
                             ValueEn = "Shaqiq Transport System"
                         },
@@ -2188,8 +2191,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 78L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2166),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2166),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4260),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4261),
                             ValueAr = "نظام نقل الشعيبة",
                             ValueEn = "Shuaiba Transport System"
                         },
@@ -2197,8 +2200,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 79L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2167),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2167),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4262),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4262),
                             ValueAr = "نظام نقل رابغ",
                             ValueEn = "Rabigh Transport System"
                         },
@@ -2206,8 +2209,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 80L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2168),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2169),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4263),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4263),
                             ValueAr = "أملج",
                             ValueEn = "Umluj"
                         },
@@ -2215,8 +2218,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 81L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2170),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2170),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4264),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4265),
                             ValueAr = "ضباء",
                             ValueEn = "Duba"
                         },
@@ -2224,8 +2227,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 82L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2171),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2172),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4266),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4266),
                             ValueAr = "سعد",
                             ValueEn = "Saad"
                         },
@@ -2233,8 +2236,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 83L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2173),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2173),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4267),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4267),
                             ValueAr = "المدينة المنورة",
                             ValueEn = "Al-Madinah"
                         },
@@ -2242,8 +2245,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 84L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2174),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2174),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4268),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4269),
                             ValueAr = "عرعر",
                             ValueEn = "Arar"
                         },
@@ -2251,8 +2254,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 85L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2175),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2176),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4270),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4270),
                             ValueAr = "طريف",
                             ValueEn = "Tarif"
                         },
@@ -2260,8 +2263,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 86L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2177),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2177),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4271),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4272),
                             ValueAr = "الرياض",
                             ValueEn = "Riyadh"
                         },
@@ -2269,8 +2272,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 87L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2178),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2178),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4272),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4273),
                             ValueAr = "أبها",
                             ValueEn = "Abha"
                         },
@@ -2278,8 +2281,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 88L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2180),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2180),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4274),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4274),
                             ValueAr = "الباحة",
                             ValueEn = "Al-Baha"
                         },
@@ -2287,8 +2290,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 89L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2181),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2181),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4275),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4275),
                             ValueAr = "جازان",
                             ValueEn = "Jazan"
                         },
@@ -2296,8 +2299,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 90L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2182),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2183),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4276),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4277),
                             ValueAr = "جدة",
                             ValueEn = "Jeddah"
                         },
@@ -2305,8 +2308,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 91L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2184),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2184),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4278),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4278),
                             ValueAr = "الخبر",
                             ValueEn = "Al-Khobar"
                         },
@@ -2314,8 +2317,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 92L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2185),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2185),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4279),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4279),
                             ValueAr = "رابغ",
                             ValueEn = "Rabigh"
                         },
@@ -2323,8 +2326,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 93L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2187),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2187),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4280),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4281),
                             ValueAr = "الطائف",
                             ValueEn = "Taif"
                         },
@@ -2332,8 +2335,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 94L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2188),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2188),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4282),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4282),
                             ValueAr = "الجبيل",
                             ValueEn = "Jubail"
                         },
@@ -2341,8 +2344,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 95L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2189),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2190),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4283),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4283),
                             ValueAr = "رابغ",
                             ValueEn = "Rabigh"
                         },
@@ -2350,8 +2353,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 96L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2191),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2192),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4285),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4286),
                             ValueAr = "جدة",
                             ValueEn = "Jeddah"
                         },
@@ -2359,8 +2362,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 97L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2193),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2193),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4287),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4287),
                             ValueAr = "رأس الخير",
                             ValueEn = "Ras Al-Khair"
                         },
@@ -2368,8 +2371,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 98L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2194),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2195),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4288),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4288),
                             ValueAr = "ينبع-المدينة المنورة",
                             ValueEn = "Yanbu-Al-Madinah"
                         },
@@ -2377,8 +2380,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 99L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2195),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2196),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4289),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4290),
                             ValueAr = "الشقيق",
                             ValueEn = "Al-Shaqiq"
                         },
@@ -2386,8 +2389,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 100L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2197),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2197),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4291),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4291),
                             ValueAr = "الشعيبة",
                             ValueEn = "Al-Shuaiba"
                         },
@@ -2395,8 +2398,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 101L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2198),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2199),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4292),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4292),
                             ValueAr = "الربع الأول - يناير",
                             ValueEn = "First Quarter - January"
                         },
@@ -2404,8 +2407,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 102L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2200),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2200),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4293),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4294),
                             ValueAr = "الربع الأول - فبراير",
                             ValueEn = "First Quarter - February"
                         },
@@ -2413,8 +2416,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 103L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2201),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2201),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4295),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4295),
                             ValueAr = "الربع الأول - مارس",
                             ValueEn = "First Quarter - March"
                         },
@@ -2422,8 +2425,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 104L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2202),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2203),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4296),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4296),
                             ValueAr = "الربع الثاني - ابريل",
                             ValueEn = "Second Quarter - April"
                         },
@@ -2431,8 +2434,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 105L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2204),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2204),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4297),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4298),
                             ValueAr = "الربع الثاني - مايو",
                             ValueEn = "Second Quarter - May"
                         },
@@ -2440,8 +2443,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 106L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2205),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2206),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4299),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4299),
                             ValueAr = "الربع الثاني - يونية",
                             ValueEn = "Second Quarter - June"
                         },
@@ -2449,8 +2452,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 107L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2206),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2207),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4300),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4300),
                             ValueAr = "الربع الثالث - يوليو",
                             ValueEn = "Third Quarter - July"
                         },
@@ -2458,8 +2461,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 108L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2208),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2208),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4301),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4302),
                             ValueAr = "الربع الثالث - اغسطس",
                             ValueEn = "Third Quarter - August"
                         },
@@ -2467,8 +2470,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 109L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2209),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2210),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4303),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4303),
                             ValueAr = "الربع الثالث - سيبتمبر",
                             ValueEn = "Third Quarter - September"
                         },
@@ -2476,8 +2479,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 110L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2211),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2211),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4304),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4304),
                             ValueAr = "الربع الرابع - اكتوبر",
                             ValueEn = "Forth Quarter - October"
                         },
@@ -2485,8 +2488,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 111L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2212),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2212),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4305),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4306),
                             ValueAr = "الربع الرابع - نوفمبر",
                             ValueEn = "Forth Quarter - November"
                         },
@@ -2494,8 +2497,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 112L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2213),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2214),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4309),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4309),
                             ValueAr = "الربع الرابع - ديسمبر",
                             ValueEn = "Forth Quarter - December"
                         },
@@ -2503,8 +2506,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 113L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2217),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2218),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4310),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4311),
                             ValueAr = "روتينية",
                             ValueEn = "routine"
                         },
@@ -2512,8 +2515,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 114L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2219),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2219),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4312),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4312),
                             ValueAr = "متابعة",
                             ValueEn = "follow-up"
                         },
@@ -2521,8 +2524,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 115L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2220),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2220),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4313),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4313),
                             ValueAr = "شكوى",
                             ValueEn = "complaint"
                         },
@@ -2530,8 +2533,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 116L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2222),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2222),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4314),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4315),
                             ValueAr = "جديد",
                             ValueEn = "New"
                         },
@@ -2539,8 +2542,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 117L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2223),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2223),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4316),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4316),
                             ValueAr = "قيد الانتظار والمراجعة مدير الاداره",
                             ValueEn = "Pending Review  the Compliance Manager"
                         },
@@ -2548,8 +2551,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 118L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2224),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2225),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4317),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4317),
                             ValueAr = "قيد الانتظار والمراجعة مدير عام مراجعة الاداء",
                             ValueEn = "Pending Review the Performance Monitoring Manager"
                         },
@@ -2557,8 +2560,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 119L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2226),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2226),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4318),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4319),
                             ValueAr = "قبول المدير الادارة",
                             ValueEn = "Approval of Compliance Manager"
                         },
@@ -2566,8 +2569,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 120L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2227),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2228),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4320),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4320),
                             ValueAr = "قبول مدير عام مراجعة الاداء",
                             ValueEn = "Approval of the Performance Monitoring Manager"
                         },
@@ -2575,8 +2578,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 121L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2229),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2229),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4321),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4322),
                             ValueAr = "ارجاع من المدير الادارة",
                             ValueEn = "Return Plan of Compliance Manager"
                         },
@@ -2584,8 +2587,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 122L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2230),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2230),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4323),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4323),
                             ValueAr = "ارجاع من مدير عام مراجعة الاداء",
                             ValueEn = "Return Plan of the Performance Monitoring Manager"
                         },
@@ -2593,8 +2596,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 123L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2231),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2232),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4324),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4324),
                             ValueAr = "مجدولة",
                             ValueEn = "Scheduled"
                         },
@@ -2602,8 +2605,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 124L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2233),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2233),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4325),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4326),
                             ValueAr = "تمت إعادة جدولة",
                             ValueEn = "Rescheduled"
                         },
@@ -2611,8 +2614,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 125L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2234),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2234),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4327),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4327),
                             ValueAr = "الإفصاح عن تضارب المصالح",
                             ValueEn = "Conflict Of Interest Disclosure"
                         },
@@ -2620,37 +2623,10 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 126L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2235),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2236),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4328),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4328),
                             ValueAr = "جديد",
                             ValueEn = "New"
-                        },
-                        new
-                        {
-                            Id = 127L,
-                            CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2237),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2237),
-                            ValueAr = "طلب إعادة جدولة",
-                            ValueEn = "RescheduleRequested"
-                        },
-                        new
-                        {
-                            Id = 128L,
-                            CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2238),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2239),
-                            ValueAr = "مكتملة",
-                            ValueEn = "Completed"
-                        },
-                        new
-                        {
-                            Id = 129L,
-                            CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2240),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2240),
-                            ValueAr = "ملغية",
-                            ValueEn = "Cancelled"
                         });
                 });
 
@@ -2757,56 +2733,56 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631920"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2393),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2392),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4473),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4473),
                             QuestionAr = "هل لديك أي مصلحة تجارية أو شراكة أو نشاط مالي قد يؤثر على الزيارة؟",
                             QuestionEn = "Do you have any business interest, partnership, or financial activity that might affect the visit?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631921"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2396),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2396),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4477),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4476),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يمتلكون عملاً تجاريًا أو لديهم مصلحة مالية مع الكيان الذي تتم زيارته؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who own a business or have a financial interest in the entity being visited?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631922"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2399),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2398),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4479),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4479),
                             QuestionAr = "هل تشغل حاليًا أي منصب إداري أو عضوية في منظمة لها علاقات مباشرة أو غير مباشرة مع الجهة التي تتم زيارتها؟",
                             QuestionEn = "Do you currently hold any management position or membership in an organization that has direct or indirect ties to the visited entity?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631923"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2402),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2401),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4481),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4481),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يشغلون مناصب إدارية  أو عضوية في جهة مرتبطة بالجهة التي تتم زيارتها؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who hold administrative or membership positions in an organization related to the entity being visited?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631924"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2404),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2404),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4484),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4484),
                             QuestionAr = "هل لديك أي علاقات أو اتصالات سابقة مع موظفي الجهة التي قد تؤثر  على الزيارة؟",
                             QuestionEn = "Do you have any previous relationships or contacts with staff members that may affect the visit?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631925"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2409),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2408),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4487),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4487),
                             QuestionAr = "هل لديك أي أسباب قد تؤثر على قدرتك على إجراء الزيارة بموضوعية  واستقلالية؟",
                             QuestionEn = "Do you have any reasons that might affect your ability to conduct the visit objectively and independently?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631926"),
-                            CreatedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2411),
-                            ModifiedOn = new DateTime(2025, 6, 23, 10, 7, 6, 845, DateTimeKind.Local).AddTicks(2411),
+                            CreatedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4490),
+                            ModifiedOn = new DateTime(2025, 6, 23, 10, 4, 41, 775, DateTimeKind.Local).AddTicks(4489),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يمتلكون عملاً تجاريًا أو لديهم مصلحة مالية مع الكيان الذي تتم زيارته؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who own a business or have a financial interest in the entity being visited?"
                         });
