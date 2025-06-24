@@ -36,8 +36,6 @@ background: #07DDB9;  font-weight: 700;">
                         <span>الموضوع: </span>
                         <!-- DYNAMIC FROM BACKEND -->
                         <span>@Model.Subject"</span>
-
-                        <span>تحميل المستندات الخاصة بزيارة الإمتثال</span>
                     </p>
                 </td>
             </tr>
@@ -94,29 +92,6 @@ background: #07DDB9;  font-weight: 700;">
                     </p>
                 </td>
             </tr>
-            @{
-                if (Model.Subject == "تحميل المستندات الخاصة بزيارة الإمتثال")
-                {
-                    <tr>
-                        <td>
-                            <p style="">
-
-                                <span>
-                                    تاريخ الرفع   /
-                                </span>
-                                <span style="font-size: 16px;
-                                margin: 0 5px ;
-                                font-style: normal;
-                                font-weight: 600;">
-                                    @Model.Content["SubmissionDate"]
-                                </span>
-                            </p>
-                        </td>
-                    </tr>
-
-                }
-            }
-
             <!-- details end -->
             <!-- url start -->
             <tr>

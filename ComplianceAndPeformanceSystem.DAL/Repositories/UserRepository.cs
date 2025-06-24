@@ -36,7 +36,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 Email = "MAbkar@swa.gov.sa",
                 Id = 3.ToString(),
                 Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
-                UserName = "Mohammed kamal Abkar"
+                UserName = "Mohammed kamal Abkar",
+                MobileNumber = "0569065085"
             });
 
 
@@ -92,7 +93,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 Roles = new List<string>() { RoleEnum.LicensedEntity },
                 Email = "Mabkar@swa.gov.sa",
                 Id = 11.ToString(),
-                UserName = "Mohamed Abkar"
+                UserName = "Mohamed Abkar",
+                MobileNumber = "0569065085"
             });
         }
 
@@ -125,7 +127,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             Email = "MAbkar@swa.gov.sa",
             Id = 3.ToString(),
             Roles = new List<string>() { RoleEnum.LicensedEntity },
-            UserName = "Mohammed kamal Abkar"
+            UserName = "Mohammed kamal Abkar",
+            MobileNumber = "0569065085"
         });
 
 

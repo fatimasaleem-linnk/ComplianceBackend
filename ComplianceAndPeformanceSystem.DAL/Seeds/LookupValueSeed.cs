@@ -1257,6 +1257,33 @@ public class LookupValueSeed : IEntityTypeConfiguration<LookupValue>
                 ValueEn="New",
                 ValueAr = "جديد"
             },
+            new LookupValue()
+            {
+                Id = 127,
+                CategoryId = 8,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                ValueEn="RescheduleRequested",
+                ValueAr = "طلب إعادة جدولة"
+            },
+            new LookupValue()
+            {
+                Id = 128,
+                CategoryId = 8,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                ValueEn="Completed",
+                ValueAr = "مكتملة"
+            },
+            new LookupValue()
+            {
+                Id = 129,
+                CategoryId = 8,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                ValueEn="Cancelled",
+                ValueAr = "ملغية"
+            },
 
             #region Figma Part 2 unmerged
             new LookupValue()
@@ -1279,7 +1306,6 @@ public class LookupValueSeed : IEntityTypeConfiguration<LookupValue>
                 ValueAr = "لا يوجد عضو فريق متاح"
             },
             #endregion
-
             #endregion
         });
 

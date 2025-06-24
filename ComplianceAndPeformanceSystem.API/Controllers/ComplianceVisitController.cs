@@ -20,18 +20,17 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             var result = await _requestService.GetComplianceVisit();
             return Ok(result);
         }
-
         // 2. Add Document Extension Request
-        [HttpPost("AddExtensionRequest")]
+        [HttpPost]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> AddExtensionRequest(Guid complianceDetailsId,[FromBody] DocumentExtensionRequestDto request)
+        public async Task<IActionResult> AddExtensionRequest(Guid complianceDetailsId, [FromBody] DocumentExtensionRequestDto request)
         {
             var result = await _requestService.AddExtensionRequest(request, complianceDetailsId);
             return Ok(result);
         }
 
         // 3. Get Document Extension Request by Id
-        [HttpGet("GetExtensionRequest")]
+        [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetExtensionRequest(Guid id)
         {
@@ -40,7 +39,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 4. Get Extension Requests by Entity Id
-        [HttpGet("GetExtensionRequestByEntityId")]
+        [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetExtensionRequestByEntityId([FromRoute] long entityId)
         {
@@ -49,16 +48,16 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 5. Update Extension Request (Review/Approve/Reject/Modify)
-        [HttpPut("UpdateExtensionRequest")]
+        [HttpPut]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> UpdateExtensionRequest([FromBody] DocumentExtensionReviewDto request,Guid requestId,Guid managerId)
+        public async Task<IActionResult> UpdateExtensionRequest([FromBody] DocumentExtensionReviewDto request, Guid requestId, Guid managerId)
         {
             var result = await _requestService.UpdateExtensionRequest(request, requestId, managerId);
             return Ok(result);
         }
 
         // 6. Get Extension Request History
-        [HttpGet("GetExtensionRequestHistory")]
+        [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetExtensionRequestHistory(Guid requestId)
         {
@@ -67,7 +66,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 7. Cancel Visit by Manager
-        [HttpPut("CancelVisitByManager")]
+        [HttpPut]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> CancelVisitByManager([FromBody] CancelVisitDto dto)
         {
@@ -76,7 +75,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 8. Request Reschedule (Entity/Specialist/Manager)
-        [HttpPost("RescheduleRequest")]
+        [HttpPost]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> RequestReschedule([FromBody] RequestRescheduleDto rescheduleDto)
         {
@@ -85,7 +84,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 9. Review Reschedule Request (Manager/Specialist)
-        [HttpPut("RescheduleReview")]
+        [HttpPut]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> ReviewReschedule([FromBody] ReviewRescheduleDto reviewRescheduleDto)
         {
@@ -94,11 +93,34 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
 
         // 10. Update Visit Status (e.g., Mark Completed)
-        [HttpPut("UpdateVisitStatus")]
+        [HttpPut]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> UpdateVisitStatus([FromBody] UpdateVisitStatusDto statusDto)
         {
             var result = await _requestService.UpdateVisitStatus(statusDto);
+            return Ok(result);
+        }
+
+        // 11. Get GetRescheduleRequests
+        [HttpGet]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> GetRescheduleRequests(long? entityId)
+        {
+            var result = await _requestService.GetRescheduleRequests(entityId);
+            return Ok(result);
+        }
+
+        // 12. AddVisitAttachment
+        [HttpPost]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> AddVisitAttachment([FromForm] List<IFormFile> attach, [FromForm] Guid ComplianceDetailsID)
+        {
+            if (attach == null || !attach.Any())
+                return BadRequest("No Files Were Uploaded.");
+            var result = await _requestService.AddVisitAttachment(attach,ComplianceDetailsID);
+            if (!result.Succeeded)
+                return BadRequest(result);
+
             return Ok(result);
         }
     }

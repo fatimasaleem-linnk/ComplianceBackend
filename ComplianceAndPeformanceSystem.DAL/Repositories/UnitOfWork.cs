@@ -18,7 +18,7 @@ public class UnitOfWork(
     private ILookupRepository _lookupRepository;
     private IComplianceRequestRepository _complianceRequestRepository;
     private IUserRepository _userRepository;
-    private IBlobService _blobService;
+    private IBlobService _blobService = blobService;
 
     public ILookupRepository LookupRepository
     {
@@ -37,7 +37,7 @@ public class UnitOfWork(
         get
         {
             if (_complianceRequestRepository == null)
-                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService,currentLanguageService, _blobService);
+                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService, currentLanguageService,  _blobService);
             return _complianceRequestRepository;
         }
     }

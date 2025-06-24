@@ -38,6 +38,7 @@ public class ComplianceDetails : TrackedEntity
     public virtual ICollection<ComplianceVisitSpecialist>? ComplianceVisitSpecialists { get; set; }
 
     public virtual ICollection<VisitStatusHistory>? VisitStatusHistory { get; set; }
+    public virtual ICollection<VisitDocument>? VisitDocuments { get; set; }
 
 
 

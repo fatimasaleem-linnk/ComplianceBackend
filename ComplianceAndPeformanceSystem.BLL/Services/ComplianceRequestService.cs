@@ -1038,23 +1038,63 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
     }
 
+
+    #region Part03-05
     public async Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> attachmentvm, Guid ComplianceDetailsID)
     {
         var request = await unitOfWork.ComplianceRequestRepository.AddAttachment(attachmentvm, ComplianceDetailsID);
         if (!request.Succeeded)
             throw new ValidationException([new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Visit documents cannot be saved." : "لا يمكن حفظ  مستندات الزيارة ")]);
         else
-            BackgroundJob.Enqueue(() => SendNotificationToLicensedEntityforUploadDocument(ComplianceDetailsID, currentUserService.User.UserName));
+            await SendNotificationToLicensedEntityforUploadDocument(ComplianceDetailsID, currentUserService.User.UserName);
+        await SendSMSUploadAttachmentSecsessed(ComplianceDetailsID);
         return request;
+    }
+    public async Task SendSMSUploadAttachmentSecsessed(Guid ComplianceDetailsID)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (SendTo != null)
+            {
+                string messageBody = $"Your documents for the compliance visit on {complianceVisits?.VisitDate?.ToShortDateString()} have been successfully uploaded.Thank you.Best regards,[The Saudi Water Authority]";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+        }
     }
     public async Task<ResponseResult<bool>> SendNotificationToLicensedEntityforUploadDocument(Guid ComplianceDetailsID, string senderName)
     {
-        var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
-        var request = visit?.Model?.Where(a => a.Id == ComplianceDetailsID).FirstOrDefault();
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
 
-        var LicensedEntity = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity });
-        if (LicensedEntity != null && LicensedEntity.Model != null)
+        if (LicensedEntity != null)
         {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
+
             await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
             {
                 Content = new Dictionary<string, object>() {
@@ -1064,15 +1104,104 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     { "SubmissionDate", DateTime.Now.ToShortDateString() },
                     { "ActionUrl", "#" }
                 },
-                Body = "",
+                Body = $" تم تحميل المستندات الخاصة بزيارةالإمتثال بتاريخ {request?.VisitDate?.ToShortDateString()} بنجاح شكراً لك.",
                 ViewName = "SubmitDocumentForm.cshtml",
                 Subject = "تحميل المستندات الخاصة بزيارة الإمتثال",
-                To = LicensedEntity.Model.Select(s => s.Email).ToList()
+                To = LicensedEmail
             });
             return ResponseResult<bool>.Success(true);
         }
         return ResponseResult<bool>.Success(false);
     }
+
+    // no doc upload 
+    public async Task SendNotificationToComplianceManagerforNoDocumentsSubmitted()
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.ToList();
+        var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
+        var complianceVisits = request?.Where(cp => !string.IsNullOrEmpty(cp.VisitReferenceNumber) & cp.IsDeleted != true);
+
+        if (complianceVisits?.Count() > 0)
+        {
+            foreach (var visit in complianceVisits)
+            {
+                if (visit == null || visit.VisitDate == null)
+                    continue;
+
+                DateTime visitDate = visit.VisitDate.Value.Date;
+                DateTime escalationDate = BusinessDays(visitDate, 3);
+
+                if (DateTime.Today < escalationDate)
+                    continue;
+
+                // GetVisitDocuments for visit
+                var Doc = visit?.VisitDocuments?.ToList();
+                bool hasDocuments = Doc != null && Doc.Any();
+                if (hasDocuments)
+                    continue; // Documents already submitted
+
+                // Build recipients (compliance managers)
+                List<string> listSendTo = complianceManagers?.Model?
+                            .Where(c => !string.IsNullOrEmpty(c.MobileNumber))
+                            .Select(s => s.MobileNumber)
+                            .Distinct()
+                            .ToList() ?? new List<string?>();
+
+                if (listSendTo.Count != 0)
+                {
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Content = new Dictionary<string, object>()
+                        {
+                    { "EmployeeName", "مدير الإإمتثال"},
+                    { "VisitNumber", visit?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", visit?.LicensedEntityName ?? ""},
+                    { "ActionUrl", "#" }
+                        },
+
+                        Body = $"بتسليم المستندات المطلوبة لزيارة الالتزام المجدولة بتاريخ {visit?.VisitDate?.ToShortDateString()}.\r\nيرجى متابعة الجهة المرخصة فورًا بهذا الشأن.\"; عزيزي مدير الإمتثال،لم تقم الجهة المرخصة {visit?.LicensedEntityName}",
+                        ViewName = "SubmitDocumentForm.cshtml",
+                        Subject = "عدم تقديم مستندات الزيارة",
+                        To = complianceManagers?.Model?.Select(s => s.Email).ToList() ?? new List<string>()
+                    });
+                    await SendSMSToComplianceManagerforNoDocumentsSubmitted(visit?.Id ?? new Guid());
+                }
+            }
+        }
+    }
+    public async Task SendSMSToComplianceManagerforNoDocumentsSubmitted(Guid ComplianceDetailsID)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit().Result.Model?.Where(a => a.Id == ComplianceDetailsID);
+        var ComplianceManager = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager }).Result.Model;
+
+        if (complianceVisits != null & complianceVisits?.Count() > 0)
+        {
+            foreach (var visit in complianceVisits)
+            {
+                string messageBody = "Entity [LicenseeName] failed to upload required documents for visit on [VisitDate]. Please follow up\r\n Best regards,\r\n";
+                var content = new Dictionary<string, string>() {
+
+                     { "{VisitDate}", visit?.VisitDate?.ToShortDateString() ?? ""},
+                     { "{LicenseeName}", visit?.LicensedEntityName ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                new NotificationMessageModel()
+                {
+                    To = ComplianceManager?.Select(s => s.Email).ToList() ?? new List<string>(),
+                    Body = messageBody,
+                }
+                );
+            }
+        }
+    }
+
+
     public async Task<ResponseResult<ComplianceDetailsDto>>? GetComplianceVisitByComplianceDetailsID(Guid ComplianceDetailsID)
     {
         var result = await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
@@ -1090,7 +1219,101 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         => await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
 
     public async Task<ResponseResult<DocumentExtensionRequestDto>> AddExtensionRequest(DocumentExtensionRequestDto request, Guid complianceDetailsId)
-        => await unitOfWork.ComplianceRequestRepository.AddExtensionRequest(request, complianceDetailsId);
+    {
+        var res = unitOfWork.ComplianceRequestRepository.AddExtensionRequest(request, complianceDetailsId)?.Result;
+        if (!res.Succeeded)
+            throw new Exception("Can't Add Extension Request");
+        else
+            await SendNotifycationToEntityforExtensionRequestSubmitted(res.Model.Id);
+        await SendNotifycationToManagerRequestSubmitted(res.Model.Id);
+        return res;
+
+    }
+
+    public async Task SendNotificationToEntityforExtensionRequestApproved(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers([RoleEnum.LicensedEntity]).Result.Model?.ToList();
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request.ComplianceDetailsID);
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", currentUserService.User.UserName ?? ""},
+                    { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", currentUserService.User.UserName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+                Body = $"Dear {currentUserService.User.UserName}, Your request for an extension of {request?.RequestedDays} days has been approved. The new deadline for submission is {visit?.VisitDate?.ToShortDateString()}.",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "تم قبول طلب التمديد",
+                To = LicensedEmail
+            });
+        }
+    }
+    public async Task SendNotifycationToEntityforExtensionRequestSubmitted(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers([RoleEnum.LicensedEntity]).Result.Model?.ToList();
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request.ComplianceDetailsID);
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", currentUserService.User.UserName ?? ""},
+                    { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", visit?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+                Body = $"Dear {visit?.LicensedEntityName}, Your request for an extension of {request?.RequestedDays} days has been submitted and is awaiting review. You will be notified of the decision soon.",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "تم تقديم طلب التمديد",
+                To = LicensedEmail
+            });
+        }
+    }
+    public async Task SendNotifycationToEntityforExtensionRequestRejection(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers([RoleEnum.LicensedEntity]).Result.Model?.ToList();
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request.ComplianceDetailsID);
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", currentUserService.User.UserName ?? ""},
+                    { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", visit?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+                Body = $"Dear {visit?.LicensedEntityName},Your extension request has been rejected. Reason: {request?.Reason ?? ""}.",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "تم رفض طلب التمديد",
+                To = LicensedEmail
+            });
+        }
+    }
 
     public async Task<ResponseResult<DocumentExtensionRequestDto>> GetExtensionRequest(Guid id)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequest(id);
@@ -1099,23 +1322,405 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestByEntityId(licensedEntityId);
 
     public async Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto dto, Guid requestId, Guid managerId)
-        => await unitOfWork.ComplianceRequestRepository.UpdateExtensionRequest(dto, requestId, managerId);
+    {
+        var res = await unitOfWork.ComplianceRequestRepository.UpdateExtensionRequest(dto, requestId, managerId);
+        if (!res.Succeeded)
+            throw new Exception("Can't Update Extension Request");
+
+        if (res.Model?.FinalStatus == 1)
+        {
+            await SendNotifycationToEntityforManagerRequestPinding(res.Model.RequestId);
+        }
+        else if (res.Model?.FinalStatus == 2 || res.Model?.FinalStatus == 4)
+        {
+            await SendNotificationToManagerRequestApproved(res.Model.RequestId);
+            await SendNotificationToEntityforExtensionRequestApproved(res.Model.RequestId);
+        }
+        else
+        {
+            await SendNotifycationToEntityforExtensionRequestRejection(res.Model.RequestId);
+        }
+        return res;
+    }
 
     public async Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid requestId)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestHistory(requestId);
 
     public async Task<ResponseResult<ComplianceDetailsDto>> CancelVisitByManager(CancelVisitDto dto)
-        => await unitOfWork.ComplianceRequestRepository.CancelVisitByManager(dto);
+    {
+        var res = unitOfWork.ComplianceRequestRepository.CancelVisitByManager(dto)?.Result;
+        if (!res.Succeeded)
+            throw new Exception("Can't Cancel a Visit");
+        else
+            await SendSMSToEntityForCancelVisit(res.Model.Id);
+        await SendNotificationToEntityForCancelVisit(res.Model.Id);
+        return res;
+    }
 
-    public async Task<ResponseResult<ComplianceDetailsDto>> RequestReschedule(RequestRescheduleDto dto)
-        => await unitOfWork.ComplianceRequestRepository.RequestReschedule(dto);
+    public async Task<ResponseResult<ReviewRescheduleDto>> RequestReschedule(RequestRescheduleDto dto)
+    {
+        var res = unitOfWork.ComplianceRequestRepository.RequestReschedule(dto)?.Result;
+        if (!res.Succeeded)
+        {
+            throw new Exception("Can't Reschedule a Visit");
+        }
+        else if (res.Model?.Status == (long?)VisitStatusEnum.Rescheduled)
+        {
+            await SendSMSToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
+            await SendNotificationToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
+        }
+        else if (res.Model?.Status == (long?)VisitStatusEnum.RescheduleRequested)
+        {
+            await SendSMSToEntityForRequestRescheduleVisit(res.Model.RequestId, res.Model.LicensedEntityId);
+            await SendNotificationToEntityForRequestRescheduleVisit(res.Model.RequestId, res.Model.LicensedEntityId);
+        }
+        return res;
+    }
+
+    public async Task<ResponseResult<List<ReviewRescheduleDto>>>? GetRescheduleRequests(long? LicensedID)
+       => await unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicensedID);
 
     public async Task<ResponseResult<ComplianceDetailsDto>> ReviewReschedule(ReviewRescheduleDto dto)
-        => await unitOfWork.ComplianceRequestRepository.ReviewRescheduleAsync(dto);
+    {
+        var res = unitOfWork.ComplianceRequestRepository.ReviewRescheduleAsync(dto)?.Result;
+        if (!res.Succeeded)
+        {
+            throw new Exception("Can't Reschedule a Visit");
+        }
+        else if (res?.Model.VisitStatusId == (long?)VisitStatusEnum.Rescheduled)
+        {
+            await SendSMSToEntityForRescheduleVisit(res.Model.Id);
+            await SendNotificationToEntityForRescheduleVisit(res.Model.Id);
+        }
+        //else
+        //{
+        //    //await SendSMSToEntityForRequestRescheduleVisit(res.re,res?.LicensedEntityId);
+        //    //await SendNotificationToEntityForRequestRescheduleVisit(res.Model.Id);
+        //}
+        return res;
+    }
 
     public async Task<ResponseResult<ComplianceDetailsDto>> UpdateVisitStatus(UpdateVisitStatusDto statusDto)
         => await unitOfWork.ComplianceRequestRepository.UpdateVisitStatus(statusDto);
+    public static DateTime BusinessDays(DateTime start, int days)
+    {
+        int CheckDays = 0;
+        DateTime current = start;
+        while (CheckDays < days)
+        {
+            current = current.AddDays(1);
+            // Skip weekends (Friday=5, Saturday=6)
+            if (current.DayOfWeek != DayOfWeek.Friday && current.DayOfWeek != DayOfWeek.Saturday)
+                CheckDays++;
+        }
+        return current;
+    }
 
+    public async Task SendNotifycationToManagerRequestSubmitted(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var managers = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceManager }).Result.Model;
+        var managerEmails = managers?.Where(c => !string.IsNullOrEmpty(c.Email)).Select(c => c.Email).ToList() ?? new List<string>();
+
+        var specialists = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceSpecialist }).Result.Model;
+        var specialistEmail = specialists?.FirstOrDefault(c => !string.IsNullOrEmpty(c.Email) && c.Id == request?.LicensedEntityId.ToString())?.Email;
+
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request?.ComplianceDetailsID);
+
+        var allEmails = managerEmails;
+        if (!string.IsNullOrEmpty(specialistEmail))
+            allEmails.Add(specialistEmail);
+        allEmails = allEmails.Distinct().ToList();
+
+        if (request != null && allEmails.Any())
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                { "EmployeeName", currentUserService.User.UserName ?? "" },
+                { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? "" },
+                { "LicensedEntityName", visit?.LicensedEntityName ?? "" },
+                { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                { "ActionUrl", "#" }
+            },
+                Body = $"Dear [Compliance Specialist, manager],\r\n\"A new extension request has been submitted for {visit?.LicensedEntityName}. Requested Days: {request?.RequestedDays}. Please review and take appropriate action.\"\r\n",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "New Extension Request",
+                To = allEmails
+            });
+        }
+    }
+    public async Task SendNotificationToManagerRequestApproved(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var managers = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceManager }).Result.Model;
+        var managerEmails = managers?.Where(c => !string.IsNullOrEmpty(c.Email)).Select(c => c.Email).ToList() ?? new List<string>();
+
+        var specialists = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceSpecialist }).Result.Model;
+        var specialistEmail = specialists?.FirstOrDefault(c => !string.IsNullOrEmpty(c.Email) && c.Id == request?.LicensedEntityId.ToString())?.Email;
+
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request?.ComplianceDetailsID);
+
+        var allEmails = managerEmails;
+        if (!string.IsNullOrEmpty(specialistEmail))
+            allEmails.Add(specialistEmail);
+        allEmails = allEmails.Distinct().ToList();
+
+        if (request != null && allEmails.Any())
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                { "EmployeeName", currentUserService.User.UserName ?? "" },
+                { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? "" },
+                { "LicensedEntityName", visit?.LicensedEntityName ?? "" },
+                { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                { "ActionUrl", "#" }
+            },
+                Body = $"Dear [Compliance Specialist, manager],\r\n\"A new extension request has been submitted for {visit?.LicensedEntityName}. Requested Days: {request?.RequestedDays}. Please review and approve/reject the request.\"\r\n",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "New Approval Request",
+                To = allEmails
+            });
+        }
+    }
+    public async Task SendNotifycationToEntityforManagerRequestPinding(Guid RequestID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
+        var managers = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceManager }).Result.Model;
+        var managerEmails = managers?.Where(c => !string.IsNullOrEmpty(c.Email)).Select(c => c.Email).ToList() ?? new List<string>();
+
+        var specialists = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceSpecialist }).Result.Model;
+        var specialistEmail = specialists?.FirstOrDefault(c => !string.IsNullOrEmpty(c.Email) && c.Id == request?.LicensedEntityId.ToString())?.Email;
+
+        var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request?.ComplianceDetailsID);
+
+        var allEmails = managerEmails;
+        if (!string.IsNullOrEmpty(specialistEmail))
+            allEmails.Add(specialistEmail);
+        allEmails = allEmails.Distinct().ToList();
+
+        if (request != null && allEmails.Any())
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                { "EmployeeName", currentUserService.User.UserName ?? "" },
+                { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? "" },
+                { "LicensedEntityName", visit?.LicensedEntityName ?? "" },
+                { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                { "ActionUrl", "#" }
+            },
+                Body = $"Dear [Compliance Specialist, manager],An extension request requiring additional approval has been escalated to you. Please review and provide your decision.",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = "Extension Request Pending Review",
+                To = allEmails
+            });
+        }
+    }
+
+    // cancel visit 
+    public async Task SendSMSToEntityForCancelVisit(Guid ComplianceDetailsID)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (SendTo != null)
+            {
+                string messageBody = $"Your compliance visit {complianceVisits?.VisitReferenceNumber} has been cancelled.\r\n\r\nReason for cancellation: {complianceVisits?.CancellationReason}\r\n\r\nIf you have any questions, please contact the compliance Manager.";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+        }
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToEntityForCancelVisit(Guid ComplianceDetailsID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", request?.LicensedEntityName ?? ""},
+                    { "VisitNumber", request?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", request?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+                Body = $"Your compliance visit {request?.VisitReferenceNumber} has been cancelled.\\r\\n\\r\\nReason for cancellation: {request?.CancellationReason} \\r\\n\\r\\nIf you have any questions, please contact the compliance Manager.\"\r\n",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = " تم إلغاء زيارة الإمتثال",
+                To = LicensedEmail
+            });
+            return ResponseResult<bool>.Success(true);
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+
+    // Reschedule Request
+    public async Task SendSMSToEntityForRescheduleVisit(Guid ComplianceDetailsID)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (SendTo != null)
+            {
+                string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nYour compliance visit {complianceVisits?.VisitReferenceNumber} has been rescheduled.\r\n\r\nNew visit date: {complianceVisits?.ScheduledDate}\r\nReason for rescheduling: {complianceVisits?.RescheduleReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+        }
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToEntityForRescheduleVisit(Guid ComplianceDetailsID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", request?.LicensedEntityName ?? ""},
+                    { "VisitNumber", request?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", request?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+
+                Body = $"Dear {request?.LicensedEntityName},\r\n\r\nYour compliance visit {request?.VisitReferenceNumber} has been rescheduled.\r\n\r\nNew visit date: {request?.ScheduledDate}\r\nReason for rescheduling: {request?.RescheduleReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = " تم إعادة جدولة زيارة الإمتثال",
+                To = LicensedEmail
+            });
+            return ResponseResult<bool>.Success(true);
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+
+    public async Task SendSMSToEntityForRequestRescheduleVisit(int RequestId, long LicenseID)
+    {
+        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.RequestId == RequestId).FirstOrDefault();
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == _request?.ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (SendTo != null)
+            {
+                string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nA reschedule request has been submitted for the compliance visit {complianceVisits?.VisitReferenceNumber}." +
+                    $"\r\n\r\nReason for reschedule: {complianceVisits?.RescheduleReason}\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+        }
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToEntityForRequestRescheduleVisit(int RequestId, long LicenseID)
+    {
+        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.RequestId == RequestId).FirstOrDefault();
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == _request?.ComplianceDetailsID).FirstOrDefault();
+
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", complianceVisits?.LicensedEntityName ?? ""},
+                    { "VisitNumber", complianceVisits?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", complianceVisits?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                },
+
+                Body = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nA reschedule request has been submitted for the compliance visit {complianceVisits?.VisitReferenceNumber}." +
+                    $"\r\n\r\nReason for reschedule: {complianceVisits?.RescheduleReason}\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
+
+                ViewName = "SubmitExtensionRequestForm.cshtml",
+                Subject = " تم تقديم طلب إعادة جدولة زيارة ",
+                To = LicensedEmail
+            });
+            return ResponseResult<bool>.Success(true);
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+
+    #endregion
     #region figma part 2 unmerged
     public async Task<ResponseResult<ComplianceDisclosureReportDto>> GetVisitDisclosureReportForComplianceManager(Guid visitId)
     {
