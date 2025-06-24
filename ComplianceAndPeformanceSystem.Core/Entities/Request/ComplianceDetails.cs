@@ -22,6 +22,8 @@ public class ComplianceDetails : TrackedEntity
     public string? CancellationReason { get; set; }
     public string? RescheduleReason { get; set; }
     public string? UpdatedReason { get; set; }
+
+    public string? LocationVisit { get; set; }
     public DateTime? CancelledAt { get; set; }
 
     public virtual LookupValue VisitStatus { get; set; }

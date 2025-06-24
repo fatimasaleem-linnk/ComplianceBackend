@@ -15,4 +15,5 @@ public class ComplianceVisitModel
     public string? VisitReferenceNumber { get; set; }
     public int? Satatus { get; set; }
     public string? StatusName { get; set; }
+    public string? LocationVisit { get; set; }
 }

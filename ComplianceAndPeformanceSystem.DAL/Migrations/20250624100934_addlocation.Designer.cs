@@ -4,6 +4,7 @@ using ComplianceAndPeformanceSystem.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ComplianceAndPeformanceSystem.DAL.Migrations
 {
     [DbContext(typeof(ComplianceAndPeformanceDbContext))]
-    partial class ComplianceAndPeformanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624100934_addlocation")]
+    partial class addlocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

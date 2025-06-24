@@ -123,5 +123,13 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
 
             return Ok(result);
         }
+        // 13. Get Document Extension Request by Id
+        [HttpGet]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> ExtensionRequests()
+        {
+            var result = await _requestService.ExtensionRequests();
+            return Ok(result);
+        }
     }
 }

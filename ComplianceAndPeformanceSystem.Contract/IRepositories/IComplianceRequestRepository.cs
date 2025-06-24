@@ -35,25 +35,13 @@ public interface IComplianceRequestRepository
     Task<ResponseResult<AssignComplianceVisitSpecialistResponseModel>> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model);
     Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists();
     Task<List<CompliancePlanDto>> GetQuarterVisits();
-
-    //// Part 03
-    //Task<ResponseResult<bool>> AddAttachment(List<IFormFile> attachmentvm, Guid? ComplianceDetailsID);
-    //Task<ResponseResult<List<ComplianceDetailsDto>>> GetComplianceVisit();
-    //Task<ResponseResult<DocumentExtensionRequestDto>>? AddExtensionRequest(DocumentExtensionRequestDto request, Guid ComplianceDetailsID);
-    //Task<ResponseResult<DocumentExtensionRequestDto>>? GetExtensionRequest(Guid id);
-    //Task<ResponseResult<List<DocumentExtensionRequestDto>>>? GetExtensionRequestByEntityId(long EntityId);
-    //Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto request, Guid requestId, Guid managerId);
-    //Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid RequestId);
-    //Task<ResponseResult<ComplianceDetailsDto>>? CancelVisitByManager(CancelVisitDto Dto);
-    //Task<ResponseResult<ComplianceDetailsDto>>? RequestReschedule(RequestRescheduleDto rescheduleDto);
-    //Task<ResponseResult<ComplianceDetailsDto>>? ReviewRescheduleAsync(ReviewRescheduleDto reviewRescheduleDto);
-    //Task<ResponseResult<ComplianceDetailsDto>>? UpdateVisitStatus(UpdateVisitStatusDto statusDto);
     
     #region Part 03
     Task<ResponseResult<bool>> AddAttachment(List<IFormFile> attachmentvm, Guid? ComplianceDetailsID);
     Task<ResponseResult<List<ComplianceDetailsDto>>> GetComplianceVisit();
     Task<ResponseResult<DocumentExtensionRequestDto>>? AddExtensionRequest(DocumentExtensionRequestDto request, Guid ComplianceDetailsID);
     Task<ResponseResult<DocumentExtensionRequestDto>>? GetExtensionRequest(Guid id);
+    Task<ResponseResult<List<DocumentExtensionRequestDto>>> ExtensionRequests();
     Task<ResponseResult<List<DocumentExtensionRequestDto>>>? GetExtensionRequestByEntityId(long EntityId);
     Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto request, Guid requestId, Guid managerId);
     Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid RequestId);

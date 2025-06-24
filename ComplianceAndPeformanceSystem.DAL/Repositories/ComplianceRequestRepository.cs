@@ -314,7 +314,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                     (model.LicensedEntityId == complianceDetailsRecord.LicensedEntityId) ||
                     (model.ActivityId == complianceDetailsRecord.ActivityId) ||
                     (model.PlantNameId == complianceDetailsRecord.PlantNameId) ||
-                    (model.LocationId.HasValue && model.LocationId == complianceDetailsRecord.LocationId) ||
+                    //(model.LocationId.HasValue && model.LocationId == complianceDetailsRecord.LocationId) ||
                     (model.QuarterPlannedForVisitId.HasValue && model.QuarterPlannedForVisitId == complianceDetailsRecord.QuarterPlannedForVisitId) ||
                     (model.VisitTypeId == complianceDetailsRecord.VisitTypeId) ||
                     (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New);
@@ -410,6 +410,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
             complianceDetailsRecord.PlantNameId = model.PlantNameId;
             complianceDetailsRecord.QuarterPlannedForVisitId = model.QuarterPlannedForVisitId;
             complianceDetailsRecord.ActivityId = model.ActivityId;
+            complianceDetailsRecord.VisitStatusId = (long?)VisitStatusEnum.New;
 
 
             ComplianceRequestActivity requestActivity = new ComplianceRequestActivity()
@@ -839,7 +840,9 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
         if (!currentQuarterNameEn.Contains(modelVisitMonthEn))
             return ResponseResult<bool>.Failure(new List<string> { "Visit Date is outside its designated Quarter." }, false);
 
-        if (complianceDetailsRecord != null && currentUserService.User.Role.Any(role => role.Equals(RoleEnum.ComplianceSpecialist) || role.Equals(RoleEnum.ComplianceManager)))
+        if (complianceDetailsRecord != null && currentUserService.User.Role.Any(
+            role => role.Equals(RoleEnum.ComplianceSpecialist)
+            || role.Equals(RoleEnum.ComplianceManager)))
         {
             List<KeyValuePair<string, string>> detailsAr = new List<KeyValuePair<string, string>>();
             List<KeyValuePair<string, string>> detailsEn = new List<KeyValuePair<string, string>>();
@@ -872,7 +875,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 detailsEn.Add(new KeyValuePair<string, string>("Activity", $"Current Activity: {categoryLookupValue.FirstOrDefault(a => a.Id == model.ActivityId)?.ValueEn} , Old Activity : {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.ActivityId)?.ValueEn}"));
             }
 
-
             if (complianceDetailsRecord.LicensedEntityId != model.LicensedEntityId)
             {
                 detailsAr.Add(new KeyValuePair<string, string>("LicensedEntity", $"المرخص له الحالي: {categoryLookupValue.FirstOrDefault(a => a.Id == model.LicensedEntityId)?.ValueAr} , المخص له السابق : {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.LicensedEntityId)?.ValueAr}"));
@@ -884,7 +886,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 detailsAr.Add(new KeyValuePair<string, string>("PlantName", $"اسم المحطة الحالي: {categoryLookupValue.FirstOrDefault(a => a.Id == model.PlantNameId)?.ValueAr} , اسم المحطة السابق : {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.PlantNameId)?.ValueAr}"));
                 detailsEn.Add(new KeyValuePair<string, string>("PlantName", $"Current Plant Name: {categoryLookupValue.FirstOrDefault(a => a.Id == model.PlantNameId)?.ValueEn} , Old Plant Name : {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.PlantNameId)?.ValueEn}"));
             }
-
 
             if (complianceDetailsRecord.LocationId != model.LocationId)
             {
@@ -913,15 +914,15 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 if (complianceDetailsRecord.VisitStatusId != null)
                 {
 
-                    //if (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New)
-                    //{
-                    //    detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
-                    //    detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
+                    if (complianceDetailsRecord.VisitStatusId == (long)VisitStatusEnum.New)
+                    {
+                        detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
+                        detailsEn.Add(new KeyValuePair<string, string>("VisitStatus", $"Current Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == (long)VisitStatusEnum.Scheduled)?.ValueEn}, Old Visit Status: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueEn}"));
 
-                    //    complianceDetailsRecord.VisitStatusId = (long)VisitStatusEnum.Scheduled;
-                    //}
-                    //else
-                    //{
+                        complianceDetailsRecord.VisitStatusId = (long)VisitStatusEnum.Scheduled;
+                    }
+                    else
+                    {
                         if (VisitStatusId != null)
                         {
                             detailsAr.Add(new KeyValuePair<string, string>("VisitStatus", $"حالة الزيارة الحالية: {categoryLookupValue.FirstOrDefault(a => a.Id == VisitStatusId)?.ValueAr}, حالة الزيارة السابق: {categoryLookupValue.FirstOrDefault(a => a.Id == complianceDetailsRecord.VisitStatusId)?.ValueAr}"));
@@ -929,7 +930,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
                             complianceDetailsRecord.VisitStatusId = VisitStatusId;
                         }
-                    //}
+                    }
 
                 }
             }
@@ -940,7 +941,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
 
             }
-
 
             if (complianceDetailsRecord.DesignedCapacity == null)
             {
@@ -953,6 +953,11 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 detailsEn.Add(new KeyValuePair<string, string>("VisitDate", $"Current Designed Capacity: {model.DesignedCapacity} , Old Designed Capacity : {complianceDetailsRecord.DesignedCapacity}"));
             }
 
+            else if (complianceDetailsRecord.LocationVisit == null)
+            {
+                detailsAr.Add(new KeyValuePair<string, string>("LocationVisit", $"موقع الزيارة : {model.LocationVisit} , موقع الزيارة السابق : {complianceDetailsRecord.LocationVisit}"));
+                detailsEn.Add(new KeyValuePair<string, string>("LocationVisit", $"Location Visit: {model.LocationVisit} , Old Location Visit : {complianceDetailsRecord.LocationVisit}"));
+            }
             bool isNewVisit = complianceDetailsRecord.VisitDate == null;
 
             complianceDetailsRecord.VisitTypeId = model.VisitTypeId;
@@ -963,6 +968,8 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
             complianceDetailsRecord.ActivityId = model.ActivityId;
             complianceDetailsRecord.DesignedCapacity = model.DesignedCapacity;
             complianceDetailsRecord.VisitDate = model.VisitDate;
+            complianceDetailsRecord.LocationVisit = model.LocationVisit;
+            complianceDetailsRecord.VisitStatusId = (long)VisitStatusEnum.New;
 
 
             ComplianceRequestActivity requestActivity = new ComplianceRequestActivity()
@@ -1510,7 +1517,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 }
                 return ResponseResult<bool>.Success(false);
             }
-            throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Unauthoried User", "Unauthoried User") });
+            return ResponseResult<bool>.Success(false);
         }
         catch (Exception)
         {
@@ -1526,6 +1533,7 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
 
         var visits = await dbContext.ComplianceDetails
             .Where(s => !s.IsDeleted)
+            .Include(a=> a.VisitDocuments)
             .Select(record => new ComplianceDetailsDto
             {
                 Id = record.Id,
@@ -1545,7 +1553,6 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                 RescheduleReason = record.RescheduleReason,
                 DesignedCapacity = record.DesignedCapacity,
                 VisitStatusId = record.VisitStatusId,
-                // VisitStatusHistory, VisitDocuments, etc. can be added similarly
 
                 VisitStatusHistory = record.VisitStatusHistory.Select(a => new VisitStatusHistory
                 {
@@ -1618,7 +1625,8 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
                     CreatedByUserName = currentUserService.User.UserName,
                     CreatedOn = DateTime.UtcNow,
                 };
-                await dbContext.DocumentExtensionRequest.AddAsync(_obj);
+
+                await dbContext.DocumentExtensionRequest.AddAsync(_obj); 
                 await dbContext.SaveChangesAsync();
 
                 requestDto = new DocumentExtensionRequestDto
@@ -1687,6 +1695,50 @@ ICurrentLanguageService currentLanguageService, IBlobService _blobService) : ICo
             return ResponseResult<DocumentExtensionRequestDto>.Success(RequestDto);
         }
         return ResponseResult<DocumentExtensionRequestDto>.Success(RequestDto);
+    }
+    public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> ExtensionRequests()
+    {
+        var _Request = await dbContext.DocumentExtensionRequest.ToListAsync();
+        List<DocumentExtensionRequestDto>? RequestDto = null;
+        if (_Request != null)
+        {
+            foreach(var item in _Request)
+            {
+                RequestDto.Add(new DocumentExtensionRequestDto
+                {
+                    Id = item.Id,
+                    LicensedEntityId = item.LicensedEntityId,
+                    ComplianceDetailsID = item.ComplianceDetailsID,
+                    RequestedDays = item.RequestedDays,
+
+                    ExtensionStatus = ExtensionStatusMapper.ToFriendlyString(item.ExtensionStatus, currentLanguageService),
+                    ReviewedAt = item.ReviewedAt,
+                    Reason = item.Reason,
+
+                    DecisionReason = item.DecisionReason,
+                    FinalDays = item.FinalDays,
+
+                    CreatedByEmail = item.CreatedByEmail,
+                    CreatedByID = item.CreatedByID,
+                    CreatedByUserName = item.CreatedByUserName,
+                    CreatedOn = item.CreatedOn.ToShortDateString(),
+
+                    ExtensionStatusHistory = item?.StatusHistories?.Select(a => new ExtensionStatusHistoryDto
+                    {
+                        Id = a.Id,
+                        RequestId = a.RequestId,
+                        ActionAt = a.ActionAt,
+                        ActionReason = a.ActionReason,
+                        ActionByUserName = a.ActionByUserId.ToString(),
+                        NewFinalDays = a.NewFinalDays,
+                        NewStatus = a.NewStatus,
+                        OldStatus = a.OldStatus
+                    }).ToList(),
+                });
+            }
+            return ResponseResult<List<DocumentExtensionRequestDto>>.Success(RequestDto);
+        }
+        return ResponseResult<List<DocumentExtensionRequestDto>>.Success(RequestDto);
     }
     public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> GetExtensionRequestByEntityId(long LicensedEntityId)
     {

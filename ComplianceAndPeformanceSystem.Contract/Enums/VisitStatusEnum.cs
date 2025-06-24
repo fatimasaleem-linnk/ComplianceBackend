@@ -12,10 +12,10 @@ namespace ComplianceAndPeformanceSystem.Contract.Enums
         Scheduled = 123,
         Rescheduled = 124,
         ConflictOfInterestDisclosure = 125,
-        RescheduleRequested = 200,
         //Rescheduled = 201,
-        Completed = 202,
-        Cancelled = 203,
+        RescheduleRequested = 127,
+        Completed = 128,
+        Cancelled = 129,
         ConflictOfInterestResolved = 130,
         NoTeamMemberAvailable = 131,
     }

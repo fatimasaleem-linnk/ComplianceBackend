@@ -1,5 +1,4 @@
-﻿
-using ComplianceAndPeformanceSystem.Contract.Common.Models;
+﻿using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Notification.Services;

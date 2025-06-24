@@ -15,7 +15,8 @@ using System.Data.Common;
 
 namespace ComplianceAndPeformanceSystem.BLL.Services;
 
-public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserService currentUserService, ICurrentLanguageService currentLanguageService, Func<NotificationTypeEnum, INotificationService> notificationService) : IComplianceRequestService
+public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserService currentUserService, ICurrentLanguageService currentLanguageService,
+    Func<NotificationTypeEnum, INotificationService> notificationService) : IComplianceRequestService
 {
     public async Task CreateComplianceRequest()
     {
@@ -1038,12 +1039,11 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
     }
 
-
     #region Part03-05
     public async Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> attachmentvm, Guid ComplianceDetailsID)
     {
         var request = await unitOfWork.ComplianceRequestRepository.AddAttachment(attachmentvm, ComplianceDetailsID);
-        if (!request.Succeeded)
+        if (!request.Model != false)
             throw new ValidationException([new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Visit documents cannot be saved." : "لا يمكن حفظ  مستندات الزيارة ")]);
         else
             await SendNotificationToLicensedEntityforUploadDocument(ComplianceDetailsID, currentUserService.User.UserName);
@@ -1317,6 +1317,8 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
     public async Task<ResponseResult<DocumentExtensionRequestDto>> GetExtensionRequest(Guid id)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequest(id);
+    public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> ExtensionRequests()
+    => await unitOfWork.ComplianceRequestRepository.ExtensionRequests();
 
     public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> GetExtensionRequestByEntityId(long licensedEntityId)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestByEntityId(licensedEntityId);
@@ -1392,12 +1394,12 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             await SendSMSToEntityForRescheduleVisit(res.Model.Id);
             await SendNotificationToEntityForRescheduleVisit(res.Model.Id);
         }
-        //else
-        //{
-        //    //await SendSMSToEntityForRequestRescheduleVisit(res.re,res?.LicensedEntityId);
-        //    //await SendNotificationToEntityForRequestRescheduleVisit(res.Model.Id);
-        //}
-        return res;
+        else
+        {
+               /// await SendSMSToEntityForRequestRescheduleVisit(res.re, res?.LicensedEntityId);
+                //await SendNotificationToEntityForRequestRescheduleVisit(res.Model.Id);
+        }
+            return res;
     }
 
     public async Task<ResponseResult<ComplianceDetailsDto>> UpdateVisitStatus(UpdateVisitStatusDto statusDto)
@@ -1721,6 +1723,8 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
     }
 
     #endregion
+    #endregion
+
     #region figma part 2 unmerged
     public async Task<ResponseResult<ComplianceDisclosureReportDto>> GetVisitDisclosureReportForComplianceManager(Guid visitId)
     {
@@ -1756,9 +1760,9 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(disclosureDto.ComplianceDetailId);
         var conflictedVisitSpecialist = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDisclosureBySpecialistId(disclosureDto.ComplianceVisitSpecialistId);
 
-        if (visit.Model.VisitStatusId.Equals((long)VisitStatusEnum.ConflictOfInterestDisclosure) 
+        if (visit.Model.VisitStatusId.Equals((long)VisitStatusEnum.ConflictOfInterestDisclosure)
             && conflictedVisitSpecialist.Model.HasConflicts
-            && complianceManagers != null 
+            && complianceManagers != null
             && complianceManagers.Model != null
         )
         {
@@ -1774,12 +1778,12 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 ViewName = "VisitTeamMemberDisclosureConflict.cshtml",
                 Subject = $"تم تحديد الصراع في مهمة الفريق.",
                 To = complianceManagers.Model.Select(s => s.Email).ToList(),
-                CC = new List<string> {visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s => s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserEmail}
+                CC = new List<string> { visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s => s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserEmail }
             });
         }
     }
 
-    public async Task SendVisitDisclosureNotSubmittedNotificationAsync() 
+    public async Task SendVisitDisclosureNotSubmittedNotificationAsync()
     {
         int reminderAfterDays = 2;
 
@@ -1821,6 +1825,4 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
     #endregion Figma part 2 unmerged
 
-
-    #endregion
 }
