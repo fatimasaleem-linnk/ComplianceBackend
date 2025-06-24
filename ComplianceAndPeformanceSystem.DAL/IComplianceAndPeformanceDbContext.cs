@@ -22,6 +22,7 @@ public interface IComplianceAndPeformanceDbContext
     DbSet<ExtensionStatusHistory> ExtensionStatusHistories { get; set; }
     DbSet<VisitStatusHistory> VisitStatusHistories  { get; set; }
     DbSet<RescheduleRequest> RescheduleRequests   { get; set; }
+    DbSet<ComplianceVisitDisclosure> ComplianceVisitDisclosure{ get; set; }
 
 
 

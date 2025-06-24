@@ -1257,6 +1257,29 @@ public class LookupValueSeed : IEntityTypeConfiguration<LookupValue>
                 ValueEn="New",
                 ValueAr = "جديد"
             },
+
+            #region Figma Part 2 unmerged
+            new LookupValue()
+            {
+                Id = 130,
+                CategoryId = 8,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                ValueEn="Conflict Of Interest Resolved",
+                ValueAr = "تم حل تضارب المصالح"
+            },
+
+            new LookupValue()
+            {
+                Id = 131,
+                CategoryId = 8,
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                ValueEn="No Team Member Available",
+                ValueAr = "لا يوجد عضو فريق متاح"
+            },
+            #endregion
+
             #endregion
         });
 

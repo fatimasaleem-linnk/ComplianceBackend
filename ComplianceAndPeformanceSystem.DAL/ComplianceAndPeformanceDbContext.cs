@@ -38,7 +38,7 @@ public class ComplianceAndPeformanceDbContext : DbContext, IComplianceAndPeforma
     public DbSet<VisitStatusHistory> VisitStatusHistories { get; set; }
     public DbSet<RescheduleRequest> RescheduleRequests { get; set; }
 
-
+    public DbSet<ComplianceVisitDisclosure> ComplianceVisitDisclosure { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

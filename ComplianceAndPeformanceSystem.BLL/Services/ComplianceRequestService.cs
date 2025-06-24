@@ -1,14 +1,17 @@
 ﻿using ComplianceAndPeformanceSystem.Contract.Common.Exceptions;
 using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.Compliance;
 using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
+using ComplianceAndPeformanceSystem.Core.Entities;
 using Hangfire;
 using Microsoft.AspNetCore.Http;
+using System.Data.Common;
 
 namespace ComplianceAndPeformanceSystem.BLL.Services;
 
@@ -127,11 +130,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 }
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ApprovalOfPerformanceMonitoringManager)
-                {      
+                {    
+                    //plan approved noptification
                     var notification = notifications.FirstOrDefault(s => s.Id == 21);
                     if (notification != null)
                         notificationsResult.Add(notification);
 
+                    //quarter visit scheduling notification
                     var today = DateTime.UtcNow.Date;
                     var notificationDates = new List<DateTime>
                     {
@@ -155,15 +160,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                             notificationsResult.Add(secondNotification);
                     }
 
-                    //to do: change schema and modify code to  filter visits according to whether or not the disclosure is submitted.
-                    //to do: filter those where not submitted, so that we can notify the specialist to start working on disclosure.
+                    //submit disclosure form notification
                     var scheduledVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatusForLoggedInUser(currentUserService.User.UserId, (long) VisitStatusEnum.Scheduled));
 
                     if (scheduledVisits != null && scheduledVisits.Model != null && scheduledVisits.Model.Count() > 0)
                     {
                         foreach (var visit in scheduledVisits.Model)
                         {
-                            //to do: change schema and modify code for check if specialist has filled disclosure form or not.
                             if (visit.ComplianceVisitSpecialists?.FirstOrDefault(vs=> vs.SpecialistUserId.Equals(currentUserService.User.UserId))?.ComplianceVisitDisclosure == null)
                             {
                                 var visitnotification = notifications.FirstOrDefault(s => s.Id == 30);
@@ -176,7 +179,26 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                             }
                         }
                     }
-                    
+
+                    //notification for specialist removed from team due to conflict
+                    var conflictedVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatusForLoggedInUser(currentUserService.User.UserId, (long)VisitStatusEnum.ConflictOfInterestDisclosure));
+
+                    var loggedInUserConflicts = conflictedVisits?.Model?.Where(v => v.ComplianceVisitSpecialists.FirstOrDefault(s => s.SpecialistUserId.Equals(currentUserService.User.UserId)).ComplianceVisitDisclosure.HasConflicts);
+
+                    if (loggedInUserConflicts != null && loggedInUserConflicts.Count() > 0)
+                    {
+                        foreach (var visit in loggedInUserConflicts)
+                        {
+                            var removalnotification = notifications.FirstOrDefault(s => s.Id == 29);
+
+                            removalnotification.MessageBody = removalnotification?.MessageBody
+                                .Replace("{Reason}", "Conflict of Interest");
+
+                            if (notification != null)
+                                notificationsResult.Add(removalnotification);
+                        }
+                    }
+
                 }
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfComplianceManager)
@@ -281,10 +303,10 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ApprovalOfPerformanceMonitoringManager)
                 {
+                    //quarter notification to schedule visits
                     var today = DateTime.UtcNow.Date;
                     var notificationDates = new List<DateTime>
                     {
-                        //today,
                         new DateTime(today.Year, 1, 1).AddDays(-7),
                         new DateTime(today.Year, 4, 1).AddDays(-7),
                         new DateTime(today.Year, 7, 1).AddDays(-7),
@@ -293,32 +315,78 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
                     if (notificationDates.Contains(today)) 
                     {                       
-                        var notification = notifications.FirstOrDefault(s => s.Id == 25);
+                        var quarterNotification = notifications.FirstOrDefault(s => s.Id == 25);
 
                         string currentMonthName = DateTime.Now.ToString("MMMM");
                         var quarterName = complianceRequest?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitName;
 
-                        notification.MessageBody = notification?.MessageBody.Replace("{QuarterName}", quarterName.ToString());
+                        quarterNotification.MessageBody = quarterNotification?.MessageBody.Replace("{QuarterName}", quarterName.ToString());
 
-                        if (notification != null)
-                            notificationsResult.Add(notification);
+                        if (quarterNotification != null)
+                            notificationsResult.Add(quarterNotification);
                                             
                     }
 
+                    //notification to assign team to new visits 
                     var scheduledVisits = (await unitOfWork.ComplianceRequestRepository.GetNewVisitsForCurrentQuarter());
 
-                    foreach(var visit in scheduledVisits)
+                    if (scheduledVisits!=null && scheduledVisits?.Count() > 0 ) 
                     {
-                        if (visit.VisitStatusId.Equals((long)VisitStatusEnum.New))
+                        foreach (var visit in scheduledVisits)
                         {
-                            var notification = notifications.FirstOrDefault(s => s.Id == 26);
+                            if (visit.VisitStatusId.Equals((long)VisitStatusEnum.New))
+                            {
+                                var assignTeamNotification = notifications.FirstOrDefault(s => s.Id == 26);
 
-                            notification.MessageBody = notification?.MessageBody
-                                .Replace("{LicenseeName}", visit.LicensedEntityName.ToString())
-                                .Replace("{VisitDate}", visit.VisitDate.Value.ToString("dd-MMMM-yyyy"));
+                                assignTeamNotification.MessageBody = assignTeamNotification?.MessageBody
+                                    .Replace("{LicenseeName}", visit.LicensedEntityName.ToString())
+                                    .Replace("{VisitDate}", visit.VisitDate.Value.ToString("dd-MMMM-yyyy"));
 
-                            if (notification != null)
-                                notificationsResult.Add(notification);
+                                if (assignTeamNotification != null)
+                                    notificationsResult.Add(assignTeamNotification);
+                            }
+                        }
+                    }
+
+                    //conflict of disclosure notifications
+                    var disclosureConflictVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatus((long)VisitStatusEnum.ConflictOfInterestDisclosure));
+
+                    if (disclosureConflictVisits != null && disclosureConflictVisits.Model != null && disclosureConflictVisits.Model.Count() > 0)
+                    {
+                        foreach (var conflictedVisit in disclosureConflictVisits.Model)
+                        {
+                            var conflictSpecialists = conflictedVisit.ComplianceVisitSpecialists?.Where(vs => vs.ComplianceVisitDisclosure.HasConflicts).ToList();
+                            foreach (var specialist in conflictSpecialists)
+                            {
+                                var conflictNotification = notifications.FirstOrDefault(s => s.Id == 27);
+
+                                conflictNotification.MessageBody = conflictNotification?.MessageBody
+                                    .Replace("{SpecialistName}", specialist.SpecialistUserName)
+                                    .Replace("{LicenseeName}", conflictedVisit.LicensedEntityName)
+                                    .Replace("[visit date]", conflictedVisit.VisitDate.Value.ToString("dd-MMMM-yyyy"));
+
+                                if (conflictNotification != null)
+                                    notificationsResult.Add(conflictNotification);
+                            }
+                        }
+                    }
+
+                    //no team member available for visit notifications
+                    var noTeamVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatus((long)VisitStatusEnum.NoTeamMemberAvailable));
+
+                    if (noTeamVisits != null && noTeamVisits.Model != null && noTeamVisits.Model.Count() > 0)
+                    {
+                        foreach (var visit in noTeamVisits.Model)
+                        {
+                            var noTeamNotification = notifications.FirstOrDefault(s => s.Id == 28);
+
+                            noTeamNotification.MessageBody = noTeamNotification?.MessageBody
+                                .Replace("{VisitDate}", visit.VisitDate.Value.ToString("dd-MMMM-yyyy"))
+                                .Replace("{LicenseeName}", visit.LicensedEntityName)
+                                .Replace("{Reason}", "All specialists are busy");
+
+                            if (noTeamNotification != null)
+                                notificationsResult.Add(noTeamNotification);
                         }
                     }
 
@@ -902,12 +970,12 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
     }
 
-    public async Task<ResponseResult<bool>> AssignComplianceVisitSpecialist(AssignComplianceVisitSpecialistModel model)
+    public async Task<ResponseResult<bool>> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model)
     {
-        var result = await unitOfWork.ComplianceRequestRepository.AssignComplianceVisitSpecialist(model);
+        var result = await unitOfWork.ComplianceRequestRepository.AssignComplianceVisitSpecialists(model);
         await unitOfWork.CommitAsync();
         BackgroundJob.Enqueue(() =>
-            NotifyAssignedComplianceVisitSpecialist(result.Model, model.ComplianceDetailsId)
+            NotifyAssignedAndConflictedComplianceVisitSpecialist(result.Model, model.ComplianceDetailsId)
         );
         if(result.Succeeded)
             return ResponseResult<bool>.Success(true);
@@ -915,14 +983,15 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             return ResponseResult<bool>.Failure(new List<string> { "An error occured while assigning visit specialists." }, false);
     }
 
-    public async Task NotifyAssignedComplianceVisitSpecialist(KeyValuePair<List<string>, bool> result, Guid visitId)
+    public async Task NotifyAssignedAndConflictedComplianceVisitSpecialist(AssignComplianceVisitSpecialistResponseModel result, Guid visitId)
     {
         var visit = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(visitId)).Model;
 
         var allUsers = (await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceSpecialist })).Model;
         if (allUsers != null && allUsers != null)
         {
-            var users = allUsers.Where(s => result.Key.Contains(s.Id)).ToList();
+            var newlyAssignedUsers = allUsers.Where(s => result.NotifyNewUsers.Contains(s.Id)).ToList();
+
             await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
             {
                 Content = new Dictionary<string, object>() {
@@ -937,8 +1006,35 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 },
                 ViewName = "AssignVisitSpecialists.cshtml",
                 Subject = "إشعار تعيين الفريق",
-                To = users.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
+                To = newlyAssignedUsers.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
             });
+
+            if (result.IsUpdate && result.NotifyConflictUsers != null && result.NotifyConflictUsers.Count()>0) 
+            {
+                var removedDueToConflictUsers = allUsers.Where(s => result.NotifyConflictUsers.Contains(s.Id)).ToList();
+
+                foreach (var conflictedUser in removedDueToConflictUsers) 
+                {
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Content = new Dictionary<string, object>() {
+                            { "EmployeeName", $"اخصائي الالتزام" },
+                            { "SpecialistUserName", conflictedUser.UserName},
+                            { "Reason", "Conflict of Interest"},
+                            { "VisitId", visit.VisitReferenceNumber },
+                            { "VisitDate", visit.VisitDate },
+                            { "LicenseeName", visit.LicensedEntityName },
+                            { "VisitType", visit.VisitTypeName },
+                            { "VisitLocation", visit.LocationName },
+                            { "DesignedCapacity", visit.DesignedCapacity },
+                            { "ActionUrl", "#" }
+                        },
+                        ViewName = "DisclosureConflictVisitSpecialists.cshtml",
+                        Subject = "تم فصل أخصائي الامتثال بسبب تضارب المصالح.",
+                        To = new List<string> { conflictedUser.Email },
+                    });
+                }
+            }
         }
     }
 
@@ -1020,7 +1116,105 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
     public async Task<ResponseResult<ComplianceDetailsDto>> UpdateVisitStatus(UpdateVisitStatusDto statusDto)
         => await unitOfWork.ComplianceRequestRepository.UpdateVisitStatus(statusDto);
 
+    #region figma part 2 unmerged
+    public async Task<ResponseResult<ComplianceDisclosureReportDto>> GetVisitDisclosureReportForComplianceManager(Guid visitId)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureReportForComplianceManager(visitId);
+        return result;
+    }
+    public async Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureFormForComplianceManager(visitId, visitSpecialistId);
+        return result;
+    }
 
+    public async Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForLoggedInSpecialist(Guid visitId)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureFormForLoggedInSpecialist(visitId);
+        return result;
+    }
+
+    public async Task<ResponseResult<bool>> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.SaveVisitDisclosureForm(model);
+        await unitOfWork.CommitAsync();
+
+        if (result.Succeeded)
+            BackgroundJob.Enqueue(() => NotifyForDisclosureFormConflicts(model));
+
+        return result;
+    }
+
+    public async Task NotifyForDisclosureFormConflicts(ComplianceVisitDisclosureDto disclosureDto)
+    {
+        var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
+        var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(disclosureDto.ComplianceDetailId);
+        var conflictedVisitSpecialist = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDisclosureBySpecialistId(disclosureDto.ComplianceVisitSpecialistId);
+
+        if (visit.Model.VisitStatusId.Equals((long)VisitStatusEnum.ConflictOfInterestDisclosure) 
+            && conflictedVisitSpecialist.Model.HasConflicts
+            && complianceManagers != null 
+            && complianceManagers.Model != null
+        )
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>() {
+                    { "EmployeeName", "مدير الادارة" },
+                    { "VisitDate", visit.Model.VisitDate },
+                    { "LicenseeName", visit.Model.LicensedEntityName },
+                    { "VisitSpecialistName", visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s=> s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserName},
+                    { "ActionUrl", "#" }
+                },
+                ViewName = "VisitTeamMemberDisclosureConflict.cshtml",
+                Subject = $"تم تحديد الصراع في مهمة الفريق.",
+                To = complianceManagers.Model.Select(s => s.Email).ToList(),
+                CC = new List<string> {visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s => s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserEmail}
+            });
+        }
+    }
+
+    public async Task SendVisitDisclosureNotSubmittedNotificationAsync() 
+    {
+        int reminderAfterDays = 2;
+
+        var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
+        var visits = await unitOfWork.ComplianceRequestRepository.GetVisitsByStatus((long)VisitStatusEnum.Scheduled);
+
+        if (visits.Model != null && visits.Model.Count() > 0)
+        {
+            foreach (var visit in visits.Model)
+            {
+                var specialistsToRemind = visit.ComplianceVisitSpecialists.Where(s =>
+                    s.ComplianceVisitDisclosure == null && // disclosure not submitted
+                    s.CreatedOn != null && //specialist is assigned means created on date is not null
+                    s.CreatedOn?.AddDays(reminderAfterDays).Date == DateTime.Today //2 days have passed since specialist was assigned
+                ).ToList();
+
+                foreach (var specialist in specialistsToRemind)
+                {
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Content = new Dictionary<string, object>() {
+                            { "EmployeeName", "مدير الادارة" },
+                            { "VisitDate", visit.VisitDate },
+                            { "LicenseeName", visit.LicensedEntityName },
+                            { "VisitSpecialistName", specialist.SpecialistUserName},
+                            { "ActionUrl", "#" }
+                        },
+                        ViewName = "DisclosureFormNotSubmittedBySpecialist.cshtml",
+                        Subject = $"لم يتم تقديم نموذج إفصاح أخصائي الامتثال - يلزم اتخاذ إجراء",
+                        To = complianceManagers.Model.Select(s => s.Email).ToList(),
+                        CC = new List<string> { specialist.SpecialistUserEmail }
+                    });
+                }
+            }
+
+        }
+    }
+
+
+    #endregion Figma part 2 unmerged
 
 
     #endregion

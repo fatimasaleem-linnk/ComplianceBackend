@@ -15,6 +15,8 @@ namespace ComplianceAndPeformanceSystem.Contract.Enums
         RescheduleRequested = 200,
         //Rescheduled = 201,
         Completed = 202,
-        Cancelled = 203
+        Cancelled = 203,
+        ConflictOfInterestResolved = 130,
+        NoTeamMemberAvailable = 131,
     }
 }

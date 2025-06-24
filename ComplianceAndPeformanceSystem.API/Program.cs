@@ -116,4 +116,10 @@ RecurringJob.AddOrUpdate<IComplianceRequestService>(
     Cron.Daily // Runs daily to check if it's 10 days before a visit date
 );
 
+RecurringJob.AddOrUpdate<IComplianceRequestService>(
+    "NotifyVisitDisclosureNotSubmittedJob",
+    service => service.SendVisitDisclosureNotSubmittedNotificationAsync(),
+    Cron.Daily //runs daily to check if disclosure forms are submitted by specialists within 2 days of visit assignment
+);
+
 app.Run();

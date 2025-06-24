@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComplianceAndPeformanceSystem.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace ComplianceAndPeformanceSystem.Contract.Models.Compliance
         public string SpecialistUserName { get; set; }
         public string SpecialistUserEmail { get; set; }
         public string? MobileNumber{ get; set; }
+        public DateTime? CreatedOn { get; set; }
         public ComplianceVisitDisclosureModel? ComplianceVisitDisclosure { get; set; }
+        public virtual List<VisitSurveyAnswerModel>? VisitSurveyAnswers { get; set; }
     }
 }

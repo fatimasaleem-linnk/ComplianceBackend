@@ -1,5 +1,6 @@
 ﻿using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.Compliance;
 using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
@@ -31,7 +32,7 @@ public interface IComplianceRequestService
     #region  Phase2
     Task<ResponseResult<CompliancePlanDto>> GetComplianceVisitDetail(Guid id);
     Task<ResponseResult<bool>> SaveComplianceVisit(ComplianceVisitModel model, long? VisitStatusId = null);
-    Task<ResponseResult<bool>> AssignComplianceVisitSpecialist(AssignComplianceVisitSpecialistModel model);
+    Task<ResponseResult<bool>> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model);
     Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists();
 
     Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> attachmentvm, Guid ComplianceDetailsID);
@@ -48,5 +49,17 @@ public interface IComplianceRequestService
     Task<ResponseResult<ComplianceDetailsDto>>? RequestReschedule(RequestRescheduleDto rescheduleDto);
     Task<ResponseResult<ComplianceDetailsDto>>? ReviewReschedule(ReviewRescheduleDto reviewRescheduleDto);
     Task<ResponseResult<ComplianceDetailsDto>>? UpdateVisitStatus(UpdateVisitStatusDto statusDto);
+
+    #region Figma Part 2 unmerged
+    Task<ResponseResult<ComplianceDisclosureReportDto>> GetVisitDisclosureReportForComplianceManager(Guid visitId);
+    Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId);
+    Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForLoggedInSpecialist(Guid visitId);
+    Task<ResponseResult<bool>> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model);
+
+    Task SendVisitDisclosureNotSubmittedNotificationAsync();
+
+
+    #endregion Figma Part 2 unmerged
+
     #endregion
 }

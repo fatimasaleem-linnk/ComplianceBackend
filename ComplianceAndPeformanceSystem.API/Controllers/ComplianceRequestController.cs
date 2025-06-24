@@ -1,4 +1,5 @@
 ﻿using ComplianceAndPeformanceSystem.Contract.Common.Models;
+using ComplianceAndPeformanceSystem.Contract.Dtos.Compliance;
 using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
@@ -160,22 +161,58 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> GetComplianceRequestSpecialist()
+        public async Task<IActionResult> GetComplianceRequestSpecialists()
         {
             return Ok(await requestService.GetComplianceRequestSpecialists());
         }
 
         [HttpPost]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> AssignComplianceVisitSpecialist(AssignComplianceVisitSpecialistModel model)
+        public async Task<IActionResult> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model)
         {
-            var result = await requestService.AssignComplianceVisitSpecialist(model);
+            var result = await requestService.AssignComplianceVisitSpecialists(model);
 
             if (!result.Succeeded)
                 return BadRequest(result);
 
             return Ok(result);
         }
+
+        #region Figma part 2 unmerged
+
+        [HttpGet]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> GetVisitDisclosureReportForComplianceManager(Guid visitId)
+        {
+            return Ok(await requestService.GetVisitDisclosureReportForComplianceManager(visitId));
+        }
+
+
+        [HttpGet]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId)
+        {
+            return Ok(await requestService.GetVisitDisclosureFormForComplianceManager(visitId, visitSpecialistId));
+        }
+
+        [HttpGet]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> GetVisitDisclosureFormForLoggedInSpecialist(Guid visitId)
+        {
+            return Ok(await requestService.GetVisitDisclosureFormForLoggedInSpecialist(visitId));
+        }
+
+        public async Task<IActionResult> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model)
+        {
+            var result = await requestService.SaveVisitDisclosureForm(model);
+
+            if (!result.Succeeded)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        #endregion Figma Part 2 unmerged
 
         #endregion
 

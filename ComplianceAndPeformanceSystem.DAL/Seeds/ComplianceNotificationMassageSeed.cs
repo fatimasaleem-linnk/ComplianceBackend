@@ -337,7 +337,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             new ComplianceNotificationMassage()
             {
                 Id = 29,
-                Role = "ComplianceManager",
+                Role = "ComplianceSpecialist",
                 MessageType = "error",
                 MessageTitleAR = "يوجد هناك تضارب في تعيينك ضمن الفريق وبالتالي سيتم استبعادك من الفريق.",
                 MessageTitleEn = "There is a conflict in your assignment to the team and therefore you will be removed from the team.",

@@ -1,9 +1,11 @@
 ﻿using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.Compliance;
 using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.Models;
 using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
+using ComplianceAndPeformanceSystem.Core.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace ComplianceAndPeformanceSystem.Contract.IRepositories;
@@ -30,7 +32,7 @@ public interface IComplianceRequestRepository
     Task<List<CompliancePlanDto>> GetUnscheduledVisitsForCurrentQuarter();
     Task<List<CompliancePlanDto>> GetNewVisitsForCurrentQuarter();
     Task<ResponseResult<List<ComplianceVisitSpecialistModel>>> GetComplianceVisitSpecialists(Guid complianceDetailId);
-    Task<ResponseResult<KeyValuePair<List<string>, bool>>> AssignComplianceVisitSpecialist(AssignComplianceVisitSpecialistModel model);
+    Task<ResponseResult<AssignComplianceVisitSpecialistResponseModel>> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model);
     Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists();
     Task<List<CompliancePlanDto>> GetQuarterVisits();
 
@@ -46,6 +48,17 @@ public interface IComplianceRequestRepository
     Task<ResponseResult<ComplianceDetailsDto>>? RequestReschedule(RequestRescheduleDto rescheduleDto);
     Task<ResponseResult<ComplianceDetailsDto>>? ReviewRescheduleAsync(ReviewRescheduleDto reviewRescheduleDto);
     Task<ResponseResult<ComplianceDetailsDto>>? UpdateVisitStatus(UpdateVisitStatusDto statusDto);
+
+
+    #region Figma Part 2 unmerged
+    Task<ResponseResult<ComplianceDisclosureReportDto>> GetVisitDisclosureReportForComplianceManager(Guid visitId);
+    Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId);
+    Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForLoggedInSpecialist(Guid visitId);
+    Task<ResponseResult<bool>> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model);
+    Task<ResponseResult<ComplianceVisitDisclosure>> GetComplianceVisitDisclosureBySpecialistId(Guid specialistid);
+    Task<ResponseResult<List<CompliancePlanDto>>> GetVisitsByStatus(long visitStatusId);
+
+    #endregion Figma Part 2 unmerged
 
     #endregion
 

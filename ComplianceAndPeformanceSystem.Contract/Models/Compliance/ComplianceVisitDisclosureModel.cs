@@ -12,5 +12,6 @@ namespace ComplianceAndPeformanceSystem.Contract.Models.Compliance
         public Guid ComplianceVisitSpecialistId { get; set; }
         public string SurveyNotes { get; set; }
         public bool HasConflicts { get; set; }
+        public string? SubmissionStatus { get; set; }
     }
 }
