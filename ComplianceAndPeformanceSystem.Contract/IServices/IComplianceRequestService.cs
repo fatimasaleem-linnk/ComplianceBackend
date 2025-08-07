@@ -104,7 +104,7 @@ public interface IComplianceRequestService
 
     Task<CorrectiveActionPlan> AddCorrectPlan(CorrectiveActionPlanDto dto);
     Task<CorrectiveEvidence> UploadEvidence(EvidenceUploadDto dto);
-    Task<CorrectiveActionPlanDto?> GetCorrectPlanById(Guid planId);
+    Task<CorrectiveActionPlanDto?> GetCorrectPlanById(Guid VisitId);
     Task ReviewEvidence(EvidenceReviewDto dto);
     Task ReviewReport(ComplianceReportReviewDto dto);
 

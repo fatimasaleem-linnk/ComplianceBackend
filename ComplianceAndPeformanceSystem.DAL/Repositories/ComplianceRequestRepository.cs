@@ -3364,6 +3364,7 @@ internal class ComplianceRequestRepository(
             Id = Guid.NewGuid(),
             ReportId = dto.ReportId,
             Description = dto.PlanDetails,
+            ComplianceDeatilsID = dto.ComplianceDeatilsID,
             Deadline = dto.Deadline,
             LicenseEntityID = (currentUserService.User.UserId),
             Status = (int)CorrectiveActionPlanStatus.SentToLicensee
@@ -3374,11 +3375,11 @@ internal class ComplianceRequestRepository(
         return plan;
     }
 
-    public async Task<CorrectiveActionPlanDto?> GetPlanWithAttachments(Guid planId)
+    public async Task<CorrectiveActionPlanDto?> GetPlanWithAttachments(Guid VisitId)
     {
         var plan = await dbContext.CorrectiveActionPlans
             .Include(p => p.Report)
-            .FirstOrDefaultAsync(p => p.Id == planId);
+            .FirstOrDefaultAsync(p => p.ComplianceDeatilsID == VisitId);
 
         if (plan == null) return null;
 
@@ -3389,7 +3390,7 @@ internal class ComplianceRequestRepository(
             PlanDetails = plan.Description,
             Deadline = plan.Deadline,
             LicenseEntityID = plan.LicenseEntityID,
-
+            ComplianceDeatilsID = plan.ComplianceDeatilsID,
             FileList = dbContext.Attachments?.Where(a => a.EntityId == plan.Id)
             .Select(attachment => new AttachmentDto
             {

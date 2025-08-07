@@ -288,9 +288,9 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> GetCorrectPlanById(Guid planId)
+        public async Task<IActionResult> GetCorrectPlanById(Guid VisitId)
         {
-            var result = await _requestService.GetCorrectPlanById(planId);
+            var result = await _requestService.GetCorrectPlanById(VisitId);
             if (result == null)
                 return NotFound("Plan not found");
             return Ok(result);

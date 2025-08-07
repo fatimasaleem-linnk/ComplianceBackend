@@ -7,6 +7,8 @@ namespace ComplianceAndPeformanceSystem.Contract.Dtos;
 public class CorrectiveActionPlanDto
 {
     public Guid Id { get; set; }
+    public Guid ComplianceDeatilsID { get; set; }
+
     public Guid ReportId { get; set; }
     public List<IFormFile>? Files { get; set; }
     public List<AttachmentDto>? FileList { get; set; }

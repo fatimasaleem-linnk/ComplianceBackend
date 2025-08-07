@@ -93,7 +93,7 @@ public interface IComplianceRequestRepository
     // phase 8 & 9 
     Task<CorrectiveActionPlan> AddCorrectPlan(CorrectiveActionPlanDto dto);
     Task<CorrectiveEvidence> UploadEvidence(EvidenceUploadDto dto);
-    Task<CorrectiveActionPlanDto?> GetPlanWithAttachments(Guid planId);
+    Task<CorrectiveActionPlanDto?> GetPlanWithAttachments(Guid VisitId);
     Task ReviewEvidence(EvidenceReviewDto dto);
     Task ReviewReport(ComplianceReportReviewDto dto);
     Task<ResponseResult<string>> ReturnLicenseNumber(long LicenseEntityID);

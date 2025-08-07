@@ -2788,9 +2788,9 @@ Func<NotificationTypeEnum, INotificationService> notificationService) : IComplia
         return plan;
     }
 
-    public async Task<CorrectiveActionPlanDto?> GetCorrectPlanById(Guid planId)
+    public async Task<CorrectiveActionPlanDto?> GetCorrectPlanById(Guid VisitId)
     {
-        return await unitOfWork.ComplianceRequestRepository.GetPlanWithAttachments(planId);
+        return await unitOfWork.ComplianceRequestRepository.GetPlanWithAttachments(VisitId);
     }
     public async Task<CorrectiveEvidence> UploadEvidence(EvidenceUploadDto dto)
     {
