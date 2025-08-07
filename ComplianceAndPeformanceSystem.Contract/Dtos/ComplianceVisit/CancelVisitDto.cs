@@ -1,8 +1,7 @@
-﻿namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit
+﻿namespace ComplianceAndPeformanceSystem.Contract.Dtos;
+
+public class CancelVisitDto
 {
-    public class CancelVisitDto
-    {
-        public Guid ComplianceDetailsId { get; set; }
-        public string Reason { get; set; } = "";
-    }
+    public Guid ComplianceDetailsId { get; set; }
+    public string Reason { get; set; } = "";
 }

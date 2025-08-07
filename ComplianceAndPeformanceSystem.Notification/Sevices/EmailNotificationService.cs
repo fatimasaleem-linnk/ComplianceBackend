@@ -21,17 +21,16 @@ public class EmailNotificationService : INotificationService
         if (_emailConfigurationModel.SendingEmailEnabled)
         {
 
-            var html = await _viewRendererService.RenderPartialToStringAsync("EmailNotification/Templates/" + message.ViewName, message);
-
+           
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(_emailConfigurationModel.From, message.Subject);
 
-            if (message.To != null)
+            if (message.To != null || message?.To?.Count > 0)
             {
                 foreach (var item in message.To)
                     mail.To.Add(new MailAddress(item));
             }
-            if (message.CC != null) 
+            if (message.CC != null || message?.CC?.Count > 0)
             {
                 foreach (var item in message.CC)
                     mail.CC.Add(new MailAddress(item));
@@ -44,7 +43,16 @@ public class EmailNotificationService : INotificationService
             //client.UseDefaultCredentials = true;
             client.Host = _emailConfigurationModel.SmtpServer;
             mail.Subject = message.Subject;
-            mail.Body = html;
+            if (message.Body == null)
+            {
+                var html = await _viewRendererService.RenderPartialToStringAsync("EmailNotification/Templates/" + message.ViewName, message);
+                mail.Body = html;
+
+            }
+            else
+            {
+                mail.Body = message.Body;
+            }
             await client.SendMailAsync(mail);
 
         }

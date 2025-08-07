@@ -1,17 +1,15 @@
-﻿using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ComplianceAndPeformanceSystem.Contract.Models;
 
-namespace ComplianceAndPeformanceSystem.Contract.Dtos.Compliance
+namespace ComplianceAndPeformanceSystem.Contract.Dtos;
+
+public class ComplianceDisclosureReportDto
 {
-    public class ComplianceDisclosureReportDto
-    {
-        public Guid ComplianceDetailId { get; set; }
-        public long? LocationId { get; set; }
-        public string? LocationName { get; set; }
-        public List<ComplianceVisitSpecialistModel>? ComplianceVisitSpecialists { get; set; }
-    }
+    public Guid ComplianceDetailId { get; set; }
+    public long? LocationId { get; set; }
+    public string? LocationName { get; set; }  
+    public long? VisitTypeId { get; set; }
+    public string? VisitTypeName { get; set; }
+    public long? ActivityId { get; set; }
+    public string? ActivityName { get; set; }
+    public List<ComplianceVisitSpecialistModel>? ComplianceVisitSpecialists { get; set; }
 }

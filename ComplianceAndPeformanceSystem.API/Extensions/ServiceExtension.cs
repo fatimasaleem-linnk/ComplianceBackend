@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using ComplianceAndPeformanceSystem.API.Services;
+﻿using ComplianceAndPeformanceSystem.API.Services;
 using ComplianceAndPeformanceSystem.BootStrapper;
 using ComplianceAndPeformanceSystem.Contract.Common.Models;
 using ComplianceAndPeformanceSystem.Contract.IServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
-using ComplianceAndPeformanceSystem.Contract.Helper;
 
 namespace ComplianceAndPeformanceSystem.API.Extensions;
 
@@ -31,7 +30,6 @@ public static class ServiceExtension
         });
 
         services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<IBlobService, BlobService>();
         services.AddScoped<ICurrentLanguageService, CurrentLanguageService>();
     }
 

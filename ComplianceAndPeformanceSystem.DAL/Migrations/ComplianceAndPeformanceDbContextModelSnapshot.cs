@@ -37,6 +37,39 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ActivityLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ActionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ActorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ActorRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RelatedEntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ActivityLogs");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.AspNetRole", b =>
                 {
                     b.Property<int>("Id")
@@ -168,6 +201,88 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.ToTable("AspNetUser");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Attachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AttachmentGuid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AttachmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("AttachmentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentGuid")
+                        .IsUnique();
+
+                    b.HasIndex("AttachmentTypeId");
+
+                    b.ToTable("Attachments");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Auditors", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReportID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReportID");
+
+                    b.ToTable("Auditors");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CategoryLookup", b =>
                 {
                     b.Property<long>("Id")
@@ -240,244 +355,62 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             Id = 8L,
                             NameAr = "حالة الزيارة",
                             NameEn = "Visit Status"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            NameAr = "نوع الملفات",
+                            NameEn = "Attachment Type"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            NameAr = "نوع التقرير",
+                            NameEn = "Report Type"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            NameAr = "حالة الإنجاز",
+                            NameEn = "Completion Status"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            NameAr = "نوع النموذج",
+                            NameEn = "Template Type"
                         });
                 });
 
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.DocumentExtensionRequest", b =>
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.TeamShortage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ComplianceDetailsID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedByEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedByUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DecisionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ExtensionStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FinalDays")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("LicensedEntityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ModifiedByEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedByID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedByUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RequestedDays")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ReviewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComplianceDetailsID");
-
-                    b.ToTable("DocumentExtensionRequest");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.ExtensionStatusHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ActionAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ActionByUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ActionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NewFinalDays")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NewStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OldStatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("ExtensionStatusHistories");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.RescheduleRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("ComplianceDetailsID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("LicensedEntityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ProposedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RequestedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RequestedByUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReviewReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ReviewedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReviewedByUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComplianceDetailsID");
-
-                    b.ToTable("RescheduleRequests");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.VisitDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ComplianceDetailsID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedByEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedByID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedByUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedByEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedByID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ModifiedByUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComplianceDetailsID");
-
-                    b.ToTable("VisitDocuments");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.VisitStatusHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ActionAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ActionByUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ActionReason")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ComplianceDetailsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NewStatus")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OldStatus")
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LicensedEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ShortageReason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("RequestedNewDate")
+                    b.Property<DateTime?>("VisitDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ComplianceDetailsId");
 
-                    b.ToTable("VisitStatusHistories");
+                    b.ToTable("TeamShortages");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceApproval", b =>
@@ -701,18 +634,18 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 1,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي التدخل لإدراج احد المتخصين لوضع الخطة من الرابط ادناه",
+                            MessageBodyAR = "يرجى التدخل لإدراج احد المختصين لوضع الخطة من الرابط ادناه",
                             MessageBodyEn = "Please intervene to include a specialist to develop the plan from the link below",
                             MessageTitleAR = "يمكنك الأن تعيين احد الأخصائين لإدارج الخطة السنوية",
                             MessageTitleEn = "You can now appoint a specialist to include the annual plan.",
-                            MessageType = "info",
+                            MessageType = "warning",
                             Role = "ComplianceManager"
                         },
                         new
                         {
                             Id = 2,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي التدخل لإدراج احد المتخصين لوضع الخطة من الرابط ادناه",
+                            MessageBodyAR = "يرجى التدخل لإدراج احد المختصين لوضع الخطة من الرابط ادناه",
                             MessageBodyEn = "Please intervene to include a specialist to develop the plan from the link below",
                             MessageTitleAR = "يمكنك الأن تعيين احد الأخصائين لإدارج الخطة السنوية",
                             MessageTitleEn = "You can now appoint a specialist to include the annual plan.",
@@ -723,7 +656,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 3,
                             ActionUrl = "/",
-                            MessageBodyAR = " وهي جاهزة لمراجعتك واعتمادك حيث ان الوقت المخصص للمراجعة هو ٧ ايام",
+                            MessageBodyAR = " وهي جاهزة لمراجعتك واعتمادك حيث أن الوقت المخصص للمراجعة هو ٧ أيام",
                             MessageBodyEn = "It is ready for your review and approval, as the review time is 7 days.",
                             MessageTitleAR = "خطة الامتثال السنوية الجديدة المقدمة للمراجعة",
                             MessageTitleEn = "New Annual Compliance Plan Submitted for Review",
@@ -734,9 +667,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 4,
                             ActionUrl = "/",
-                            MessageBodyAR = " يرجي الانتهاء من مراجعة الخطة في الوقت المحدد حيث ان ذلك يسهل ويساعد علي اكتمال المراحل القادمة بشكل جيد",
+                            MessageBodyAR = " يرجى الانتهاء من مراجعة الخطة في الوقت المحدد حيث أن ذلك يسهل ويساعد على اكتمال المراحل القادمة بشكل جيد",
                             MessageBodyEn = "Please complete the plan review on time as this will facilitate and help complete the next stages well.",
-                            MessageTitleAR = "الوقت المتبقي للإنتهاء من مراجعتك للخطة الزمنية هو ٥ ايام",
+                            MessageTitleAR = "الوقت المتبقي للإنتهاء من مراجعتك للخطة الزمنية هو ٥ أيام",
                             MessageTitleEn = "The time remaining to complete the review of the timeline is 5 days.",
                             MessageType = "info",
                             Role = "ComplianceManager"
@@ -767,7 +700,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 7,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي العلم ان دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
+                            MessageBodyAR = "يرجى العلم أن دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
                             MessageBodyEn = "Please note that the role of the manager here is to receive notifications only and cannot access the plan to make any changes to it.",
                             MessageTitleAR = "الاخصائي  قد تلقى تعديلات من المدير العام لمراقبة الاداء",
                             MessageTitleEn = "The specialist has received modifications from Performance Monitoring Manager.",
@@ -778,7 +711,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 8,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي العلم ان دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
+                            MessageBodyAR = "يرجى العلم أن دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء أي تعديلات عليها",
                             MessageBodyEn = "Please note that the role of the manager here is to receive notifications only and cannot access the plan to make any changes to it.",
                             MessageTitleAR = "الاخصائي  قد ارسل الخطة بعد التعديل الى المدير العام لمراقبة الاداء",
                             MessageTitleEn = "The specialist sent the modified plan to Performance Monitoring Manager.",
@@ -789,7 +722,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 9,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي  التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا فوريًا لحل هذه المهمة المتأخرة.",
+                            MessageBodyAR = "يرجى  التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا فوريًا لحل هذه المهمة المتأخرة.",
                             MessageBodyEn = "Please intervene to ensure the plan is reviewed. Immediate attention is required to resolve this delayed task.",
                             MessageTitleAR = "انتهت فترة مراجعة خطة الامتثال السنوية بعنوان {{PlanTitle}} دون اتخاذ أي إجراء.",
                             MessageTitleEn = "The annual compliance plan review period for {{PlanTitle}} has ended without any action.",
@@ -800,9 +733,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 10,
                             ActionUrl = "/",
-                            MessageBodyAR = "يرجي التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا لمراجة الخطة بشكل كامل واعتمادها او ارجعها الي الاخصايئ للعمل التعديلات",
+                            MessageBodyAR = "يرجى التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا لمراجة الخطة بشكل كامل واعتمادها او ارجعها الي الاخصائي للعمل التعديلات",
                             MessageBodyEn = "Please intervene to ensure the plan is reviewed. It requires attention to review the plan completely and approve it or return it to the specialist to make amendments.",
-                            MessageTitleAR = "تم عمل خطة الامتثال السنوي من قبل الاخصائي وقبولها من قبل المدير المسؤول الخطة جاهزة لمراجعتك خلال ٧ ايام ",
+                            MessageTitleAR = "تم عمل خطة الامتثال السنوي من قبل الاخصائي وقبولها من قبل المدير المسؤول الخطة جاهزة لمراجعتك خلال ٧ أيام ",
                             MessageTitleEn = "The annual compliance plan has been prepared by the specialist and accepted by the responsible manager. The plan is ready for your review within 7 days.",
                             MessageType = "info",
                             Role = "PerformanceMonitoringManager"
@@ -824,7 +757,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             ActionUrl = "/",
                             MessageBodyAR = "يرجى التأكد من إكمال جميع الخطوات المطلوبة، وتقديم الخطة في الوقت المحدد يعد تقديمك في الوقت المناسب أمرًا بالغ الأهمية لتحقيق أهداف الامتثال\r\nإذا كنت بحاجة إلى مساعدة، يرجى الاتصال بمديرك على الفور للحصول على الخطة في الرابط ادناه",
                             MessageBodyEn = "Please ensure you complete all required steps and submit the plan on time. Your timely submission is critical to achieving compliance goals. If you need assistance, please contact your manager immediately to obtain the plan at the link below.",
-                            MessageTitleAR = "نأسف لإبلاغك بأن مراجعة خطة الامتثال السنوية لم تكتمل في الإطار الزمني المحدد لذا فضلاً يرجي الانتهاء منها في اقرب وقت",
+                            MessageTitleAR = "نأسف لإبلاغك بأن مراجعة خطة الامتثال السنوية لم تكتمل في الإطار الزمني المحدد لذا فضلاً يرجى الانتهاء منها في اقرب وقت",
                             MessageTitleEn = "We regret to inform you that the review of the annual compliance plan was not completed within the specified time frame, so please complete it as soon as possible.",
                             MessageType = "info",
                             Role = "PerformanceMonitoringManager"
@@ -835,9 +768,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             ActionUrl = "/",
                             MessageBodyAR = "يتعين عليك جمع وتحليل البيانات ذات الصلة، واستكمال التقييمات اللازمة، والبدء في صياغة الخطة في النظام. ويجب إكمال عملية الإعداد في غضون 60 يوم عمل بدءًا من اليوم للوصول إلى نموذج إعداد خطة الامتثال، ",
                             MessageBodyEn = "You must collect and analyze relevant data, complete the necessary assessments, and begin drafting the plan in the system. The preparation process must be completed within 20 business days from today to access the compliance plan preparation form.",
-                            MessageTitleAR = "إبدأ الخطة",
+                            MessageTitleAR = "ابدأ الخطة",
                             MessageTitleEn = "Start Plan",
-                            MessageType = "info",
+                            MessageType = "warning",
                             Role = "ComplianceSpecialist"
                         },
                         new
@@ -846,7 +779,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             ActionUrl = "/",
                             MessageBodyAR = "يتعين عليك جمع وتحليل البيانات ذات الصلة، واستكمال التقييمات اللازمة، والبدء في صياغة الخطة في النظام. ويجب إكمال عملية الإعداد في غضون 60 يوم عمل بدءًا من اليوم للوصول إلى نموذج إعداد خطة الامتثال، ",
                             MessageBodyEn = "You must collect and analyze relevant data, complete the necessary assessments, and begin drafting the plan in the system. The preparation process must be completed within 20 business days from today to access the compliance plan preparation form.",
-                            MessageTitleAR = "إبدأ الخطة",
+                            MessageTitleAR = "ابدأ الخطة",
                             MessageTitleEn = "Start Plan",
                             MessageType = "error",
                             Role = "ComplianceSpecialist"
@@ -945,7 +878,7 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             ActionUrl = "/",
                             MessageBodyAR = " وسبب الارجاع {{ReturnReason}}",
                             MessageBodyEn = "Return reason is {{ReturnReason}}",
-                            MessageTitleAR = " تمت اعادة الخطة من قبل مدير الادارة ",
+                            MessageTitleAR = " تمت إعادة الخطة من قبل مدير الادارة ",
                             MessageTitleEn = "The plan has been Returned by the Compliance Manager and .",
                             MessageType = "success",
                             Role = "ComplianceSpecialist"
@@ -956,10 +889,65 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             ActionUrl = "/",
                             MessageBodyAR = " وسبب الارجاع {{ReturnReason}}",
                             MessageBodyEn = "Return reason is {{ReturnReason}}.",
-                            MessageTitleAR = "تمت اعادة الخطة من قبل مدير عام مراقبة الالتزام  ",
+                            MessageTitleAR = "تمت إعادة الخطة من قبل مدير عام مراقبة الالتزام  ",
                             MessageTitleEn = "The plan has been Returned by the Performance Monitoring Manager",
                             MessageType = "success",
                             Role = "ComplianceSpecialist"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ActionUrl = "/",
+                            MessageBodyAR = " يُرجى إكمال الإعداد في أقرب وقت ممكن",
+                            MessageBodyEn = "Please complete the setup as soon as possible.",
+                            MessageTitleAR = "انتهت فترة التحضير",
+                            MessageTitleEn = "The preparation period has ended. ",
+                            MessageType = "error",
+                            Role = "ComplianceSpecialist"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ActionUrl = "/",
+                            MessageBodyAR = " يُرجى اعطاء الموافقة او ارجاع الخطة",
+                            MessageBodyEn = "Please approve or return the Plan as soon as possible.",
+                            MessageTitleAR = "انتهت فترة الموافقة على الخطة",
+                            MessageTitleEn = "The Approval for Plan period has ended. ",
+                            MessageType = "error",
+                            Role = "PerformanceMonitoringManager"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ActionUrl = "/",
+                            MessageBodyAR = " يُرجى اعطاء الموافقة او ارجاع الخطة",
+                            MessageBodyEn = "Please approve or return the Plan as soon as possible.",
+                            MessageTitleAR = "انتهت فترة الموافقة على الخطة",
+                            MessageTitleEn = "The Approval for Plan period has ended. ",
+                            MessageType = "error",
+                            Role = "ComplianceManager"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ActionUrl = "/",
+                            MessageBodyAR = "جاري المراجعة الأن من قبل المدير العام لمراقبة الاداء",
+                            MessageBodyEn = "The plan is currently being reviewed by the Performance Monitoring Manager",
+                            MessageTitleAR = "حالة مراجعة خطة الزيارات",
+                            MessageTitleEn = "Visit Plan Review Status",
+                            MessageType = "success",
+                            Role = "PerformanceMonitoringManager"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ActionUrl = "/",
+                            MessageBodyAR = "جاري المراجعة الأن من قبل المدير المباشر ",
+                            MessageBodyEn = "The plan is currently being reviewed by the Compliance Manager.",
+                            MessageTitleAR = "حالة مراجعة خطة الزيارات",
+                            MessageTitleEn = "Visit Plan Review Status",
+                            MessageType = "info",
+                            Role = "ComplianceManager"
                         },
                         new
                         {
@@ -1014,13 +1002,13 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             MessageTitleAR = "يوجد هناك تضارب في تعيينك ضمن الفريق وبالتالي سيتم استبعادك من الفريق.",
                             MessageTitleEn = "There is a conflict in your assignment to the team and therefore you will be removed from the team.",
                             MessageType = "error",
-                            Role = "ComplianceManager"
+                            Role = "ComplianceSpecialist"
                         },
                         new
                         {
                             Id = 30,
                             ActionUrl = "/",
-                            MessageBodyAR = "لقد تم تعيينك في الزيارة {VisitDate} يرجي العلم بان المدة المحددة لتحميل النماذج وارساله لنا في خلال يومين لتحميل النموذج في الرابط ادناه",
+                            MessageBodyAR = "لقد تم تعيينك في الزيارة {VisitDate} يرجى العلم بان المدة المحددة لتحميل النماذج وارساله لنا في خلال يومين لتحميل النموذج في الرابط ادناه",
                             MessageBodyEn = "You have been appointed for visit {VisitDate} Please note that the time limit for downloading the forms and sending them to us is two days. To download the form, use the link below.",
                             MessageTitleAR = "لقد تم تعيينك في الزيارة {VisitDate} تأكد من ارسال نماذج الإفصاح خلال يومين ",
                             MessageTitleEn = "You have been assigned to {VisitDate}. Please ensure you submit your disclosure forms within 2 days.",
@@ -1115,6 +1103,135 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                             MessageType = "info",
                             Role = "ComplianceSpecialist"
                         });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CommercialOperationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ComplianceDetailId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FacilityOrLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InspectionScope")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("LicenseID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LicenseIssueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Recommendation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ReportStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReportTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SiteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VisitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("VisitTypeID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceDetailId");
+
+                    b.ToTable("ComplianceReports");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReportReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ComplianceReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReasonForReturn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReviewedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReviewerRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ComplianceReportReviews");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceRequest", b =>
@@ -1297,6 +1414,57 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.ToTable("ComplianceSpecialist");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitDisclosure", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ComplianceVisitSpecialistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasConflicts")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SurveyNotes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceVisitSpecialistId")
+                        .IsUnique();
+
+                    b.ToTable("ComplianceVisitDisclosure");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitSpecialist", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1348,15 +1516,166 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SurveyNotes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ComplianceDetailsId");
 
                     b.ToTable("ComplianceVisitSpecialist");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveActionPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LicenseEntityID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("CorrectiveActionPlans");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveEvidence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EvidenceStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("CorrectiveEvidences");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.DocumentExtensionRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ComplianceDetailsID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DecisionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExtensionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FinalDays")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("LicensedEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LicensedEntityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RequestedDays")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceDetailsID");
+
+                    b.HasIndex("LicensedEntityId");
+
+                    b.ToTable("DocumentExtensionRequest");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ExtensionStatusHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ActionAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ActionByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NewFinalDays")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OldStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("ExtensionStatusHistories");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.License", b =>
@@ -1441,6 +1760,44 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.ToTable("License");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.LicenseParticipant", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReportID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReportID");
+
+                    b.ToTable("LicenseParticipants");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", b =>
                 {
                     b.Property<long>("Id")
@@ -1466,6 +1823,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LicenseNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedByEmail")
                         .HasColumnType("nvarchar(max)");
@@ -1498,8 +1858,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 1L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1533),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1542),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0001",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مرافق البحر الأحمر المشتركة",
                             ValueEn = "Red Sea Joint Facilities"
                         },
@@ -1507,8 +1868,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 2L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1545),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1546),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0002",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نيوم",
                             ValueEn = "NEOM"
                         },
@@ -1516,8 +1878,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 3L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1547),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1548),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0003",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة المياه الوطنية",
                             ValueEn = "National Water Company"
                         },
@@ -1525,8 +1888,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 4L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1549),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1549),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0004",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة الفتح الدولية لأعمال المياه والكهرباء",
                             ValueEn = "Al-Fath International Water and Electricity Works Company"
                         },
@@ -1534,8 +1898,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 5L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1550),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1550),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0005",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المؤسسة العامة لتحلية مياه الشرب",
                             ValueEn = "Public Corporation for Potable Water Conversion"
                         },
@@ -1543,8 +1908,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 6L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1552),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1552),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0006",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة الركاب للكهرباء في الجبيل وينبع",
                             ValueEn = "Al-Rakab Electricity Company in Jubail and Yanbu"
                         },
@@ -1552,8 +1918,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 7L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1553),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1554),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0007",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة مشروع شيبة لتنمية المياه",
                             ValueEn = "Shaiba Project Company for Water Development"
                         },
@@ -1561,8 +1928,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 8L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1555),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1555),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0008",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الشركة الشقيقة الثالثة",
                             ValueEn = "Third Sister Company"
                         },
@@ -1570,8 +1938,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 9L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1556),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1557),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0009",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة رابغ الثالثة",
                             ValueEn = "Rabigh Third Company"
                         },
@@ -1579,8 +1948,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 10L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1558),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1559),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0010",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الشركة السعودية لشراكات المياه",
                             ValueEn = "Saudi Water Partnership Company"
                         },
@@ -1588,8 +1958,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 11L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1560),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1560),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0011",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة محطة العلم العلمية",
                             ValueEn = "Al-Alam Scientific Station Company"
                         },
@@ -1597,8 +1968,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 12L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1561),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1561),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0012",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة جزالة",
                             ValueEn = "Jazalah Company"
                         },
@@ -1606,8 +1978,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 13L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1562),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1563),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0013",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "كندا",
                             ValueEn = "Canada"
                         },
@@ -1615,8 +1988,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 14L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1564),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1564),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0014",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "سواكو",
                             ValueEn = "SWACO"
                         },
@@ -1624,8 +1998,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 15L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1565),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1566),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0015",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة شاس للمقاولات",
                             ValueEn = "Shas Contracting"
                         },
@@ -1633,8 +2008,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 16L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1567),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1567),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0016",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة شاس لخدمات المياه",
                             ValueEn = "Shas Water Services"
                         },
@@ -1642,8 +2018,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 17L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1568),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1569),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0017",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "درر أبشر",
                             ValueEn = "Durar Absher"
                         },
@@ -1651,8 +2028,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 18L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1570),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1571),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0018",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة عبد العزيز بن عثمان بن سلمة وشركاؤه للمياه",
                             ValueEn = "Abdulaziz bin Othman bin Salma and Partners Water Company"
                         },
@@ -1660,8 +2038,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 19L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1574),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1575),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0019",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة عبد العزيز بن عثمان بن سلمة وشركاؤه للتجارة",
                             ValueEn = "Abdulaziz bin Othman bin Salma and Partners for Trade"
                         },
@@ -1669,8 +2048,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 20L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1576),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1577),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0020",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المقاولات والنقل",
                             ValueEn = "Contracting and Transport"
                         },
@@ -1678,8 +2058,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 21L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1578),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1578),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0021",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مؤسسة عبد الله محمد السعد لتحلية المياه",
                             ValueEn = "Abdullah Mohammed Al-Saad Water Desalination Establishment"
                         },
@@ -1687,8 +2068,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 22L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1579),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1580),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0022",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مؤسسة عبد الرزاق العبد الكريم علي بن عبد الرزاق العبد الكريم للمقاولات",
                             ValueEn = "Abdulrazaq Al-Abdulkarim Ali bin Abdulrazaq Al-Abdulkarim Contracting Establishment"
                         },
@@ -1696,8 +2078,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 23L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1581),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1581),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0023",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "حسن عبد الله العماري",
                             ValueEn = "Hassan Abdullah Al-Amari"
                         },
@@ -1705,8 +2088,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 24L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1582),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1583),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0024",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة ينبع الدولية للطيران",
                             ValueEn = "Yanbu International Aviation Company"
                         },
@@ -1714,8 +2098,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 25L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1584),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1584),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0025",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة نقل وتقنية المياه",
                             ValueEn = "Water Transport and Technology Company"
                         },
@@ -1723,8 +2108,9 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 26L,
                             CategoryId = 1L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1585),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1586),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LicenseNumber = "LIC-2025-01-0026",
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "أخرى",
                             ValueEn = "Another"
                         },
@@ -1732,8 +2118,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 27L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1587),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1587),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "إنتاج المياه المحلاة",
                             ValueEn = "Desalinated water production"
                         },
@@ -1741,8 +2127,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 28L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1588),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1588),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "معالجة مياه الصرف الصحي",
                             ValueEn = "Wastewater treatment"
                         },
@@ -1750,8 +2136,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 29L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1589),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1590),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "التخزين الاستراتيجي",
                             ValueEn = "Strategic storage"
                         },
@@ -1759,8 +2145,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 30L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1591),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1591),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "إنتاج المياه النقية",
                             ValueEn = "Purified water production"
                         },
@@ -1768,8 +2154,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 31L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1592),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1593),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "التخزين الاستراتيجي",
                             ValueEn = "Strategic storage"
                         },
@@ -1777,8 +2163,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 32L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1594),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1594),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "توزيع المياه المحلاة والمنقاة",
                             ValueEn = "Desalinated and purified water distribution"
                         },
@@ -1786,8 +2172,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 33L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1595),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1596),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المشتري الرئيسي",
                             ValueEn = "Main buyer"
                         },
@@ -1795,8 +2181,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 34L,
                             CategoryId = 2L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1597),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1598),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المحطات الصغيرة",
                             ValueEn = "Mini-stations"
                         },
@@ -1804,8 +2190,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 35L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1599),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1599),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "RO",
                             ValueEn = "RO"
                         },
@@ -1813,8 +2199,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 36L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1600),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1601),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة معالجة مياه الصرف الصحي ١",
                             ValueEn = "STP1"
                         },
@@ -1822,8 +2208,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 37L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1602),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1602),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة ضباء",
                             ValueEn = "Duba Station"
                         },
@@ -1831,8 +2217,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 38L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1603),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1604),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة سعد",
                             ValueEn = "Saad Station"
                         },
@@ -1840,8 +2226,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 39L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1604),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1605),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة الخبر ١",
                             ValueEn = "Al Khobar Station 1"
                         },
@@ -1849,8 +2235,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 40L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1606),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1606),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة الخبر ٢",
                             ValueEn = "Al Khobar Station 2"
                         },
@@ -1858,8 +2244,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 41L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1607),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1608),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "بريمان - المرحلة ١ و٢",
                             ValueEn = "Breiman Phase 1 and 2"
                         },
@@ -1867,8 +2253,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 42L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1610),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1610),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "لم يُحدد بعد",
                             ValueEn = "TBD"
                         },
@@ -1876,8 +2262,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 43L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1611),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1611),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "خزانات عرعر",
                             ValueEn = "Arar Tanks"
                         },
@@ -1885,8 +2271,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 44L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1612),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1613),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "خزانات طريف",
                             ValueEn = "Turaif Tanks"
                         },
@@ -1894,8 +2280,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 45L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1614),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1614),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مشروع النرجس",
                             ValueEn = "Al Narjis Project"
                         },
@@ -1903,8 +2289,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 46L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1615),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1616),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "أبها (أم الركب)",
                             ValueEn = "Abha (Umm Al Rukb)"
                         },
@@ -1912,8 +2298,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 47L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1617),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1617),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "خزان بلجرشي",
                             ValueEn = "Baljurashi Tank"
                         },
@@ -1921,8 +2307,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 48L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1618),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1619),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "خزان جازان",
                             ValueEn = "Jazan Tank"
                         },
@@ -1930,8 +2316,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 49L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1619),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1620),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة تحلية مياه البحر الفاتح",
                             ValueEn = "Al Fateh Seawater Desalination Plant"
                         },
@@ -1939,8 +2325,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 50L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1621),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1622),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جدة RO٣",
                             ValueEn = "Jeddah RO3"
                         },
@@ -1948,8 +2334,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 51L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1623),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1623),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة تحلية مياه الخبر RO٢",
                             ValueEn = "Al Khobar RO 2"
                         },
@@ -1957,8 +2343,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 52L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1624),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1625),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة تحلية مياه البحر في مدينة الجبيل الصناعية - المرحلة ١",
                             ValueEn = "Jubail Industrial City SWRO Stage 1"
                         },
@@ -1966,8 +2352,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 53L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1626),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1626),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المرحلتان ٢-٣",
                             ValueEn = "Stage 2-3"
                         },
@@ -1975,8 +2361,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 54L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1627),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1628),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المرحلة ٥",
                             ValueEn = "Stage 5"
                         },
@@ -1984,8 +2370,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 55L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1629),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1629),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شبكة مياه الشرب",
                             ValueEn = "Drinking Water Network"
                         },
@@ -1993,8 +2379,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 56L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1633),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1635),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "خزانات مياه ينبع العامة في مشروع تطوير مياه الشعيبة - المرحلة السادسة",
                             ValueEn = "Yanbu PRW Tanks at PSDP-6"
                         },
@@ -2002,8 +2388,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 57L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1636),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1636),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة مشروع تطوير مياه الشعيبة الثاني",
                             ValueEn = "Shuaiba 2nd Water Development Project Company"
                         },
@@ -2011,8 +2397,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 58L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1637),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1637),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة الشقيق الثالثة للمياه",
                             ValueEn = "Al Shuqaiq 3rd Water Company"
                         },
@@ -2020,8 +2406,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 59L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1638),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1639),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة رابغ الثالثة",
                             ValueEn = "Rabigh 3rd Company"
                         },
@@ -2029,8 +2415,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 60L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1640),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1640),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "العقود",
                             ValueEn = "Contracts"
                         },
@@ -2038,8 +2424,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 61L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1641),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1642),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة مياه الطائف المستقلة",
                             ValueEn = "Taif Independent Water Plant"
                         },
@@ -2047,8 +2433,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 62L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1643),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1643),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة جزلة",
                             ValueEn = "Jazlah Station"
                         },
@@ -2056,8 +2442,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 63L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1644),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1644),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة رابغ",
                             ValueEn = "Rabigh Station"
                         },
@@ -2065,8 +2451,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 64L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1645),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1646),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة ميناء جدة الإسلامي",
                             ValueEn = "Jeddah Islamic Port Station"
                         },
@@ -2074,8 +2460,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 65L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1647),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1647),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "أبحر الشمالية",
                             ValueEn = "North Obhur"
                         },
@@ -2083,8 +2469,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 66L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1649),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1649),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة إنتاج ومعالجة مياه شآس",
                             ValueEn = "Shaas Water Production and Treatment Plant"
                         },
@@ -2092,8 +2478,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 67L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1650),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1651),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة شآس لخدمات المياه المحدودة",
                             ValueEn = " Shaas Water Services Company Limited"
                         },
@@ -2101,8 +2487,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 68L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1652),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1652),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة تحلية المقبل",
                             ValueEn = "Al Muqbil Desalination Plant"
                         },
@@ -2110,8 +2496,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 69L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1653),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1654),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة عبد العزيز بن سلمى",
                             ValueEn = "Abdulaziz Bin Salma Company"
                         },
@@ -2119,8 +2505,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 70L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1655),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1655),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شركة عبد العزيز بن سلمى، محطة سعد",
                             ValueEn = "Abdulaziz Bin Salma Company, Saad Station"
                         },
@@ -2128,8 +2514,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 71L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1656),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1656),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة عبد الكريم",
                             ValueEn = "Abdulkarim Station"
                         },
@@ -2137,8 +2523,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 72L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1657),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1658),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المحطة ١",
                             ValueEn = "Station 1"
                         },
@@ -2146,8 +2532,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 73L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1659),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1659),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "محطة ينبع المستقلة لإنتاج المياه",
                             ValueEn = "Yanbu Independent Water Production Plant"
                         },
@@ -2155,8 +2541,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 74L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1660),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1661),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شبكة الجبيل",
                             ValueEn = "Jubail System"
                         },
@@ -2164,8 +2550,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 75L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1662),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1662),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نظام رأس الخير",
                             ValueEn = "System Ras Al Khair"
                         },
@@ -2173,8 +2559,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 76L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1663),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1664),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نظام ينبع - المدينة المنورة",
                             ValueEn = "Yanbu - Madinah System"
                         },
@@ -2182,8 +2568,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 77L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1664),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1665),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نظام نقل الشقيق",
                             ValueEn = "Shaqiq Transport System"
                         },
@@ -2191,8 +2577,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 78L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1667),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1667),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نظام نقل الشعيبة",
                             ValueEn = "Shuaiba Transport System"
                         },
@@ -2200,8 +2586,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 79L,
                             CategoryId = 3L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1668),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1669),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "نظام نقل رابغ",
                             ValueEn = "Rabigh Transport System"
                         },
@@ -2209,8 +2595,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 80L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1670),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1670),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "أملج",
                             ValueEn = "Umluj"
                         },
@@ -2218,8 +2604,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 81L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1671),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1672),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "ضباء",
                             ValueEn = "Duba"
                         },
@@ -2227,8 +2613,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 82L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1673),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1673),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "سعد",
                             ValueEn = "Saad"
                         },
@@ -2236,8 +2622,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 83L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1674),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1675),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "المدينة المنورة",
                             ValueEn = "Al-Madinah"
                         },
@@ -2245,8 +2631,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 84L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1676),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1676),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "عرعر",
                             ValueEn = "Arar"
                         },
@@ -2254,8 +2640,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 85L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1677),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1678),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "طريف",
                             ValueEn = "Tarif"
                         },
@@ -2263,8 +2649,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 86L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1679),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1679),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الرياض",
                             ValueEn = "Riyadh"
                         },
@@ -2272,8 +2658,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 87L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1680),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1680),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "أبها",
                             ValueEn = "Abha"
                         },
@@ -2281,8 +2667,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 88L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1681),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1682),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الباحة",
                             ValueEn = "Al-Baha"
                         },
@@ -2290,8 +2676,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 89L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1683),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1683),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جازان",
                             ValueEn = "Jazan"
                         },
@@ -2299,8 +2685,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 90L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1686),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1686),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جدة",
                             ValueEn = "Jeddah"
                         },
@@ -2308,8 +2694,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 91L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1687),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1688),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الخبر",
                             ValueEn = "Al-Khobar"
                         },
@@ -2317,8 +2703,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 92L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1689),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1689),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "رابغ",
                             ValueEn = "Rabigh"
                         },
@@ -2326,8 +2712,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 93L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1690),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1691),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الطائف",
                             ValueEn = "Taif"
                         },
@@ -2335,8 +2721,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 94L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1692),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1692),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الجبيل",
                             ValueEn = "Jubail"
                         },
@@ -2344,8 +2730,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 95L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1693),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1693),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "رابغ",
                             ValueEn = "Rabigh"
                         },
@@ -2353,8 +2739,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 96L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1696),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1696),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جدة",
                             ValueEn = "Jeddah"
                         },
@@ -2362,8 +2748,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 97L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1697),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1698),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "رأس الخير",
                             ValueEn = "Ras Al-Khair"
                         },
@@ -2371,8 +2757,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 98L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1699),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1699),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "ينبع-المدينة المنورة",
                             ValueEn = "Yanbu-Al-Madinah"
                         },
@@ -2380,8 +2766,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 99L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1700),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1700),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الشقيق",
                             ValueEn = "Al-Shaqiq"
                         },
@@ -2389,8 +2775,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 100L,
                             CategoryId = 4L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1701),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1702),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الشعيبة",
                             ValueEn = "Al-Shuaiba"
                         },
@@ -2398,8 +2784,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 101L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1703),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1703),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الأول - يناير",
                             ValueEn = "First Quarter - January"
                         },
@@ -2407,8 +2793,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 102L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1704),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1705),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الأول - فبراير",
                             ValueEn = "First Quarter - February"
                         },
@@ -2416,8 +2802,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 103L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1706),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1706),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الأول - مارس",
                             ValueEn = "First Quarter - March"
                         },
@@ -2425,8 +2811,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 104L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1707),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1708),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثاني - ابريل",
                             ValueEn = "Second Quarter - April"
                         },
@@ -2434,8 +2820,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 105L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1709),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1709),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثاني - مايو",
                             ValueEn = "Second Quarter - May"
                         },
@@ -2443,8 +2829,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 106L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1710),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1710),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثاني - يونية",
                             ValueEn = "Second Quarter - June"
                         },
@@ -2452,8 +2838,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 107L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1711),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1712),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثالث - يوليو",
                             ValueEn = "Third Quarter - July"
                         },
@@ -2461,8 +2847,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 108L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1713),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1713),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثالث - اغسطس",
                             ValueEn = "Third Quarter - August"
                         },
@@ -2470,8 +2856,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 109L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1714),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1715),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الثالث - سيبتمبر",
                             ValueEn = "Third Quarter - September"
                         },
@@ -2479,8 +2865,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 110L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1716),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1716),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الرابع - اكتوبر",
                             ValueEn = "Forth Quarter - October"
                         },
@@ -2488,8 +2874,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 111L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1717),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1718),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الرابع - نوفمبر",
                             ValueEn = "Forth Quarter - November"
                         },
@@ -2497,8 +2883,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 112L,
                             CategoryId = 5L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1719),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1719),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الربع الرابع - ديسمبر",
                             ValueEn = "Forth Quarter - December"
                         },
@@ -2506,8 +2892,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 113L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1720),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1720),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "روتينية",
                             ValueEn = "routine"
                         },
@@ -2515,8 +2901,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 114L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1721),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1722),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "متابعة",
                             ValueEn = "follow-up"
                         },
@@ -2524,8 +2910,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 115L,
                             CategoryId = 6L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1723),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1723),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "شكوى",
                             ValueEn = "complaint"
                         },
@@ -2533,8 +2919,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 116L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1724),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1725),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جديد",
                             ValueEn = "New"
                         },
@@ -2542,8 +2928,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 117L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1726),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1726),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "قيد الانتظار والمراجعة مدير الاداره",
                             ValueEn = "Pending Review  the Compliance Manager"
                         },
@@ -2551,8 +2937,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 118L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1727),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1727),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "قيد الانتظار والمراجعة مدير عام مراجعة الاداء",
                             ValueEn = "Pending Review the Performance Monitoring Manager"
                         },
@@ -2560,8 +2946,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 119L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1729),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1729),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "قبول المدير الادارة",
                             ValueEn = "Approval of Compliance Manager"
                         },
@@ -2569,8 +2955,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 120L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1730),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1730),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "قبول مدير عام مراجعة الاداء",
                             ValueEn = "Approval of the Performance Monitoring Manager"
                         },
@@ -2578,8 +2964,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 121L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1731),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1732),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "ارجاع من المدير الادارة",
                             ValueEn = "Return Plan of Compliance Manager"
                         },
@@ -2587,8 +2973,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 122L,
                             CategoryId = 7L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1733),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1733),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "ارجاع من مدير عام مراجعة الاداء",
                             ValueEn = "Return Plan of the Performance Monitoring Manager"
                         },
@@ -2596,8 +2982,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 123L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1734),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1735),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مجدولة",
                             ValueEn = "Scheduled"
                         },
@@ -2605,8 +2991,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 124L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1736),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1736),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "تمت إعادة جدولة",
                             ValueEn = "Rescheduled"
                         },
@@ -2614,8 +3000,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 125L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1737),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1737),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "الإفصاح عن تضارب المصالح",
                             ValueEn = "Conflict Of Interest Disclosure"
                         },
@@ -2623,8 +3009,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 126L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1738),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1739),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "جديد",
                             ValueEn = "New"
                         },
@@ -2632,8 +3018,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 127L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1740),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1740),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "طلب إعادة جدولة",
                             ValueEn = "RescheduleRequested"
                         },
@@ -2641,8 +3027,8 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 128L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1741),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1742),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "مكتملة",
                             ValueEn = "Completed"
                         },
@@ -2650,11 +3036,952 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         {
                             Id = 129L,
                             CategoryId = 8L,
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1743),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(1743),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ValueAr = "ملغية",
                             ValueEn = "Cancelled"
+                        },
+                        new
+                        {
+                            Id = 130L,
+                            CategoryId = 8L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "تم حل تضارب المصالح",
+                            ValueEn = "Conflict Of Interest Resolved"
+                        },
+                        new
+                        {
+                            Id = 131L,
+                            CategoryId = 8L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "لا يوجد عضو فريق متاح",
+                            ValueEn = "No Team Member Available"
+                        },
+                        new
+                        {
+                            Id = 132L,
+                            CategoryId = 9L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "مرفقات الزيارة",
+                            ValueEn = "VisitAttachment"
+                        },
+                        new
+                        {
+                            Id = 133L,
+                            CategoryId = 9L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "المرفقات التابعة للتقارير",
+                            ValueEn = "ReportSendAttachment"
+                        },
+                        new
+                        {
+                            Id = 134L,
+                            CategoryId = 9L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "المرفقات الرد للتقارير",
+                            ValueEn = "ReportReplyAttachment"
+                        },
+                        new
+                        {
+                            Id = 135L,
+                            CategoryId = 10L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "Initial ",
+                            ValueEn = "أولي"
+                        },
+                        new
+                        {
+                            Id = 136L,
+                            CategoryId = 10L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "Final ",
+                            ValueEn = "نهائي"
+                        },
+                        new
+                        {
+                            Id = 137L,
+                            CategoryId = 11L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "Compleated ",
+                            ValueEn = "مكتملة"
+                        },
+                        new
+                        {
+                            Id = 138L,
+                            CategoryId = 11L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "Remaining ",
+                            ValueEn = "متوقفة"
+                        },
+                        new
+                        {
+                            Id = 139L,
+                            CategoryId = 9L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "مرفقات التقارير",
+                            ValueEn = "ReportAttachment"
+                        },
+                        new
+                        {
+                            Id = 140L,
+                            CategoryId = 9L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "مرفقات الخطة التصحيحية",
+                            ValueEn = "CorrectPlanAttachment"
+                        },
+                        new
+                        {
+                            Id = 141L,
+                            CategoryId = 7L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "أخصائي الامتثال متاخر في اعداد الخطة",
+                            ValueEn = "Compliance Specialist Preparing Delayed"
+                        },
+                        new
+                        {
+                            Id = 142L,
+                            CategoryId = 7L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "مدير الامتثال متاخر",
+                            ValueEn = "Compliance Manager Overdue"
+                        },
+                        new
+                        {
+                            Id = 143L,
+                            CategoryId = 7L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "مدير مراقبة الأداء متأخر",
+                            ValueEn = "Peformance Monitoring Manager Overdue"
+                        },
+                        new
+                        {
+                            Id = 144L,
+                            CategoryId = 12L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "البريد الالكتروني",
+                            ValueEn = "Email"
+                        },
+                        new
+                        {
+                            Id = 145L,
+                            CategoryId = 12L,
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ValueAr = "رسائل نصية",
+                            ValueEn = "SMS"
                         });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.PreviousRecommendations", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompletionStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ReportID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("VisitDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReportID")
+                        .IsUnique();
+
+                    b.ToTable("PreviousRecommendations");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Questaion", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EntryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EntryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Evidence")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvidencePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReportID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("SubCategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubCategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReportID");
+
+                    b.ToTable("Questaions");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "Legal & Regulation",
+                            NameAr = "القانونية والتنظيمية"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "Financial",
+                            NameAr = "مالي"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "Technical",
+                            NameAr = "فني"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "Consumer Service",
+                            NameAr = "خدمة المستهلك"
+                        });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportEntries", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupCategoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupCategoryID");
+
+                    b.ToTable("ReportEntries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 111,
+                            IsDeleted = false,
+                            Name = "Complied with licensed facility's design capacity data",
+                            NameAr = "الامتثال لبيانات الطاقة التصميمية للمنشأة المرخصة",
+                            SupCategoryID = 11
+                        },
+                        new
+                        {
+                            Id = 112,
+                            IsDeleted = false,
+                            Name = "Implemented recommendations from previous audits within defined period",
+                            NameAr = "تنفيذ التوصيات من عمليات التدقيق السابقة ضمن الفترة المحددة",
+                            SupCategoryID = 11
+                        },
+                        new
+                        {
+                            Id = 113,
+                            IsDeleted = false,
+                            Name = "Provided data/information requested by SWA in an approved format",
+                            NameAr = "تقديم البيانات/المعلومات المطلوبة من الهيئة بالصيغة المعتمدة",
+                            SupCategoryID = 11
+                        },
+                        new
+                        {
+                            Id = 114,
+                            IsDeleted = false,
+                            Name = "Supported audit team and complied with requests",
+                            NameAr = "دعم فريق التدقيق والامتثال للطلبات",
+                            SupCategoryID = 11
+                        },
+                        new
+                        {
+                            Id = 121,
+                            IsDeleted = false,
+                            Name = "Obtained a land title deed for licensed facility/asset",
+                            NameAr = "الحصول على صك ملكية للأصل أو المنشأة المرخصة",
+                            SupCategoryID = 12
+                        },
+                        new
+                        {
+                            Id = 122,
+                            IsDeleted = false,
+                            Name = "Obtained a valid license or permit as per law",
+                            NameAr = "الحصول على ترخيص أو تصريح ساري حسب النظام",
+                            SupCategoryID = 12
+                        },
+                        new
+                        {
+                            Id = 123,
+                            IsDeleted = false,
+                            Name = "Obtained required approvals for mergers/acquisitions",
+                            NameAr = "الحصول على الموافقات اللازمة للاندماجات أو الاستحواذات",
+                            SupCategoryID = 12
+                        },
+                        new
+                        {
+                            Id = 131,
+                            IsDeleted = false,
+                            Name = "Established compliance department and defined job descriptions",
+                            NameAr = "إنشاء إدارة امتثال وتحديد الوصف الوظيفي",
+                            SupCategoryID = 13
+                        },
+                        new
+                        {
+                            Id = 132,
+                            IsDeleted = false,
+                            Name = "Submitted and obtained approval for the compliance plan",
+                            NameAr = "تقديم واعتماد خطة الامتثال",
+                            SupCategoryID = 13
+                        },
+                        new
+                        {
+                            Id = 211,
+                            IsDeleted = false,
+                            Name = "Established an updated fixed asset register (FAR)",
+                            NameAr = "إعداد سجل الأصول الثابتة المحدّث",
+                            SupCategoryID = 21
+                        },
+                        new
+                        {
+                            Id = 212,
+                            IsDeleted = false,
+                            Name = "Implemented separate accounts for licensed activities",
+                            NameAr = "تطبيق حسابات منفصلة للأنشطة المرخصة",
+                            SupCategoryID = 21
+                        },
+                        new
+                        {
+                            Id = 221,
+                            IsDeleted = false,
+                            Name = "Submitted annual audited financial statements",
+                            NameAr = "تقديم القوائم المالية السنوية المدققة",
+                            SupCategoryID = 22
+                        },
+                        new
+                        {
+                            Id = 222,
+                            IsDeleted = false,
+                            Name = "Provided valid and accurate commercial agreements",
+                            NameAr = "تقديم اتفاقيات تجارية صحيحة ودقيقة",
+                            SupCategoryID = 22
+                        },
+                        new
+                        {
+                            Id = 223,
+                            IsDeleted = false,
+                            Name = "Submitted and obtained approval for revenue management method",
+                            NameAr = "تقديم واعتماد آلية إدارة الإيرادات",
+                            SupCategoryID = 22
+                        },
+                        new
+                        {
+                            Id = 311,
+                            IsDeleted = false,
+                            Name = "Mechanism for monitoring and controlling water quality",
+                            NameAr = "آلية مراقبة وضبط جودة المياه",
+                            SupCategoryID = 31
+                        },
+                        new
+                        {
+                            Id = 312,
+                            IsDeleted = false,
+                            Name = "Established operational plans",
+                            NameAr = "إعداد خطط تشغيلية",
+                            SupCategoryID = 31
+                        },
+                        new
+                        {
+                            Id = 313,
+                            IsDeleted = false,
+                            Name = "Established maintenance and incident reporting plans",
+                            NameAr = "إعداد خطط الصيانة والتقارير عن الحوادث",
+                            SupCategoryID = 31
+                        },
+                        new
+                        {
+                            Id = 314,
+                            IsDeleted = false,
+                            Name = "Established risk and emergency management plans",
+                            NameAr = "إعداد خطط إدارة المخاطر والطوارئ",
+                            SupCategoryID = 31
+                        },
+                        new
+                        {
+                            Id = 321,
+                            IsDeleted = false,
+                            Name = "Complied with KSA localization and operational performance standards",
+                            NameAr = "الامتثال لمعايير التوطين والأداء التشغيلي في المملكة",
+                            SupCategoryID = 32
+                        },
+                        new
+                        {
+                            Id = 322,
+                            IsDeleted = false,
+                            Name = "Disposed wastewater treated as per standards",
+                            NameAr = "تصريف مياه الصرف الصحي المعالجة حسب المعايير",
+                            SupCategoryID = 32
+                        },
+                        new
+                        {
+                            Id = 411,
+                            IsDeleted = false,
+                            Name = "Kept encrypted consumer data, restricting access to required employees",
+                            NameAr = "حفظ بيانات المستهلك بشكل مشفر وتقييد الوصول",
+                            SupCategoryID = 41
+                        },
+                        new
+                        {
+                            Id = 412,
+                            IsDeleted = false,
+                            Name = "Made service information publicly available",
+                            NameAr = "إتاحة معلومات الخدمة للعامة",
+                            SupCategoryID = 41
+                        },
+                        new
+                        {
+                            Id = 421,
+                            IsDeleted = false,
+                            Name = "Established a call center for consumer inquiries",
+                            NameAr = "إنشاء مركز اتصال لاستفسارات المستهلك",
+                            SupCategoryID = 42
+                        },
+                        new
+                        {
+                            Id = 422,
+                            IsDeleted = false,
+                            Name = "Provided training for employees dealing with consumers",
+                            NameAr = "تقديم تدريب للموظفين للتعامل مع المستهلكين",
+                            SupCategoryID = 42
+                        });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportRequestActivity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ComplianceDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsReply")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedByUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReplyComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RequestComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceDetailsId");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("ReportRequestActivities");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportSubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("ReportSubCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 11,
+                            CategoryID = 1,
+                            IsDeleted = false,
+                            Name = "Compliance",
+                            NameAr = "الامتثال"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryID = 1,
+                            IsDeleted = false,
+                            Name = "Licensing requirements",
+                            NameAr = "متطلبات الترخيص"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryID = 1,
+                            IsDeleted = false,
+                            Name = "Organization & capabilities",
+                            NameAr = "الهيكل التنظيمي والقدرات"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CategoryID = 2,
+                            IsDeleted = false,
+                            Name = "Accounting requirements",
+                            NameAr = "متطلبات المحاسبة"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CategoryID = 2,
+                            IsDeleted = false,
+                            Name = "Financial information",
+                            NameAr = "المعلومات المالية"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CategoryID = 3,
+                            IsDeleted = false,
+                            Name = "Organization & capabilities",
+                            NameAr = "الهيكل التنظيمي والقدرات"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CategoryID = 3,
+                            IsDeleted = false,
+                            Name = "Regulatory requirements",
+                            NameAr = "المتطلبات التنظيمية"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CategoryID = 4,
+                            IsDeleted = false,
+                            Name = "Consumer information",
+                            NameAr = "معلومات المستهلك"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CategoryID = 4,
+                            IsDeleted = false,
+                            Name = "Consumer satisfaction",
+                            NameAr = "رضا المستهلك"
+                        });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.RescheduleRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ComplianceDetailsID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("LicensedEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ProposedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequestedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReviewedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceDetailsID");
+
+                    b.ToTable("RescheduleRequests");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Template", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TemplateTypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TemplateTypeId");
+
+                    b.ToTable("Templates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Content = "<!DOCTYPE html>\r\n                                <html lang='en' dir='rtl'>\r\n                                <head>\r\n                                    <meta charset='UTF-8' />\r\n                                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                                    <!-- <title>Document</title> -->\r\n                                    <style>\r\n                                        @font-face {\r\n                                            font-family: 'IBM Plex Sans';\r\n                                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                                        }\r\n                                    </style>\r\n                                </head>\r\n                                <body>\r\n                                    <!-- <div width='708'>\r\n\r\n                                    </div> -->\r\n                                    <center>\r\n                                        <table width='708px'\r\n                                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                                               cellpadding='0'\r\n                                               border='0'\r\n                                               cellspacing='0'>\r\n                                            <!-- email navbar start -->\r\n                                            <tr>\r\n                                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                                    <div>\r\n                                                        <img src='data:image/png;base64,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'\r\n                                                             alt='swa icon' />\r\n                                                    </div>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- email navbar end -->\r\n                                            <!-- send from start -->\r\n                                            <tr>\r\n                                                <td>\r\n                                                    <p>\r\n                                                        <span>من /</span>\r\n                                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                                        <span>النظام </span>\r\n                                                    </p>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- subject  start -->\r\n                                            <tr>\r\n                                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                                background: #07DDB9;  font-weight: 700;'>\r\n                                                    <p>\r\n                                                        <span>الموضوع: </span>\r\n                                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                                        <span> اشعار بالبدء تعيين اخصائي للقيام بإعداد خطة الامتثال السنوية </span>\r\n                                                    </p>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- subject  end -->\r\n                                            <!-- subtitle start -->\r\n                                            <tr>\r\n                                                <td>\r\n                                                    <p>\r\n                                                        <span>عزيزي: </span>\r\n                                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                                        <span>{{EmployeeName}} </span>\r\n                                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                                        <span>هذا تذكير بأنه قد حان الوقت للبدء بتعيين اخصائي للقيام بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                                    </p>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- subtitle end -->\r\n                                            <!-- details start -->\r\n\r\n                                            <!-- details end -->\r\n                                            <!-- url start -->\r\n                                            <tr>\r\n                                                <td>\r\n                                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                                        <span>\r\n                                                            يرجى تعيين الاخصائي الذي يقوم بوضع الخطة السنوية للامتثال . استخدم الرابط أدناه لإكمال هذه المهمة\r\n                                                        </span>\r\n                                                         <span style='float: left;'>\r\n                                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                                                رابط لتعيين الفريق\r\n                                                            </a>\r\n                                                        </span>\r\n                                                    </div>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- url end -->\r\n                                            <!-- footer start -->\r\n                                            <tr>\r\n                                                <td style='padding-top: 50px; float: left;'>\r\n                                                    <p>\r\n                                                        اطيب التحيات ,,,\r\n                                                    </p>\r\n                                                    <p style='\r\n                                    font-style: normal;\r\n                                    font-weight: 600;'>\r\n                                                        الهيئة السعودية للمياه\r\n                                                    </p>\r\n                                                </td>\r\n                                            </tr>\r\n                                            <!-- footer end -->\r\n                                        </table>\r\n                                    </center>\r\n                                </body>\r\n                                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "ابدأ في إعداد الخطة في 10 سبتمبر",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAABjCAYAAABda7TNAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAB11SURBVHgB7Z0HfBXF1sD3phBKCFJCEwggUg3oU0SKCHyKiiCCDwuCGDqilAiC8FCk96Y0pQQQpPfeQw8QIPTQQie0EEILIeR+/zPuxs0liQlJHoG35/e7ye7M7MzsnDOnzsxqmgUWWGCBBRZYYIEFFlhggQUWWGCBBRZYkP7AWXv6wCmBdJv+syAJ8LQNlBDqw2+//datdu3aTc+dO5czU6ZM4Q8fPjzw+++/H968efNVvZxBBDGaBc8E2Nq2bZvTbrdHhoeH+9+8eXNaRETEwuvXrx8m7Q6/iEuXLk1t06ZNUdMzTpoFTz9cu3Zt15kzZ76PL69Hjx7ex48fXwEB2G/fvn0sMDCwhin7aRRr//MgbFsh7v79+xFz584to8UVUzbz/6+++iojHGG5/S8I2bFjx2emshYBPCUgrFohFJa+GcTvTkJ5xd6Z/W/pyL/F78rKlSvf1ss4a5YimK5BKWnjx493BXFXo6Ki/BIoEx+4yJ9Vq1YV4dnoEydONLl169ZefkGvvvpqZnMZC9IfKMQI0h88eHAhOjra/+7du2Fo8SEXLlxYt2nTpsGTJk2qVKxYMTfTM2azTj3fr18/UQjtq1evfpHnPpfrAwcONNXLWLM/nYFCGlr7josXL/4m19WqVctYtmzZ3CNGjCg7ZswYH5S8yWFhYSHgMQql78S0adPam4jAYPlKpjdt2jSrIHzGjBllMAUzc3kOPWA//+MQiQXpAAICAt4EMeH6bYJKWcuWLV3Xr1//LubddkEuBLF++PDh+UzPKaQuWbLkeclv3759HrkPDQ3tI/fbt2+voJe1kP+EQSln4OTy0qVL39TTEmLHcTx2DRo0yIBSN0AQev78+eWmcooT+Pv71xA/gJE4e/bsElIWjjFCT7JY/xMEW69evcoj009oyYM4RHD69OkZglTseUU8BQoUyCT/kfOTEBH+pmfETDyA8rjflPZMO37SLWVje48rXbp0veDg4Fl58uTxgggMLvCA2Rnh4eFxac+ePSEg9Thu21OYahe5fuBYz8SJE0sg34+A7BEg3pekDPyiqO8myl6DWrVqrdb+YvHRV65c+dXT07OVj4+Pp5+fX7iRrj2DkG4RHxMTcxTla/W+fftC16xZc/u5554DV9E2/mesX7++x40bN/K5uroWzpkzZ67s2bPn5pGs/G4g3w9v2bJl1rx581YsWLDgiqm+EGb0wYwZM9aR+/79+xft2rVrsM1mc9X+lu3RBw8e/LBMmTKLsBiKv/XWW8dJk/wHmgVpD7rWHZ6cZ95//303XLZlUPI6whG2ie8eEzCU+0HvvvuuUvSY0dswB+cZz2AxrDh27Ngo/VYmgSBZCwoK6iYiYu/evR/pea6aBWkPsN+8IOWSfvvYXAlCeAUOMFccOCh6+1D8skEMAThz2kn+119/7S4IlmifZrIa4AZN4Q6zyTpLP/rqyRby0xp0mzusZ8+ese7alMLChQsrUedBRMQ0QTaiQHEBHDlzQ0JCxprLDhs27DUIJUiuKXoJkTNTz7LMvbSGyMjIG4sXL65iTmvcuHGWcePGle7WrdsnW7du/Qmt/U8QtBkHz14QdJTfKTHjZaaafiF4+o6NGjVq3s6dO9txv4fZLLhXFoPu1RMZHqvJ4yjKJb594/7evXuHcPWu1bvxTAR50i0Fo7F/UKdOnbW7d+/+yMvLa1CuXLlEgXPnF0bI9Qxy+DzIOEi5haIAcn0Dxe1W5syZsczuP4Sl20DYQwI7ke7u7i4fA+XKlesOQguj0N2jnhcuX77si8UwDFYfPH369IZffPHFdGkbK+EW/2JwDGX87bff7nFfBr1hB21szZo1a2VNXxCiWZDqoOQpythImZqw/Nfbtm3rRXAlyXJWuMOyZcs+1715t/kfCJHIjL+Ghm/Ha9dfHDmw9RyDBg16j3zDZ6BEC3kX0Ak89TQ1yyEif4huh55msf00AiNAcw2bvrqeFp9TJY6zBVle586dO4d4LgbFLAjR0LpEiRJZO3bsmEnqOnr06EDR+KUsWntzEBmit/Pgww8/zKrXpwlXYcYXMrWjkH/u3LmN6AmGZWApfGkAygvXt2/fPPqsF8eLk0O+QoaYf4cOHRolwRqQfRrnyxdi3hkFDx8+/IHUMXXq1CJnz55dgAnXzshDJITBzsscOXJkHkGe5kY6OkZIkyZNXnDok3PFihUz6S7ernqaNfPTABRiQdwgZqCxAMNF/6loHbJeuWUx0Rb+8MMPnqZnVRlm548ym5HfHiC4PNc3Jb158+Z5RHTMnz+/FEi+ioevHOx+m/Ew1yGUKWKqT3EC4gCLrl692hEF8RoKZg1zngWpCwbLj8DF+n9GIgj4UQ/ETJGlVnqywfbVM+gIk2RyGs9IHZs3bxZLwYYjx7dDhw6yKNNGuZ27du3qg+wPNJU936hRo3ymfjhBaC7SpoR+xRyUa8RBZs1a0JkmoFj+zJkzS4lsxrmSXRAIBwgQe18vE7vcSvsb6TOZyaeMSojKfYq9fkiuxTbHxLuMlh6B5t8/X7584imM5LdNFDoJ83Idqst8ow8S9BlFvauMOqmvHfWcN7drQeqCwbanyCyDxZbX080IFxA9QIMVT2BGh5ifFc2+Zs2aBWX5Ncg6JZq9DgEiAoj9i6lnR86XI5iTQ1b9mOp1FmeS5MMlntNMXIX6NkA8RqTPCummATgxG0WxitLZq+MMUxo2SlcXylzX05SOgFn3Dt634IEDB2ZFXNRCAZyDrT8T5O8RhOPY+UTctoLYPn36fExIuAyWwXG9DtUO2vxaFMOJelqcVTvM/JWU32EyNy0CSEVQMxvt+zsQd1hPczb/37BhQzVBnqm8SkdRO7Z27VoVcCH61hAkjiSM+yMyvJiwfaMByu0gEjhgypQpn4pX0EifO3fua5R7aO6HDgrRo0ePzmuwD6yLn0z5FvtPJVCIFBkvvnc9TekAzZo1E/Zsx52bR/t7QYate/fustwqdiuVIbeJz6/w9fWtpHMRNTvnzJnTAE4wD9k/f/LkybWMZ6ReCKesqT0BhXRRFiUfoissSiYzXxxG0fgPXnQob0EKwUaotTJyOkK/V3Kdwb6Fpl9XT4v1p+PHH3vq1KlNcv3NN9/UaNOmTXa5xgsXxL24XzWcO8UggjfE20e9ysdvsG3uCfCd6alXJzM4Vq9A0fuPENXgwYNzm/I1XMiKGCAe0QcsxKcSqMFlVgbv37+/o1zDluei+BlBFEPOGq7XW0OHDu2FvZ4TLT9IgjkQwqwtW7aUWbRoUX3k/EVs8q0oaMpPz/8oCEjJ8ujo6J3M4OWmelXb4hzimcNwh9NwjDjixihD1K9fcHDwEs2CVAXbpEmTPEXRI7hS1MTK40TOdNks++j8zembNm0ST94Nfod1LV1B69atCxs6gvjkIYKNepZ4ARUhQWwtpQxOpT56nqNloaB9+/Zl4RYnNQtSFdRAM6PUalqUseJ6ehy2iia/AkXuFykzduzY5yVtwoQJVZmpe5iRfUHscpSxScxgD8nDNPODc0wl/wjPTjfXBduug3v3pvgGhgwZkktPdtESYOXoHF40e1qzINXBSViuaNvxmHdKsZPlWz4+PgXtf22hVuvvtm3b1gBu8a5RECthqPj6ZZOGrpiLh/AtyWvYsGF2wsI/C9MA4ZcgsIqm+hONy+PuLWUhPm1AzXpRvDDvtpvTBHDEVIJdB8tyK2T1XJS89kIAEt51rAjkq21VyO1ZvXv3fgEE+6JDXJQktP9V2P8l9KIGwhNT2FTeunXr/kPfVmkWpAkY5t394cOHF9ZMCCFoMxUTazCId4elh0kaBCAa+0P+X4MoNoSFhc2ErV8TpJMmMn8VtvwRlLtJiITKJsXNiAH8k4YeW0bqxGooollafZqAGlSUtRbM0CN6mpr1YpbhgXuVS1c09xuVK1fOCjuXXTPXR40a5XHy5MktOmvfu3Tp0qKJ1J8UxMWWw7Urfv+I0NDQrub+WJD6YGy0iASxauGEhGuFrRu2uMhaccPKNQiZjsK3QK6/++67XDiCBkMkMtuvys6b8ePHV+d5dy2Z0LVr1+xwmfFCSSidLfXkdLtQ45lhQ8jUDhUqVPBxd3cvh7fuNXzus202m5rJIGQb/vhfUNaUGxYOcBPkt/Dy8pptPN+iRYviKGTNvL2962bKlKkASeGUOUmwZy/EsA17fr+Hh0eYi4vLAzEfIRY3wrPeVatW/bR48eK1nZ2dPfEPLJ06dWqTn3/+WZxL1kaM/wIYsv7esGHDim7cuLExrDx2wyQ290DMt6n6ra1Lly7ZZGb27dtX4u2PaOgSievcufOLnTp1qohvv4O44O2PQjhK5YGgoKCxAwYMqKQvBde0/4F9d+kJDE26Epr5VWbeED8/v9gDkiCGN1HwjGibQgoIrSwzV0eYoZTFEgG2ekmI50/qO8Kzm3bs2DFy8eLFn2MelpaNGNqj3DKp+oAFqQxKnqLk9ZbpqK+QVcjQt2RF6ocmxG6VwlnTTti+/nzsPnrYeoDY7rh1u+EjyKVZkO7B8ONPF3ep/e/TLtTiyQULFlQzlVXIR9kbiUcuNjQrARpMusnx1G3N5nQOCvmXL1/uKTMfJ8q3co9TpgnOGMegiUI+rtoxYr+HhIQMgwusM9VjIfspA4V8NPvnCZ1KRC5S1svZH92BG8v2z54929FhEYcFTymIzFYI7N+/f+Fjx45NlgWW4rMnXt4f2V3SXBjl7d+4dY0onjXTnwGI42pFw3+d2S1boK/zuwmbD0QczNHX2xXULKQ/c/CIuYXmnxdvX21Zx6fb9ALWkafPOMQ3sy3ZboEFFlhggQUWWGACc/zZTUs6OD5nfta8li4+5etJ7VaJbTdHjhwepnTzu6Rmf11Mdaa/g5cXLVrUIjg4eLSWTCDy1e769etDjXsibIunT5/+tmO5xo0bF9qwYcNnROJqdujQoaL2BGH16tX1iPKpGD8u4j927dr1mWOZmjVr5ubdGo8dO7bG8OHDjf30j2zDSgLYGJ9NgwcPLvLee+8VJr6wzbQ07MkDsfDf8IAdSe5zc+bMkRDoPuOel4yYN29eK8dyAQEBzWRpEy++j3bmJVCdzeF/mkBgYGB3/Puhcn337t3Q48eP93MsM27cuDriMo6Ojt5G/F55BmV1MCHfdXgLfbSkg+3+/fsxEM+/Pv/8c7UiWPbra48JKbVbH/kuDJ27bdfPmElWRTZbBCHS28Y9iI2krkiHYi4VKlSY+Mknn2TH4fKv/Pnz/1t79B2c+Rk+d7uWPIdMsgiFOP1d/t3Xb+9AuLcd+9K6desl9DeLi4tLJQ8Pj+qS+Pvvv/ctXLhwfpB/SEsGyEJRCEyOdpXzdVN0xm5KEK8GVI4Jl7Vr2t+DbQZbPNeO69+T3YfXXnst808//XTLz8+vt/bXt+VcTPU97N27t3yO5IHujXuo/b3nLRby5MmTRf7LurymTZvm13fUyDuk5jo5450zyAIRYgRKBHJdFqIu8fLLLw9JoHyaQ0oQH/PVV1+5zZ49++aQIUOunjt3Tu0uhbLjIBsEeZgWQKjToJcvX/7FgQMH/GvXri3HiNuT2J56FvY+/Pvvv5c1bZmJuKlNEj179owh3r4YNphN7vfv338BjnGiW7duZ/VDk4Q47Hfu3FlMuX0zZszIg0y+4+/v33b37t13Jk6ceIFnb+DDH6f9tU7OFs8YmZdoJYXFCgFFU2cPxuiuq6trTgJFKu6P3P93rVq1Mvv6+srWbZuwbJ3w4lvVkyaQEsTb8XPvRwmbGR4e7lOgQIFlsrRYDhQ0lZGlTYE+Pj5yypQMfjRl5yDjJr300ktVUVQ6aDriQVScymH7mrNzHC4dTTBlbKZMmWojFmy3b99elC1bNrU5QhBP2XfIk+XUoi9EZciQoRQz60qXLl1ErsbQ7k6ic2/AKl2RkepMO2b9d4RtN33wwQeFQU6VggULtmrXrp1sb7abj1OVL1rAmt0QM1kgqmmlS5d2PH0rPngAkfZD429TvXp11507d44rWrRoEcl45ZVXIlFQw+FcivD79etXmeDROX2M1EvLcSyO9cuY8F5aasBjI/7TTz8tzsAXfeGFF3yyZ8/uxyAfpWOiyIQ7OTndMsqRHpM1a9aLcs2gvZ8lS5a3wZvbmDFjPixZsqSx9lxD/slpk3eNe/2EyjgmYa5cuVpt3bq1nuxxJ78GSIyVkbQbBNcp17lz57xG2ujRo4tBEG/IiVf09TXayA0iZJm1nFpZgZleKXfu3P9XpUqV29u3b79A+g2idercHDjVGYihnJQdOHBgwIQJE2rzrObt7d3o8OHDikolzKsfex4v5MuXzxekfgHRuEDo9SCEo5IuhMm/DLB+9b5YBjd5F2Pj58Px48cX4ncXThBHX4GwH6JXuCLik8olE4TH1gpBpqxVc164cGEt2PZJKLF4xowZz9I597x581ZicKrCTvOT/mKzZs06Fy9e/GCpUqUGXL169a6cUQuxqGrgGH148fWwv08hHPfNmzdX8/T0FEQV4P8Zc5sXLlyYzOw8wE/Wy51v27Zth4oVKwaTlQdWWoGBbQpBnQH5PRnUbfTxTRBj5zk1wBBeK7TwQJB7mRnWYf78+b2Y8dN++OEHORlLTrP4Fp3lVQjma+4L0AdPxFlJNzc3L0RYeYj9htRDnzvBtv1LlCjRzThRg3aEQ8WZSPTnV/SM9frtaYim2bJly9Yh28VMlc+q/bR3795Z6Bn/YUJ40OdPrl27dhVCnHn+/Hk/LKToJUuWvA5nKgKBik7ixrV8SzeL9oRAsR8GrYux1hiKXShpIlO53Q/rtstCRuz6/ORdkDKbNm36JjQ09E86bpd8nh9gHELEjCtF3kZJlx9UvdKhTUWkI0eOrM5szQdy5MjxG3IgMXXEyNFmks+AjZcZIXXIzij0AKV77Nmzx1ftiIyIeICcjzHa4dFInhnG85ulLnmW/p45evRoD+PdMNM+1LdZnaZsDaP/Ut2UKVPUJg7qPIkoeuQYFMRhFWR5QQhNTt64Ig8h9zcGBQWVMOpngjSG4H2lXtq4T9ItxIHnr7/+6iX5zHLVX9oYL3W2atVKtn9HpcScSwkoYSOnP+vHjwgI21NEAXt7zlzY/G04+TYMclLtVuF/BvMLyMcA5fgx/da8QTHe5cumsqouow5pw1RvbNv60ab27t27e0l58/m49DmjuT7ZDq2faqExO/PJal25lnp1qyBWa5f309tzSqy/ZcuWjZ2t4oCRNh3LyDySPX84wlYLIRtjpmerMZYTNrUnuGgk0bXl8klQqDSQWXUHAqmVzLoSSouTJ4qXvhFyiXCA+AqiTBZAHM3mN1+QTr9GONT/T207J5Bu3NsSyU/sOW3t2rXFpU+M0RpE0GlJk71+/BaKSfrll1/mTKT+x0Z8SlmFPbF7NNmeyNkYZocMfGAy60ooLU7emjVrbiCb2yAL96InFI+vIGzzOZSr92UZNeUbUk7crOYPDf1T2w8TSE/KfaLlEBUX0HdaIt8PMlbq8AZMzJrly5ffefPmzXVTp06Vo9tsCdSTYiUvLSA+bTcpVkRyqDg+durYbnyeu/SydDq+/ivWL6dm6Qcxp4d+xoH4Ov24nxJ55HRKHQSJzg7lMjiUtSXStlMC10kFMxHFK7Md8o3/5j4nx2XsmkC96WpJmHohtN8+KCBb0Xw7OCg3yQI09X/Z9QOH8WEHmj4FIppxIcycAUY0CrHRTI40kWtRznDmDDYfYmQCm8jITp06yXFkjzVzkMHvIHsH6e+WKOLRzIsae/FEWceV/a6WTMDUlcOZxQ9iEwVP9gZo6W3Wo4DsYNBvIMvH6KbSYCPPfF68g+bqFt81A1tS6hBEYqrVxB5/y8hDE1ffhBWHjPbX2TbR0pzkIQMrSJ4cfODQriISiHIevoMl5vZk/7x+H2uFxNMnm/6OsgzbPmvWrKrmejXTZgwB/eBjOegwo7yDKJz16tV7y1Rv7HHrDn2Mo2c1b968LDqLj1zjd/DFiRVizjdiDA59/e8BlC2HD9hRqmK1dcM8wiY2TpsI1deqi4kSzDO19evjvJR6DoVrnRRkVsnaduURw94fGBYW1s3cHjZ2BDHtz7CJRQuOkAigHEZA6LYHdvEBKSN72fV2z8qOVmz4DwxbGS6hvi8n5+XIPTazKJs2ISbxO8BhZuPWjeM7wH//shgB+Ph/w8ewRdLk9ErSLmLmldTPv70gByPKiRwQmFR9S2Y9/Q/HgSPvFMPkiD0LR66lEO99SLgITh05jfsoXG4cdWzA2VUMbjaDMcinlxM7fwz1LcLR1UQfn7rySloK4LFlBy8XCYKHY9suEzctgzwdSn2AGzYTptUG8afj3doNovylPAPtRefVhwQw8QqRF7Vy5cpP8IjVaNiwYV5EhbhKlduStGp4waqb2+PZnW+++WaVN954oxriZbwcW049r+DvroJ5tlLYIgO0SNqlL5fw3q2G0yyjnRPcb2eAOzH754CcrLqv3w3im33ixAk5H8cbgnAhXGp2wGgfffRRP7TtmYRWOzLTKstMhQhkhuajzSzMRpmx+XFbP9+/f/+vcSkLB6onsQM8iTY5fZNnS+CVq0laSZxUvXE1V2BMMoPQKIjWH4K8y/hJmWJDhw79Fg9n5RdffLFO1apVL8E91sknUogR+OJxPOrl5aU4Kv8HQuxbtBRASpSGjAyGL50tQ7StE67ZOnRy6/Tp0yPo1Cl+u/CNl8OFa8Tm7VC0cp3KLODFwxnEmszSgD///PMygyGeN6W44eu/D27umhvDBTy7SJEiVerXr18XN/Ey2vTv1avXl8TkS5OH+3vObQjxOu0G4IQpjE6gTB0QGsrvDJdRzz//vBx3Lo6RNbhhs4IoL4hFlUNHaACxBGgm9k/QpgJIfX/UqFF/yD0E+ioIitb7GIXb2K5fu0KMyg8PZ5A6nN3d3TNT3zQcP8chkChMSgmj18JNPA1Oco9x642L+2Xpl7h7CWTVhzgOQqzZIBo1AXA1H2OcIiDcSDjrcOr0FC5TqFChEnCqvloKICWIj4T19ALZYfjOJ8Cqx/HS2Qh51oBCJ6HYvIELczUyUtnAvIAz7FddQyRyJKiTfBiYQSsiaQReciTW2GqA2eItUTgCNQcDAgIWY/c2gTt4wC12M5sGvv766yMYlAoEawIJqKgoIUSWi3bUZkkILQpiPYyP/Z0ff/zxJZw/NUBsfsnjPQzZKeLGPmDAgDK0lQNX7xwUrqP0NxRvWWc/Pz8JsIhfPpJnFILkHfHrK88afbiHuJNxtdMH0Tuc6aMTBMarOp0n31vKNWrUyBuOoJQ4uQepSjmlnQfG3k0IIA/EoRZ3QBShctYeLusNjOW5QYMGndeekLZvg4KP6yL0pvzBGVEW2ect11CryPnFco3XzhPk/KqXDZQ/TJAGDK46kkS+78I/2c+u3hgWLJ/03urYINm3aVOiaGoBiIhABkNF6NavX6/86RCfDIySo0TXcoC0LrqMb4fvWz4uaCfIckT+o4U3YDa/INfI7jhWAaJlK4g1jkfXEGPvG/0DiTt0f/0uSaOOV+SQRXGr6xq5Ou6sR48en4klItc8X1c+dSbXEKB8FNGOXC8Pa5ePG9qNDx/xHt14dzVBILIvJQ9ONkXuV6xY0Uivq7X2hCDWVl26dOmr8n03w6ct8Msvv5QkCNFMrlF8ShmrUJmV9fGRF0SpKUCESpWHknOJN02OD+cnBwnakG8F9Q8Bx3Gp1qhRwwuPVl7jXgaLGSQuTUX5f/zxhzci4Eu5JhTrDStXmj4K0yuVKlUyYvc5iIi1nDt3rjpWXPz6LVq0KKM5fOHq7bff9jZ9jkzlUa687su3MfhfCCJl4aNhtfBMtrp161aQfNovbZT9+OOPy+DLV2MgC1PgVq2nTZtm7NVzk74a5iIx+2xYA8WN8ZXxYzxUXxGjXoJ49IbHNk9TAxJy4DglsayA8z+kJeSAcazPKZ78+Mq5JNKWuWxijp+E3iWhxRkJ+fyNZ2wJ1BEnjxC0+DnsWApz46nXgmcUBMlups+hWV+++B8Fa7ZbYIEFFlhggQUWWGCBBRZYYIEFFlhgwTMJ/w+9dmWowyAkwgAAAABJRU5ErkJggg=='\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>مدير عام الاداء </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> اشعار بالبدء بإعداد خطة الامتثال السنوية </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير بأنه قد حان الوقت للبدء بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                            يُطلب منك جمع البيانات ذات الصلة وتحليلها، وإكمال التقييمات اللازمة، والبدء في صياغة الخطة في النظام. يجب إكمال عملية الإعداد خلال 60 يوم عمل بدءًا من اليوم.\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                            للوصول إلى نموذج إعداد خطة الامتثال . استخدم الرابط أدناه لإكمال هذه المهمة\r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                                رابط لتعيين الفريق\r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "أخصائي جديد تم تعيينه لإعداد الخطة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>مدير عام الاداء </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> اشعار بالغاء مهمة لإعداد الخطة للاخصائي </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير بأنه قد تم الغاء تعيينك للقيام بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "إلغاء مهمة المتخصص لإعداد الخطة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> تذكير: إعداد خطة الامتثال السنوية </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير للقيام بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          يرجى العلم أنه يتبقى لديك {{RemaningDays}} يوم عمل من أصل 60 يومًا مخصصة لهذه المهمة. تأكد من إكمال جميع الخطوات المطلوبة في الموعد المحدد.\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "تذكير: إعداد خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> تذكير نهائي: الموعد النهائي لخطة الامتثال السنوية </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير نهائي للقيام بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                         <span>\r\n                                          يرجى العلم أنه يتبقى لديك {{RemaningDays}} يوم عمل من أصل 60 يومًا مخصصة لهذه المهمة. تأكد من إكمال جميع الخطوات المطلوبة في الموعد المحدد.\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "تذكير نهائي: الموعد النهائي لخطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> تصعيد: تأخر تقديم خطة الامتثال السنوية </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تصعيد  لتاخر قيام الاخصائي بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "تصعيد: تأخر تقديم خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> تصعيد: تأخر تقديم خطة الامتثال السنوية </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تصعيد  لتاخر قيام الاخصائي بإعداد خطة الامتثال السنوية للدورة القادمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "PerformanceMonitoringManager",
+                            Subject = "تنبيه تصعيد: تأخر تقديم خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAABjCAYAAABda7TNAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAB11SURBVHgB7Z0HfBXF1sD3phBKCFJCEwggUg3oU0SKCHyKiiCCDwuCGDqilAiC8FCk96Y0pQQQpPfeQw8QIPTQQie0EEILIeR+/zPuxs0liQlJHoG35/e7ye7M7MzsnDOnzsxqmgUWWGCBBRZYYIEFFlhggQUWWGCBBRZYkP7AWXv6wCmBdJv+syAJ8LQNlBDqw2+//datdu3aTc+dO5czU6ZM4Q8fPjzw+++/H968efNVvZxBBDGaBc8E2Nq2bZvTbrdHhoeH+9+8eXNaRETEwuvXrx8m7Q6/iEuXLk1t06ZNUdMzTpoFTz9cu3Zt15kzZ76PL69Hjx7ex48fXwEB2G/fvn0sMDCwhin7aRRr//MgbFsh7v79+xFz584to8UVUzbz/6+++iojHGG5/S8I2bFjx2emshYBPCUgrFohFJa+GcTvTkJ5xd6Z/W/pyL/F78rKlSvf1ss4a5YimK5BKWnjx493BXFXo6Ki/BIoEx+4yJ9Vq1YV4dnoEydONLl169ZefkGvvvpqZnMZC9IfKMQI0h88eHAhOjra/+7du2Fo8SEXLlxYt2nTpsGTJk2qVKxYMTfTM2azTj3fr18/UQjtq1evfpHnPpfrAwcONNXLWLM/nYFCGlr7josXL/4m19WqVctYtmzZ3CNGjCg7ZswYH5S8yWFhYSHgMQql78S0adPam4jAYPlKpjdt2jSrIHzGjBllMAUzc3kOPWA//+MQiQXpAAICAt4EMeH6bYJKWcuWLV3Xr1//LubddkEuBLF++PDh+UzPKaQuWbLkeclv3759HrkPDQ3tI/fbt2+voJe1kP+EQSln4OTy0qVL39TTEmLHcTx2DRo0yIBSN0AQev78+eWmcooT+Pv71xA/gJE4e/bsElIWjjFCT7JY/xMEW69evcoj009oyYM4RHD69OkZglTseUU8BQoUyCT/kfOTEBH+pmfETDyA8rjflPZMO37SLWVje48rXbp0veDg4Fl58uTxgggMLvCA2Rnh4eFxac+ePSEg9Thu21OYahe5fuBYz8SJE0sg34+A7BEg3pekDPyiqO8myl6DWrVqrdb+YvHRV65c+dXT07OVj4+Pp5+fX7iRrj2DkG4RHxMTcxTla/W+fftC16xZc/u5554DV9E2/mesX7++x40bN/K5uroWzpkzZ67s2bPn5pGs/G4g3w9v2bJl1rx581YsWLDgiqm+EGb0wYwZM9aR+/79+xft2rVrsM1mc9X+lu3RBw8e/LBMmTKLsBiKv/XWW8dJk/wHmgVpD7rWHZ6cZ95//303XLZlUPI6whG2ie8eEzCU+0HvvvuuUvSY0dswB+cZz2AxrDh27Ngo/VYmgSBZCwoK6iYiYu/evR/pea6aBWkPsN+8IOWSfvvYXAlCeAUOMFccOCh6+1D8skEMAThz2kn+119/7S4IlmifZrIa4AZN4Q6zyTpLP/rqyRby0xp0mzusZ8+ese7alMLChQsrUedBRMQ0QTaiQHEBHDlzQ0JCxprLDhs27DUIJUiuKXoJkTNTz7LMvbSGyMjIG4sXL65iTmvcuHGWcePGle7WrdsnW7du/Qmt/U8QtBkHz14QdJTfKTHjZaaafiF4+o6NGjVq3s6dO9txv4fZLLhXFoPu1RMZHqvJ4yjKJb594/7evXuHcPWu1bvxTAR50i0Fo7F/UKdOnbW7d+/+yMvLa1CuXLlEgXPnF0bI9Qxy+DzIOEi5haIAcn0Dxe1W5syZsczuP4Sl20DYQwI7ke7u7i4fA+XKlesOQguj0N2jnhcuX77si8UwDFYfPH369IZffPHFdGkbK+EW/2JwDGX87bff7nFfBr1hB21szZo1a2VNXxCiWZDqoOQpythImZqw/Nfbtm3rRXAlyXJWuMOyZcs+1715t/kfCJHIjL+Ghm/Ha9dfHDmw9RyDBg16j3zDZ6BEC3kX0Ak89TQ1yyEif4huh55msf00AiNAcw2bvrqeFp9TJY6zBVle586dO4d4LgbFLAjR0LpEiRJZO3bsmEnqOnr06EDR+KUsWntzEBmit/Pgww8/zKrXpwlXYcYXMrWjkH/u3LmN6AmGZWApfGkAygvXt2/fPPqsF8eLk0O+QoaYf4cOHRolwRqQfRrnyxdi3hkFDx8+/IHUMXXq1CJnz55dgAnXzshDJITBzsscOXJkHkGe5kY6OkZIkyZNXnDok3PFihUz6S7ernqaNfPTABRiQdwgZqCxAMNF/6loHbJeuWUx0Rb+8MMPnqZnVRlm548ym5HfHiC4PNc3Jb158+Z5RHTMnz+/FEi+ioevHOx+m/Ew1yGUKWKqT3EC4gCLrl692hEF8RoKZg1zngWpCwbLj8DF+n9GIgj4UQ/ETJGlVnqywfbVM+gIk2RyGs9IHZs3bxZLwYYjx7dDhw6yKNNGuZ27du3qg+wPNJU936hRo3ymfjhBaC7SpoR+xRyUa8RBZs1a0JkmoFj+zJkzS4lsxrmSXRAIBwgQe18vE7vcSvsb6TOZyaeMSojKfYq9fkiuxTbHxLuMlh6B5t8/X7584imM5LdNFDoJ83Idqst8ow8S9BlFvauMOqmvHfWcN7drQeqCwbanyCyDxZbX080IFxA9QIMVT2BGh5ifFc2+Zs2aBWX5Ncg6JZq9DgEiAoj9i6lnR86XI5iTQ1b9mOp1FmeS5MMlntNMXIX6NkA8RqTPCummATgxG0WxitLZq+MMUxo2SlcXylzX05SOgFn3Dt634IEDB2ZFXNRCAZyDrT8T5O8RhOPY+UTctoLYPn36fExIuAyWwXG9DtUO2vxaFMOJelqcVTvM/JWU32EyNy0CSEVQMxvt+zsQd1hPczb/37BhQzVBnqm8SkdRO7Z27VoVcCH61hAkjiSM+yMyvJiwfaMByu0gEjhgypQpn4pX0EifO3fua5R7aO6HDgrRo0ePzmuwD6yLn0z5FvtPJVCIFBkvvnc9TekAzZo1E/Zsx52bR/t7QYate/fustwqdiuVIbeJz6/w9fWtpHMRNTvnzJnTAE4wD9k/f/LkybWMZ6ReCKesqT0BhXRRFiUfoissSiYzXxxG0fgPXnQob0EKwUaotTJyOkK/V3Kdwb6Fpl9XT4v1p+PHH3vq1KlNcv3NN9/UaNOmTXa5xgsXxL24XzWcO8UggjfE20e9ysdvsG3uCfCd6alXJzM4Vq9A0fuPENXgwYNzm/I1XMiKGCAe0QcsxKcSqMFlVgbv37+/o1zDluei+BlBFEPOGq7XW0OHDu2FvZ4TLT9IgjkQwqwtW7aUWbRoUX3k/EVs8q0oaMpPz/8oCEjJ8ujo6J3M4OWmelXb4hzimcNwh9NwjDjixihD1K9fcHDwEs2CVAXbpEmTPEXRI7hS1MTK40TOdNks++j8zembNm0ST94Nfod1LV1B69atCxs6gvjkIYKNepZ4ARUhQWwtpQxOpT56nqNloaB9+/Zl4RYnNQtSFdRAM6PUalqUseJ6ehy2iia/AkXuFykzduzY5yVtwoQJVZmpe5iRfUHscpSxScxgD8nDNPODc0wl/wjPTjfXBduug3v3pvgGhgwZkktPdtESYOXoHF40e1qzINXBSViuaNvxmHdKsZPlWz4+PgXtf22hVuvvtm3b1gBu8a5RECthqPj6ZZOGrpiLh/AtyWvYsGF2wsI/C9MA4ZcgsIqm+hONy+PuLWUhPm1AzXpRvDDvtpvTBHDEVIJdB8tyK2T1XJS89kIAEt51rAjkq21VyO1ZvXv3fgEE+6JDXJQktP9V2P8l9KIGwhNT2FTeunXr/kPfVmkWpAkY5t394cOHF9ZMCCFoMxUTazCId4elh0kaBCAa+0P+X4MoNoSFhc2ErV8TpJMmMn8VtvwRlLtJiITKJsXNiAH8k4YeW0bqxGooollafZqAGlSUtRbM0CN6mpr1YpbhgXuVS1c09xuVK1fOCjuXXTPXR40a5XHy5MktOmvfu3Tp0qKJ1J8UxMWWw7Urfv+I0NDQrub+WJD6YGy0iASxauGEhGuFrRu2uMhaccPKNQiZjsK3QK6/++67XDiCBkMkMtuvys6b8ePHV+d5dy2Z0LVr1+xwmfFCSSidLfXkdLtQ45lhQ8jUDhUqVPBxd3cvh7fuNXzus202m5rJIGQb/vhfUNaUGxYOcBPkt/Dy8pptPN+iRYviKGTNvL2962bKlKkASeGUOUmwZy/EsA17fr+Hh0eYi4vLAzEfIRY3wrPeVatW/bR48eK1nZ2dPfEPLJ06dWqTn3/+WZxL1kaM/wIYsv7esGHDim7cuLExrDx2wyQ290DMt6n6ra1Lly7ZZGb27dtX4u2PaOgSievcufOLnTp1qohvv4O44O2PQjhK5YGgoKCxAwYMqKQvBde0/4F9d+kJDE26Epr5VWbeED8/v9gDkiCGN1HwjGibQgoIrSwzV0eYoZTFEgG2ekmI50/qO8Kzm3bs2DFy8eLFn2MelpaNGNqj3DKp+oAFqQxKnqLk9ZbpqK+QVcjQt2RF6ocmxG6VwlnTTti+/nzsPnrYeoDY7rh1u+EjyKVZkO7B8ONPF3ep/e/TLtTiyQULFlQzlVXIR9kbiUcuNjQrARpMusnx1G3N5nQOCvmXL1/uKTMfJ8q3co9TpgnOGMegiUI+rtoxYr+HhIQMgwusM9VjIfspA4V8NPvnCZ1KRC5S1svZH92BG8v2z54929FhEYcFTymIzFYI7N+/f+Fjx45NlgWW4rMnXt4f2V3SXBjl7d+4dY0onjXTnwGI42pFw3+d2S1boK/zuwmbD0QczNHX2xXULKQ/c/CIuYXmnxdvX21Zx6fb9ALWkafPOMQ3sy3ZboEFFlhggQUWWGACc/zZTUs6OD5nfta8li4+5etJ7VaJbTdHjhwepnTzu6Rmf11Mdaa/g5cXLVrUIjg4eLSWTCDy1e769etDjXsibIunT5/+tmO5xo0bF9qwYcNnROJqdujQoaL2BGH16tX1iPKpGD8u4j927dr1mWOZmjVr5ubdGo8dO7bG8OHDjf30j2zDSgLYGJ9NgwcPLvLee+8VJr6wzbQ07MkDsfDf8IAdSe5zc+bMkRDoPuOel4yYN29eK8dyAQEBzWRpEy++j3bmJVCdzeF/mkBgYGB3/Puhcn337t3Q48eP93MsM27cuDriMo6Ojt5G/F55BmV1MCHfdXgLfbSkg+3+/fsxEM+/Pv/8c7UiWPbra48JKbVbH/kuDJ27bdfPmElWRTZbBCHS28Y9iI2krkiHYi4VKlSY+Mknn2TH4fKv/Pnz/1t79B2c+Rk+d7uWPIdMsgiFOP1d/t3Xb+9AuLcd+9K6desl9DeLi4tLJQ8Pj+qS+Pvvv/ctXLhwfpB/SEsGyEJRCEyOdpXzdVN0xm5KEK8GVI4Jl7Vr2t+DbQZbPNeO69+T3YfXXnst808//XTLz8+vt/bXt+VcTPU97N27t3yO5IHujXuo/b3nLRby5MmTRf7LurymTZvm13fUyDuk5jo5450zyAIRYgRKBHJdFqIu8fLLLw9JoHyaQ0oQH/PVV1+5zZ49++aQIUOunjt3Tu0uhbLjIBsEeZgWQKjToJcvX/7FgQMH/GvXri3HiNuT2J56FvY+/Pvvv5c1bZmJuKlNEj179owh3r4YNphN7vfv338BjnGiW7duZ/VDk4Q47Hfu3FlMuX0zZszIg0y+4+/v33b37t13Jk6ceIFnb+DDH6f9tU7OFs8YmZdoJYXFCgFFU2cPxuiuq6trTgJFKu6P3P93rVq1Mvv6+srWbZuwbJ3w4lvVkyaQEsTb8XPvRwmbGR4e7lOgQIFlsrRYDhQ0lZGlTYE+Pj5yypQMfjRl5yDjJr300ktVUVQ6aDriQVScymH7mrNzHC4dTTBlbKZMmWojFmy3b99elC1bNrU5QhBP2XfIk+XUoi9EZciQoRQz60qXLl1ErsbQ7k6ic2/AKl2RkepMO2b9d4RtN33wwQeFQU6VggULtmrXrp1sb7abj1OVL1rAmt0QM1kgqmmlS5d2PH0rPngAkfZD429TvXp11507d44rWrRoEcl45ZVXIlFQw+FcivD79etXmeDROX2M1EvLcSyO9cuY8F5aasBjI/7TTz8tzsAXfeGFF3yyZ8/uxyAfpWOiyIQ7OTndMsqRHpM1a9aLcs2gvZ8lS5a3wZvbmDFjPixZsqSx9lxD/slpk3eNe/2EyjgmYa5cuVpt3bq1nuxxJ78GSIyVkbQbBNcp17lz57xG2ujRo4tBEG/IiVf09TXayA0iZJm1nFpZgZleKXfu3P9XpUqV29u3b79A+g2idercHDjVGYihnJQdOHBgwIQJE2rzrObt7d3o8OHDikolzKsfex4v5MuXzxekfgHRuEDo9SCEo5IuhMm/DLB+9b5YBjd5F2Pj58Px48cX4ncXThBHX4GwH6JXuCLik8olE4TH1gpBpqxVc164cGEt2PZJKLF4xowZz9I597x581ZicKrCTvOT/mKzZs06Fy9e/GCpUqUGXL169a6cUQuxqGrgGH148fWwv08hHPfNmzdX8/T0FEQV4P8Zc5sXLlyYzOw8wE/Wy51v27Zth4oVKwaTlQdWWoGBbQpBnQH5PRnUbfTxTRBj5zk1wBBeK7TwQJB7mRnWYf78+b2Y8dN++OEHORlLTrP4Fp3lVQjma+4L0AdPxFlJNzc3L0RYeYj9htRDnzvBtv1LlCjRzThRg3aEQ8WZSPTnV/SM9frtaYim2bJly9Yh28VMlc+q/bR3795Z6Bn/YUJ40OdPrl27dhVCnHn+/Hk/LKToJUuWvA5nKgKBik7ixrV8SzeL9oRAsR8GrYux1hiKXShpIlO53Q/rtstCRuz6/ORdkDKbNm36JjQ09E86bpd8nh9gHELEjCtF3kZJlx9UvdKhTUWkI0eOrM5szQdy5MjxG3IgMXXEyNFmks+AjZcZIXXIzij0AKV77Nmzx1ftiIyIeICcjzHa4dFInhnG85ulLnmW/p45evRoD+PdMNM+1LdZnaZsDaP/Ut2UKVPUJg7qPIkoeuQYFMRhFWR5QQhNTt64Ig8h9zcGBQWVMOpngjSG4H2lXtq4T9ItxIHnr7/+6iX5zHLVX9oYL3W2atVKtn9HpcScSwkoYSOnP+vHjwgI21NEAXt7zlzY/G04+TYMclLtVuF/BvMLyMcA5fgx/da8QTHe5cumsqouow5pw1RvbNv60ab27t27e0l58/m49DmjuT7ZDq2faqExO/PJal25lnp1qyBWa5f309tzSqy/ZcuWjZ2t4oCRNh3LyDySPX84wlYLIRtjpmerMZYTNrUnuGgk0bXl8klQqDSQWXUHAqmVzLoSSouTJ4qXvhFyiXCA+AqiTBZAHM3mN1+QTr9GONT/T207J5Bu3NsSyU/sOW3t2rXFpU+M0RpE0GlJk71+/BaKSfrll1/mTKT+x0Z8SlmFPbF7NNmeyNkYZocMfGAy60ooLU7emjVrbiCb2yAL96InFI+vIGzzOZSr92UZNeUbUk7crOYPDf1T2w8TSE/KfaLlEBUX0HdaIt8PMlbq8AZMzJrly5ffefPmzXVTp06Vo9tsCdSTYiUvLSA+bTcpVkRyqDg+durYbnyeu/SydDq+/ivWL6dm6Qcxp4d+xoH4Ov24nxJ55HRKHQSJzg7lMjiUtSXStlMC10kFMxHFK7Md8o3/5j4nx2XsmkC96WpJmHohtN8+KCBb0Xw7OCg3yQI09X/Z9QOH8WEHmj4FIppxIcycAUY0CrHRTI40kWtRznDmDDYfYmQCm8jITp06yXFkjzVzkMHvIHsH6e+WKOLRzIsae/FEWceV/a6WTMDUlcOZxQ9iEwVP9gZo6W3Wo4DsYNBvIMvH6KbSYCPPfF68g+bqFt81A1tS6hBEYqrVxB5/y8hDE1ffhBWHjPbX2TbR0pzkIQMrSJ4cfODQriISiHIevoMl5vZk/7x+H2uFxNMnm/6OsgzbPmvWrKrmejXTZgwB/eBjOegwo7yDKJz16tV7y1Rv7HHrDn2Mo2c1b968LDqLj1zjd/DFiRVizjdiDA59/e8BlC2HD9hRqmK1dcM8wiY2TpsI1deqi4kSzDO19evjvJR6DoVrnRRkVsnaduURw94fGBYW1s3cHjZ2BDHtz7CJRQuOkAigHEZA6LYHdvEBKSN72fV2z8qOVmz4DwxbGS6hvi8n5+XIPTazKJs2ISbxO8BhZuPWjeM7wH//shgB+Ph/w8ewRdLk9ErSLmLmldTPv70gByPKiRwQmFR9S2Y9/Q/HgSPvFMPkiD0LR66lEO99SLgITh05jfsoXG4cdWzA2VUMbjaDMcinlxM7fwz1LcLR1UQfn7rySloK4LFlBy8XCYKHY9suEzctgzwdSn2AGzYTptUG8afj3doNovylPAPtRefVhwQw8QqRF7Vy5cpP8IjVaNiwYV5EhbhKlduStGp4waqb2+PZnW+++WaVN954oxriZbwcW049r+DvroJ5tlLYIgO0SNqlL5fw3q2G0yyjnRPcb2eAOzH754CcrLqv3w3im33ixAk5H8cbgnAhXGp2wGgfffRRP7TtmYRWOzLTKstMhQhkhuajzSzMRpmx+XFbP9+/f/+vcSkLB6onsQM8iTY5fZNnS+CVq0laSZxUvXE1V2BMMoPQKIjWH4K8y/hJmWJDhw79Fg9n5RdffLFO1apVL8E91sknUogR+OJxPOrl5aU4Kv8HQuxbtBRASpSGjAyGL50tQ7StE67ZOnRy6/Tp0yPo1Cl+u/CNl8OFa8Tm7VC0cp3KLODFwxnEmszSgD///PMygyGeN6W44eu/D27umhvDBTy7SJEiVerXr18XN/Ey2vTv1avXl8TkS5OH+3vObQjxOu0G4IQpjE6gTB0QGsrvDJdRzz//vBx3Lo6RNbhhs4IoL4hFlUNHaACxBGgm9k/QpgJIfX/UqFF/yD0E+ioIitb7GIXb2K5fu0KMyg8PZ5A6nN3d3TNT3zQcP8chkChMSgmj18JNPA1Oco9x642L+2Xpl7h7CWTVhzgOQqzZIBo1AXA1H2OcIiDcSDjrcOr0FC5TqFChEnCqvloKICWIj4T19ALZYfjOJ8Cqx/HS2Qh51oBCJ6HYvIELczUyUtnAvIAz7FddQyRyJKiTfBiYQSsiaQReciTW2GqA2eItUTgCNQcDAgIWY/c2gTt4wC12M5sGvv766yMYlAoEawIJqKgoIUSWi3bUZkkILQpiPYyP/Z0ff/zxJZw/NUBsfsnjPQzZKeLGPmDAgDK0lQNX7xwUrqP0NxRvWWc/Pz8JsIhfPpJnFILkHfHrK88afbiHuJNxtdMH0Tuc6aMTBMarOp0n31vKNWrUyBuOoJQ4uQepSjmlnQfG3k0IIA/EoRZ3QBShctYeLusNjOW5QYMGndeekLZvg4KP6yL0pvzBGVEW2ect11CryPnFco3XzhPk/KqXDZQ/TJAGDK46kkS+78I/2c+u3hgWLJ/03urYINm3aVOiaGoBiIhABkNF6NavX6/86RCfDIySo0TXcoC0LrqMb4fvWz4uaCfIckT+o4U3YDa/INfI7jhWAaJlK4g1jkfXEGPvG/0DiTt0f/0uSaOOV+SQRXGr6xq5Ou6sR48en4klItc8X1c+dSbXEKB8FNGOXC8Pa5ePG9qNDx/xHt14dzVBILIvJQ9ONkXuV6xY0Uivq7X2hCDWVl26dOmr8n03w6ct8Msvv5QkCNFMrlF8ShmrUJmV9fGRF0SpKUCESpWHknOJN02OD+cnBwnakG8F9Q8Bx3Gp1qhRwwuPVl7jXgaLGSQuTUX5f/zxhzci4Eu5JhTrDStXmj4K0yuVKlUyYvc5iIi1nDt3rjpWXPz6LVq0KKM5fOHq7bff9jZ9jkzlUa687su3MfhfCCJl4aNhtfBMtrp161aQfNovbZT9+OOPy+DLV2MgC1PgVq2nTZtm7NVzk74a5iIx+2xYA8WN8ZXxYzxUXxGjXoJ49IbHNk9TAxJy4DglsayA8z+kJeSAcazPKZ78+Mq5JNKWuWxijp+E3iWhxRkJ+fyNZ2wJ1BEnjxC0+DnsWApz46nXgmcUBMlups+hWV+++B8Fa7ZbYIEFFlhggQUWWGCBBRZYYIEFFlhgwTMJ/w+9dmWowyAkwgAAAABJRU5ErkJggg=='\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> نود أن نخبرك أنه تم حفظ خطة الامتثال السنوية الخاصة بك بنجاح كمسودة. </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>يمكنك استئناف تحرير خطتك وإكمالها في أي وقت قبل الموعد النهائي. يُرجى التأكد من إتمام المسودة وتقديمها خلال المدة المحددة (60 يومًا).</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          تاريخ اخر حفظ : {{LastUpdatedDate}}\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "مسودة خطة الامتثال السنوية المحفوظة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAABjCAYAAABda7TNAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAB11SURBVHgB7Z0HfBXF1sD3phBKCFJCEwggUg3oU0SKCHyKiiCCDwuCGDqilAiC8FCk96Y0pQQQpPfeQw8QIPTQQie0EEILIeR+/zPuxs0liQlJHoG35/e7ye7M7MzsnDOnzsxqmgUWWGCBBRZYYIEFFlhggQUWWGCBBRZYkP7AWXv6wCmBdJv+syAJ8LQNlBDqw2+//datdu3aTc+dO5czU6ZM4Q8fPjzw+++/H968efNVvZxBBDGaBc8E2Nq2bZvTbrdHhoeH+9+8eXNaRETEwuvXrx8m7Q6/iEuXLk1t06ZNUdMzTpoFTz9cu3Zt15kzZ76PL69Hjx7ex48fXwEB2G/fvn0sMDCwhin7aRRr//MgbFsh7v79+xFz584to8UVUzbz/6+++iojHGG5/S8I2bFjx2emshYBPCUgrFohFJa+GcTvTkJ5xd6Z/W/pyL/F78rKlSvf1ss4a5YimK5BKWnjx493BXFXo6Ki/BIoEx+4yJ9Vq1YV4dnoEydONLl169ZefkGvvvpqZnMZC9IfKMQI0h88eHAhOjra/+7du2Fo8SEXLlxYt2nTpsGTJk2qVKxYMTfTM2azTj3fr18/UQjtq1evfpHnPpfrAwcONNXLWLM/nYFCGlr7josXL/4m19WqVctYtmzZ3CNGjCg7ZswYH5S8yWFhYSHgMQql78S0adPam4jAYPlKpjdt2jSrIHzGjBllMAUzc3kOPWA//+MQiQXpAAICAt4EMeH6bYJKWcuWLV3Xr1//LubddkEuBLF++PDh+UzPKaQuWbLkeclv3759HrkPDQ3tI/fbt2+voJe1kP+EQSln4OTy0qVL39TTEmLHcTx2DRo0yIBSN0AQev78+eWmcooT+Pv71xA/gJE4e/bsElIWjjFCT7JY/xMEW69evcoj009oyYM4RHD69OkZglTseUU8BQoUyCT/kfOTEBH+pmfETDyA8rjflPZMO37SLWVje48rXbp0veDg4Fl58uTxgggMLvCA2Rnh4eFxac+ePSEg9Thu21OYahe5fuBYz8SJE0sg34+A7BEg3pekDPyiqO8myl6DWrVqrdb+YvHRV65c+dXT07OVj4+Pp5+fX7iRrj2DkG4RHxMTcxTla/W+fftC16xZc/u5554DV9E2/mesX7++x40bN/K5uroWzpkzZ67s2bPn5pGs/G4g3w9v2bJl1rx581YsWLDgiqm+EGb0wYwZM9aR+/79+xft2rVrsM1mc9X+lu3RBw8e/LBMmTKLsBiKv/XWW8dJk/wHmgVpD7rWHZ6cZ95//303XLZlUPI6whG2ie8eEzCU+0HvvvuuUvSY0dswB+cZz2AxrDh27Ngo/VYmgSBZCwoK6iYiYu/evR/pea6aBWkPsN+8IOWSfvvYXAlCeAUOMFccOCh6+1D8skEMAThz2kn+119/7S4IlmifZrIa4AZN4Q6zyTpLP/rqyRby0xp0mzusZ8+ese7alMLChQsrUedBRMQ0QTaiQHEBHDlzQ0JCxprLDhs27DUIJUiuKXoJkTNTz7LMvbSGyMjIG4sXL65iTmvcuHGWcePGle7WrdsnW7du/Qmt/U8QtBkHz14QdJTfKTHjZaaafiF4+o6NGjVq3s6dO9txv4fZLLhXFoPu1RMZHqvJ4yjKJb594/7evXuHcPWu1bvxTAR50i0Fo7F/UKdOnbW7d+/+yMvLa1CuXLlEgXPnF0bI9Qxy+DzIOEi5haIAcn0Dxe1W5syZsczuP4Sl20DYQwI7ke7u7i4fA+XKlesOQguj0N2jnhcuX77si8UwDFYfPH369IZffPHFdGkbK+EW/2JwDGX87bff7nFfBr1hB21szZo1a2VNXxCiWZDqoOQpythImZqw/Nfbtm3rRXAlyXJWuMOyZcs+1715t/kfCJHIjL+Ghm/Ha9dfHDmw9RyDBg16j3zDZ6BEC3kX0Ak89TQ1yyEif4huh55msf00AiNAcw2bvrqeFp9TJY6zBVle586dO4d4LgbFLAjR0LpEiRJZO3bsmEnqOnr06EDR+KUsWntzEBmit/Pgww8/zKrXpwlXYcYXMrWjkH/u3LmN6AmGZWApfGkAygvXt2/fPPqsF8eLk0O+QoaYf4cOHRolwRqQfRrnyxdi3hkFDx8+/IHUMXXq1CJnz55dgAnXzshDJITBzsscOXJkHkGe5kY6OkZIkyZNXnDok3PFihUz6S7ernqaNfPTABRiQdwgZqCxAMNF/6loHbJeuWUx0Rb+8MMPnqZnVRlm548ym5HfHiC4PNc3Jb158+Z5RHTMnz+/FEi+ioevHOx+m/Ew1yGUKWKqT3EC4gCLrl692hEF8RoKZg1zngWpCwbLj8DF+n9GIgj4UQ/ETJGlVnqywfbVM+gIk2RyGs9IHZs3bxZLwYYjx7dDhw6yKNNGuZ27du3qg+wPNJU936hRo3ymfjhBaC7SpoR+xRyUa8RBZs1a0JkmoFj+zJkzS4lsxrmSXRAIBwgQe18vE7vcSvsb6TOZyaeMSojKfYq9fkiuxTbHxLuMlh6B5t8/X7584imM5LdNFDoJ83Idqst8ow8S9BlFvauMOqmvHfWcN7drQeqCwbanyCyDxZbX080IFxA9QIMVT2BGh5ifFc2+Zs2aBWX5Ncg6JZq9DgEiAoj9i6lnR86XI5iTQ1b9mOp1FmeS5MMlntNMXIX6NkA8RqTPCummATgxG0WxitLZq+MMUxo2SlcXylzX05SOgFn3Dt634IEDB2ZFXNRCAZyDrT8T5O8RhOPY+UTctoLYPn36fExIuAyWwXG9DtUO2vxaFMOJelqcVTvM/JWU32EyNy0CSEVQMxvt+zsQd1hPczb/37BhQzVBnqm8SkdRO7Z27VoVcCH61hAkjiSM+yMyvJiwfaMByu0gEjhgypQpn4pX0EifO3fua5R7aO6HDgrRo0ePzmuwD6yLn0z5FvtPJVCIFBkvvnc9TekAzZo1E/Zsx52bR/t7QYate/fustwqdiuVIbeJz6/w9fWtpHMRNTvnzJnTAE4wD9k/f/LkybWMZ6ReCKesqT0BhXRRFiUfoissSiYzXxxG0fgPXnQob0EKwUaotTJyOkK/V3Kdwb6Fpl9XT4v1p+PHH3vq1KlNcv3NN9/UaNOmTXa5xgsXxL24XzWcO8UggjfE20e9ysdvsG3uCfCd6alXJzM4Vq9A0fuPENXgwYNzm/I1XMiKGCAe0QcsxKcSqMFlVgbv37+/o1zDluei+BlBFEPOGq7XW0OHDu2FvZ4TLT9IgjkQwqwtW7aUWbRoUX3k/EVs8q0oaMpPz/8oCEjJ8ujo6J3M4OWmelXb4hzimcNwh9NwjDjixihD1K9fcHDwEs2CVAXbpEmTPEXRI7hS1MTK40TOdNks++j8zembNm0ST94Nfod1LV1B69atCxs6gvjkIYKNepZ4ARUhQWwtpQxOpT56nqNloaB9+/Zl4RYnNQtSFdRAM6PUalqUseJ6ehy2iia/AkXuFykzduzY5yVtwoQJVZmpe5iRfUHscpSxScxgD8nDNPODc0wl/wjPTjfXBduug3v3pvgGhgwZkktPdtESYOXoHF40e1qzINXBSViuaNvxmHdKsZPlWz4+PgXtf22hVuvvtm3b1gBu8a5RECthqPj6ZZOGrpiLh/AtyWvYsGF2wsI/C9MA4ZcgsIqm+hONy+PuLWUhPm1AzXpRvDDvtpvTBHDEVIJdB8tyK2T1XJS89kIAEt51rAjkq21VyO1ZvXv3fgEE+6JDXJQktP9V2P8l9KIGwhNT2FTeunXr/kPfVmkWpAkY5t394cOHF9ZMCCFoMxUTazCId4elh0kaBCAa+0P+X4MoNoSFhc2ErV8TpJMmMn8VtvwRlLtJiITKJsXNiAH8k4YeW0bqxGooollafZqAGlSUtRbM0CN6mpr1YpbhgXuVS1c09xuVK1fOCjuXXTPXR40a5XHy5MktOmvfu3Tp0qKJ1J8UxMWWw7Urfv+I0NDQrub+WJD6YGy0iASxauGEhGuFrRu2uMhaccPKNQiZjsK3QK6/++67XDiCBkMkMtuvys6b8ePHV+d5dy2Z0LVr1+xwmfFCSSidLfXkdLtQ45lhQ8jUDhUqVPBxd3cvh7fuNXzus202m5rJIGQb/vhfUNaUGxYOcBPkt/Dy8pptPN+iRYviKGTNvL2962bKlKkASeGUOUmwZy/EsA17fr+Hh0eYi4vLAzEfIRY3wrPeVatW/bR48eK1nZ2dPfEPLJ06dWqTn3/+WZxL1kaM/wIYsv7esGHDim7cuLExrDx2wyQ290DMt6n6ra1Lly7ZZGb27dtX4u2PaOgSievcufOLnTp1qohvv4O44O2PQjhK5YGgoKCxAwYMqKQvBde0/4F9d+kJDE26Epr5VWbeED8/v9gDkiCGN1HwjGibQgoIrSwzV0eYoZTFEgG2ekmI50/qO8Kzm3bs2DFy8eLFn2MelpaNGNqj3DKp+oAFqQxKnqLk9ZbpqK+QVcjQt2RF6ocmxG6VwlnTTti+/nzsPnrYeoDY7rh1u+EjyKVZkO7B8ONPF3ep/e/TLtTiyQULFlQzlVXIR9kbiUcuNjQrARpMusnx1G3N5nQOCvmXL1/uKTMfJ8q3co9TpgnOGMegiUI+rtoxYr+HhIQMgwusM9VjIfspA4V8NPvnCZ1KRC5S1svZH92BG8v2z54929FhEYcFTymIzFYI7N+/f+Fjx45NlgWW4rMnXt4f2V3SXBjl7d+4dY0onjXTnwGI42pFw3+d2S1boK/zuwmbD0QczNHX2xXULKQ/c/CIuYXmnxdvX21Zx6fb9ALWkafPOMQ3sy3ZboEFFlhggQUWWGACc/zZTUs6OD5nfta8li4+5etJ7VaJbTdHjhwepnTzu6Rmf11Mdaa/g5cXLVrUIjg4eLSWTCDy1e769etDjXsibIunT5/+tmO5xo0bF9qwYcNnROJqdujQoaL2BGH16tX1iPKpGD8u4j927dr1mWOZmjVr5ubdGo8dO7bG8OHDjf30j2zDSgLYGJ9NgwcPLvLee+8VJr6wzbQ07MkDsfDf8IAdSe5zc+bMkRDoPuOel4yYN29eK8dyAQEBzWRpEy++j3bmJVCdzeF/mkBgYGB3/Puhcn337t3Q48eP93MsM27cuDriMo6Ojt5G/F55BmV1MCHfdXgLfbSkg+3+/fsxEM+/Pv/8c7UiWPbra48JKbVbH/kuDJ27bdfPmElWRTZbBCHS28Y9iI2krkiHYi4VKlSY+Mknn2TH4fKv/Pnz/1t79B2c+Rk+d7uWPIdMsgiFOP1d/t3Xb+9AuLcd+9K6desl9DeLi4tLJQ8Pj+qS+Pvvv/ctXLhwfpB/SEsGyEJRCEyOdpXzdVN0xm5KEK8GVI4Jl7Vr2t+DbQZbPNeO69+T3YfXXnst808//XTLz8+vt/bXt+VcTPU97N27t3yO5IHujXuo/b3nLRby5MmTRf7LurymTZvm13fUyDuk5jo5450zyAIRYgRKBHJdFqIu8fLLLw9JoHyaQ0oQH/PVV1+5zZ49++aQIUOunjt3Tu0uhbLjIBsEeZgWQKjToJcvX/7FgQMH/GvXri3HiNuT2J56FvY+/Pvvv5c1bZmJuKlNEj179owh3r4YNphN7vfv338BjnGiW7duZ/VDk4Q47Hfu3FlMuX0zZszIg0y+4+/v33b37t13Jk6ceIFnb+DDH6f9tU7OFs8YmZdoJYXFCgFFU2cPxuiuq6trTgJFKu6P3P93rVq1Mvv6+srWbZuwbJ3w4lvVkyaQEsTb8XPvRwmbGR4e7lOgQIFlsrRYDhQ0lZGlTYE+Pj5yypQMfjRl5yDjJr300ktVUVQ6aDriQVScymH7mrNzHC4dTTBlbKZMmWojFmy3b99elC1bNrU5QhBP2XfIk+XUoi9EZciQoRQz60qXLl1ErsbQ7k6ic2/AKl2RkepMO2b9d4RtN33wwQeFQU6VggULtmrXrp1sb7abj1OVL1rAmt0QM1kgqmmlS5d2PH0rPngAkfZD429TvXp11507d44rWrRoEcl45ZVXIlFQw+FcivD79etXmeDROX2M1EvLcSyO9cuY8F5aasBjI/7TTz8tzsAXfeGFF3yyZ8/uxyAfpWOiyIQ7OTndMsqRHpM1a9aLcs2gvZ8lS5a3wZvbmDFjPixZsqSx9lxD/slpk3eNe/2EyjgmYa5cuVpt3bq1nuxxJ78GSIyVkbQbBNcp17lz57xG2ujRo4tBEG/IiVf09TXayA0iZJm1nFpZgZleKXfu3P9XpUqV29u3b79A+g2idercHDjVGYihnJQdOHBgwIQJE2rzrObt7d3o8OHDikolzKsfex4v5MuXzxekfgHRuEDo9SCEo5IuhMm/DLB+9b5YBjd5F2Pj58Px48cX4ncXThBHX4GwH6JXuCLik8olE4TH1gpBpqxVc164cGEt2PZJKLF4xowZz9I597x581ZicKrCTvOT/mKzZs06Fy9e/GCpUqUGXL169a6cUQuxqGrgGH148fWwv08hHPfNmzdX8/T0FEQV4P8Zc5sXLlyYzOw8wE/Wy51v27Zth4oVKwaTlQdWWoGBbQpBnQH5PRnUbfTxTRBj5zk1wBBeK7TwQJB7mRnWYf78+b2Y8dN++OEHORlLTrP4Fp3lVQjma+4L0AdPxFlJNzc3L0RYeYj9htRDnzvBtv1LlCjRzThRg3aEQ8WZSPTnV/SM9frtaYim2bJly9Yh28VMlc+q/bR3795Z6Bn/YUJ40OdPrl27dhVCnHn+/Hk/LKToJUuWvA5nKgKBik7ixrV8SzeL9oRAsR8GrYux1hiKXShpIlO53Q/rtstCRuz6/ORdkDKbNm36JjQ09E86bpd8nh9gHELEjCtF3kZJlx9UvdKhTUWkI0eOrM5szQdy5MjxG3IgMXXEyNFmks+AjZcZIXXIzij0AKV77Nmzx1ftiIyIeICcjzHa4dFInhnG85ulLnmW/p45evRoD+PdMNM+1LdZnaZsDaP/Ut2UKVPUJg7qPIkoeuQYFMRhFWR5QQhNTt64Ig8h9zcGBQWVMOpngjSG4H2lXtq4T9ItxIHnr7/+6iX5zHLVX9oYL3W2atVKtn9HpcScSwkoYSOnP+vHjwgI21NEAXt7zlzY/G04+TYMclLtVuF/BvMLyMcA5fgx/da8QTHe5cumsqouow5pw1RvbNv60ab27t27e0l58/m49DmjuT7ZDq2faqExO/PJal25lnp1qyBWa5f309tzSqy/ZcuWjZ2t4oCRNh3LyDySPX84wlYLIRtjpmerMZYTNrUnuGgk0bXl8klQqDSQWXUHAqmVzLoSSouTJ4qXvhFyiXCA+AqiTBZAHM3mN1+QTr9GONT/T207J5Bu3NsSyU/sOW3t2rXFpU+M0RpE0GlJk71+/BaKSfrll1/mTKT+x0Z8SlmFPbF7NNmeyNkYZocMfGAy60ooLU7emjVrbiCb2yAL96InFI+vIGzzOZSr92UZNeUbUk7crOYPDf1T2w8TSE/KfaLlEBUX0HdaIt8PMlbq8AZMzJrly5ffefPmzXVTp06Vo9tsCdSTYiUvLSA+bTcpVkRyqDg+durYbnyeu/SydDq+/ivWL6dm6Qcxp4d+xoH4Ov24nxJ55HRKHQSJzg7lMjiUtSXStlMC10kFMxHFK7Md8o3/5j4nx2XsmkC96WpJmHohtN8+KCBb0Xw7OCg3yQI09X/Z9QOH8WEHmj4FIppxIcycAUY0CrHRTI40kWtRznDmDDYfYmQCm8jITp06yXFkjzVzkMHvIHsH6e+WKOLRzIsae/FEWceV/a6WTMDUlcOZxQ9iEwVP9gZo6W3Wo4DsYNBvIMvH6KbSYCPPfF68g+bqFt81A1tS6hBEYqrVxB5/y8hDE1ffhBWHjPbX2TbR0pzkIQMrSJ4cfODQriISiHIevoMl5vZk/7x+H2uFxNMnm/6OsgzbPmvWrKrmejXTZgwB/eBjOegwo7yDKJz16tV7y1Rv7HHrDn2Mo2c1b968LDqLj1zjd/DFiRVizjdiDA59/e8BlC2HD9hRqmK1dcM8wiY2TpsI1deqi4kSzDO19evjvJR6DoVrnRRkVsnaduURw94fGBYW1s3cHjZ2BDHtz7CJRQuOkAigHEZA6LYHdvEBKSN72fV2z8qOVmz4DwxbGS6hvi8n5+XIPTazKJs2ISbxO8BhZuPWjeM7wH//shgB+Ph/w8ewRdLk9ErSLmLmldTPv70gByPKiRwQmFR9S2Y9/Q/HgSPvFMPkiD0LR66lEO99SLgITh05jfsoXG4cdWzA2VUMbjaDMcinlxM7fwz1LcLR1UQfn7rySloK4LFlBy8XCYKHY9suEzctgzwdSn2AGzYTptUG8afj3doNovylPAPtRefVhwQw8QqRF7Vy5cpP8IjVaNiwYV5EhbhKlduStGp4waqb2+PZnW+++WaVN954oxriZbwcW049r+DvroJ5tlLYIgO0SNqlL5fw3q2G0yyjnRPcb2eAOzH754CcrLqv3w3im33ixAk5H8cbgnAhXGp2wGgfffRRP7TtmYRWOzLTKstMhQhkhuajzSzMRpmx+XFbP9+/f/+vcSkLB6onsQM8iTY5fZNnS+CVq0laSZxUvXE1V2BMMoPQKIjWH4K8y/hJmWJDhw79Fg9n5RdffLFO1apVL8E91sknUogR+OJxPOrl5aU4Kv8HQuxbtBRASpSGjAyGL50tQ7StE67ZOnRy6/Tp0yPo1Cl+u/CNl8OFa8Tm7VC0cp3KLODFwxnEmszSgD///PMygyGeN6W44eu/D27umhvDBTy7SJEiVerXr18XN/Ey2vTv1avXl8TkS5OH+3vObQjxOu0G4IQpjE6gTB0QGsrvDJdRzz//vBx3Lo6RNbhhs4IoL4hFlUNHaACxBGgm9k/QpgJIfX/UqFF/yD0E+ioIitb7GIXb2K5fu0KMyg8PZ5A6nN3d3TNT3zQcP8chkChMSgmj18JNPA1Oco9x642L+2Xpl7h7CWTVhzgOQqzZIBo1AXA1H2OcIiDcSDjrcOr0FC5TqFChEnCqvloKICWIj4T19ALZYfjOJ8Cqx/HS2Qh51oBCJ6HYvIELczUyUtnAvIAz7FddQyRyJKiTfBiYQSsiaQReciTW2GqA2eItUTgCNQcDAgIWY/c2gTt4wC12M5sGvv766yMYlAoEawIJqKgoIUSWi3bUZkkILQpiPYyP/Z0ff/zxJZw/NUBsfsnjPQzZKeLGPmDAgDK0lQNX7xwUrqP0NxRvWWc/Pz8JsIhfPpJnFILkHfHrK88afbiHuJNxtdMH0Tuc6aMTBMarOp0n31vKNWrUyBuOoJQ4uQepSjmlnQfG3k0IIA/EoRZ3QBShctYeLusNjOW5QYMGndeekLZvg4KP6yL0pvzBGVEW2ect11CryPnFco3XzhPk/KqXDZQ/TJAGDK46kkS+78I/2c+u3hgWLJ/03urYINm3aVOiaGoBiIhABkNF6NavX6/86RCfDIySo0TXcoC0LrqMb4fvWz4uaCfIckT+o4U3YDa/INfI7jhWAaJlK4g1jkfXEGPvG/0DiTt0f/0uSaOOV+SQRXGr6xq5Ou6sR48en4klItc8X1c+dSbXEKB8FNGOXC8Pa5ePG9qNDx/xHt14dzVBILIvJQ9ONkXuV6xY0Uivq7X2hCDWVl26dOmr8n03w6ct8Msvv5QkCNFMrlF8ShmrUJmV9fGRF0SpKUCESpWHknOJN02OD+cnBwnakG8F9Q8Bx3Gp1qhRwwuPVl7jXgaLGSQuTUX5f/zxhzci4Eu5JhTrDStXmj4K0yuVKlUyYvc5iIi1nDt3rjpWXPz6LVq0KKM5fOHq7bff9jZ9jkzlUa687su3MfhfCCJl4aNhtfBMtrp161aQfNovbZT9+OOPy+DLV2MgC1PgVq2nTZtm7NVzk74a5iIx+2xYA8WN8ZXxYzxUXxGjXoJ49IbHNk9TAxJy4DglsayA8z+kJeSAcazPKZ78+Mq5JNKWuWxijp+E3iWhxRkJ+fyNZ2wJ1BEnjxC0+DnsWApz46nXgmcUBMlups+hWV+++B8Fa7ZbYIEFFlhggQUWWGCBBRZYYIEFFlhgwTMJ/w+9dmWowyAkwgAAAABJRU5ErkJggg=='\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                                            background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تم تقديم خطة الامتثال السنوية الخاصة بك بنجاح. </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تم إرسال طلبك إلى مدير الامتثال للمراجعة والموافقة. في حال وجود أي استفسارات أو تحديثات إضافية، سيتم إخطارك فورًا. شكرًا لجهودك في إنجاز هذه المهمة المهمة.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        عنوان الخطة /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{PlanTitle}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        معرّف الطلب /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        #{{RequestNumber}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        تاريخ تقديم الطلب  /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{SubmissionDate}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "تأكيد الإرسال: خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>اخصائي الامتثال </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تم تقديم خطة الامتثال السنوية من قبل {{SenderName}} وهي جاهزة لمراجعتك وموافقتك. </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>يرجى اتخاذ الإجراء المناسب (الموافقة أو طلب التعديل) خلال 7 أيام عمل.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        عنوان الخطة /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{PlanTitle}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        معرّف الطلب /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        #{{RequestNumber}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        تاريخ تقديم الطلب  /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{SubmissionDate}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "خطة الامتثال السنوية الجديدة مقدمة للمراجعة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAABjCAYAAABda7TNAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAB11SURBVHgB7Z0HfBXF1sD3phBKCFJCEwggUg3oU0SKCHyKiiCCDwuCGDqilAiC8FCk96Y0pQQQpPfeQw8QIPTQQie0EEILIeR+/zPuxs0liQlJHoG35/e7ye7M7MzsnDOnzsxqmgUWWGCBBRZYYIEFFlhggQUWWGCBBRZYkP7AWXv6wCmBdJv+syAJ8LQNlBDqw2+//datdu3aTc+dO5czU6ZM4Q8fPjzw+++/H968efNVvZxBBDGaBc8E2Nq2bZvTbrdHhoeH+9+8eXNaRETEwuvXrx8m7Q6/iEuXLk1t06ZNUdMzTpoFTz9cu3Zt15kzZ76PL69Hjx7ex48fXwEB2G/fvn0sMDCwhin7aRRr//MgbFsh7v79+xFz584to8UVUzbz/6+++iojHGG5/S8I2bFjx2emshYBPCUgrFohFJa+GcTvTkJ5xd6Z/W/pyL/F78rKlSvf1ss4a5YimK5BKWnjx493BXFXo6Ki/BIoEx+4yJ9Vq1YV4dnoEydONLl169ZefkGvvvpqZnMZC9IfKMQI0h88eHAhOjra/+7du2Fo8SEXLlxYt2nTpsGTJk2qVKxYMTfTM2azTj3fr18/UQjtq1evfpHnPpfrAwcONNXLWLM/nYFCGlr7josXL/4m19WqVctYtmzZ3CNGjCg7ZswYH5S8yWFhYSHgMQql78S0adPam4jAYPlKpjdt2jSrIHzGjBllMAUzc3kOPWA//+MQiQXpAAICAt4EMeH6bYJKWcuWLV3Xr1//LubddkEuBLF++PDh+UzPKaQuWbLkeclv3759HrkPDQ3tI/fbt2+voJe1kP+EQSln4OTy0qVL39TTEmLHcTx2DRo0yIBSN0AQev78+eWmcooT+Pv71xA/gJE4e/bsElIWjjFCT7JY/xMEW69evcoj009oyYM4RHD69OkZglTseUU8BQoUyCT/kfOTEBH+pmfETDyA8rjflPZMO37SLWVje48rXbp0veDg4Fl58uTxgggMLvCA2Rnh4eFxac+ePSEg9Thu21OYahe5fuBYz8SJE0sg34+A7BEg3pekDPyiqO8myl6DWrVqrdb+YvHRV65c+dXT07OVj4+Pp5+fX7iRrj2DkG4RHxMTcxTla/W+fftC16xZc/u5554DV9E2/mesX7++x40bN/K5uroWzpkzZ67s2bPn5pGs/G4g3w9v2bJl1rx581YsWLDgiqm+EGb0wYwZM9aR+/79+xft2rVrsM1mc9X+lu3RBw8e/LBMmTKLsBiKv/XWW8dJk/wHmgVpD7rWHZ6cZ95//303XLZlUPI6whG2ie8eEzCU+0HvvvuuUvSY0dswB+cZz2AxrDh27Ngo/VYmgSBZCwoK6iYiYu/evR/pea6aBWkPsN+8IOWSfvvYXAlCeAUOMFccOCh6+1D8skEMAThz2kn+119/7S4IlmifZrIa4AZN4Q6zyTpLP/rqyRby0xp0mzusZ8+ese7alMLChQsrUedBRMQ0QTaiQHEBHDlzQ0JCxprLDhs27DUIJUiuKXoJkTNTz7LMvbSGyMjIG4sXL65iTmvcuHGWcePGle7WrdsnW7du/Qmt/U8QtBkHz14QdJTfKTHjZaaafiF4+o6NGjVq3s6dO9txv4fZLLhXFoPu1RMZHqvJ4yjKJb594/7evXuHcPWu1bvxTAR50i0Fo7F/UKdOnbW7d+/+yMvLa1CuXLlEgXPnF0bI9Qxy+DzIOEi5haIAcn0Dxe1W5syZsczuP4Sl20DYQwI7ke7u7i4fA+XKlesOQguj0N2jnhcuX77si8UwDFYfPH369IZffPHFdGkbK+EW/2JwDGX87bff7nFfBr1hB21szZo1a2VNXxCiWZDqoOQpythImZqw/Nfbtm3rRXAlyXJWuMOyZcs+1715t/kfCJHIjL+Ghm/Ha9dfHDmw9RyDBg16j3zDZ6BEC3kX0Ak89TQ1yyEif4huh55msf00AiNAcw2bvrqeFp9TJY6zBVle586dO4d4LgbFLAjR0LpEiRJZO3bsmEnqOnr06EDR+KUsWntzEBmit/Pgww8/zKrXpwlXYcYXMrWjkH/u3LmN6AmGZWApfGkAygvXt2/fPPqsF8eLk0O+QoaYf4cOHRolwRqQfRrnyxdi3hkFDx8+/IHUMXXq1CJnz55dgAnXzshDJITBzsscOXJkHkGe5kY6OkZIkyZNXnDok3PFihUz6S7ernqaNfPTABRiQdwgZqCxAMNF/6loHbJeuWUx0Rb+8MMPnqZnVRlm548ym5HfHiC4PNc3Jb158+Z5RHTMnz+/FEi+ioevHOx+m/Ew1yGUKWKqT3EC4gCLrl692hEF8RoKZg1zngWpCwbLj8DF+n9GIgj4UQ/ETJGlVnqywfbVM+gIk2RyGs9IHZs3bxZLwYYjx7dDhw6yKNNGuZ27du3qg+wPNJU936hRo3ymfjhBaC7SpoR+xRyUa8RBZs1a0JkmoFj+zJkzS4lsxrmSXRAIBwgQe18vE7vcSvsb6TOZyaeMSojKfYq9fkiuxTbHxLuMlh6B5t8/X7584imM5LdNFDoJ83Idqst8ow8S9BlFvauMOqmvHfWcN7drQeqCwbanyCyDxZbX080IFxA9QIMVT2BGh5ifFc2+Zs2aBWX5Ncg6JZq9DgEiAoj9i6lnR86XI5iTQ1b9mOp1FmeS5MMlntNMXIX6NkA8RqTPCummATgxG0WxitLZq+MMUxo2SlcXylzX05SOgFn3Dt634IEDB2ZFXNRCAZyDrT8T5O8RhOPY+UTctoLYPn36fExIuAyWwXG9DtUO2vxaFMOJelqcVTvM/JWU32EyNy0CSEVQMxvt+zsQd1hPczb/37BhQzVBnqm8SkdRO7Z27VoVcCH61hAkjiSM+yMyvJiwfaMByu0gEjhgypQpn4pX0EifO3fua5R7aO6HDgrRo0ePzmuwD6yLn0z5FvtPJVCIFBkvvnc9TekAzZo1E/Zsx52bR/t7QYate/fustwqdiuVIbeJz6/w9fWtpHMRNTvnzJnTAE4wD9k/f/LkybWMZ6ReCKesqT0BhXRRFiUfoissSiYzXxxG0fgPXnQob0EKwUaotTJyOkK/V3Kdwb6Fpl9XT4v1p+PHH3vq1KlNcv3NN9/UaNOmTXa5xgsXxL24XzWcO8UggjfE20e9ysdvsG3uCfCd6alXJzM4Vq9A0fuPENXgwYNzm/I1XMiKGCAe0QcsxKcSqMFlVgbv37+/o1zDluei+BlBFEPOGq7XW0OHDu2FvZ4TLT9IgjkQwqwtW7aUWbRoUX3k/EVs8q0oaMpPz/8oCEjJ8ujo6J3M4OWmelXb4hzimcNwh9NwjDjixihD1K9fcHDwEs2CVAXbpEmTPEXRI7hS1MTK40TOdNks++j8zembNm0ST94Nfod1LV1B69atCxs6gvjkIYKNepZ4ARUhQWwtpQxOpT56nqNloaB9+/Zl4RYnNQtSFdRAM6PUalqUseJ6ehy2iia/AkXuFykzduzY5yVtwoQJVZmpe5iRfUHscpSxScxgD8nDNPODc0wl/wjPTjfXBduug3v3pvgGhgwZkktPdtESYOXoHF40e1qzINXBSViuaNvxmHdKsZPlWz4+PgXtf22hVuvvtm3b1gBu8a5RECthqPj6ZZOGrpiLh/AtyWvYsGF2wsI/C9MA4ZcgsIqm+hONy+PuLWUhPm1AzXpRvDDvtpvTBHDEVIJdB8tyK2T1XJS89kIAEt51rAjkq21VyO1ZvXv3fgEE+6JDXJQktP9V2P8l9KIGwhNT2FTeunXr/kPfVmkWpAkY5t394cOHF9ZMCCFoMxUTazCId4elh0kaBCAa+0P+X4MoNoSFhc2ErV8TpJMmMn8VtvwRlLtJiITKJsXNiAH8k4YeW0bqxGooollafZqAGlSUtRbM0CN6mpr1YpbhgXuVS1c09xuVK1fOCjuXXTPXR40a5XHy5MktOmvfu3Tp0qKJ1J8UxMWWw7Urfv+I0NDQrub+WJD6YGy0iASxauGEhGuFrRu2uMhaccPKNQiZjsK3QK6/++67XDiCBkMkMtuvys6b8ePHV+d5dy2Z0LVr1+xwmfFCSSidLfXkdLtQ45lhQ8jUDhUqVPBxd3cvh7fuNXzus202m5rJIGQb/vhfUNaUGxYOcBPkt/Dy8pptPN+iRYviKGTNvL2962bKlKkASeGUOUmwZy/EsA17fr+Hh0eYi4vLAzEfIRY3wrPeVatW/bR48eK1nZ2dPfEPLJ06dWqTn3/+WZxL1kaM/wIYsv7esGHDim7cuLExrDx2wyQ290DMt6n6ra1Lly7ZZGb27dtX4u2PaOgSievcufOLnTp1qohvv4O44O2PQjhK5YGgoKCxAwYMqKQvBde0/4F9d+kJDE26Epr5VWbeED8/v9gDkiCGN1HwjGibQgoIrSwzV0eYoZTFEgG2ekmI50/qO8Kzm3bs2DFy8eLFn2MelpaNGNqj3DKp+oAFqQxKnqLk9ZbpqK+QVcjQt2RF6ocmxG6VwlnTTti+/nzsPnrYeoDY7rh1u+EjyKVZkO7B8ONPF3ep/e/TLtTiyQULFlQzlVXIR9kbiUcuNjQrARpMusnx1G3N5nQOCvmXL1/uKTMfJ8q3co9TpgnOGMegiUI+rtoxYr+HhIQMgwusM9VjIfspA4V8NPvnCZ1KRC5S1svZH92BG8v2z54929FhEYcFTymIzFYI7N+/f+Fjx45NlgWW4rMnXt4f2V3SXBjl7d+4dY0onjXTnwGI42pFw3+d2S1boK/zuwmbD0QczNHX2xXULKQ/c/CIuYXmnxdvX21Zx6fb9ALWkafPOMQ3sy3ZboEFFlhggQUWWGACc/zZTUs6OD5nfta8li4+5etJ7VaJbTdHjhwepnTzu6Rmf11Mdaa/g5cXLVrUIjg4eLSWTCDy1e769etDjXsibIunT5/+tmO5xo0bF9qwYcNnROJqdujQoaL2BGH16tX1iPKpGD8u4j927dr1mWOZmjVr5ubdGo8dO7bG8OHDjf30j2zDSgLYGJ9NgwcPLvLee+8VJr6wzbQ07MkDsfDf8IAdSe5zc+bMkRDoPuOel4yYN29eK8dyAQEBzWRpEy++j3bmJVCdzeF/mkBgYGB3/Puhcn337t3Q48eP93MsM27cuDriMo6Ojt5G/F55BmV1MCHfdXgLfbSkg+3+/fsxEM+/Pv/8c7UiWPbra48JKbVbH/kuDJ27bdfPmElWRTZbBCHS28Y9iI2krkiHYi4VKlSY+Mknn2TH4fKv/Pnz/1t79B2c+Rk+d7uWPIdMsgiFOP1d/t3Xb+9AuLcd+9K6desl9DeLi4tLJQ8Pj+qS+Pvvv/ctXLhwfpB/SEsGyEJRCEyOdpXzdVN0xm5KEK8GVI4Jl7Vr2t+DbQZbPNeO69+T3YfXXnst808//XTLz8+vt/bXt+VcTPU97N27t3yO5IHujXuo/b3nLRby5MmTRf7LurymTZvm13fUyDuk5jo5450zyAIRYgRKBHJdFqIu8fLLLw9JoHyaQ0oQH/PVV1+5zZ49++aQIUOunjt3Tu0uhbLjIBsEeZgWQKjToJcvX/7FgQMH/GvXri3HiNuT2J56FvY+/Pvvv5c1bZmJuKlNEj179owh3r4YNphN7vfv338BjnGiW7duZ/VDk4Q47Hfu3FlMuX0zZszIg0y+4+/v33b37t13Jk6ceIFnb+DDH6f9tU7OFs8YmZdoJYXFCgFFU2cPxuiuq6trTgJFKu6P3P93rVq1Mvv6+srWbZuwbJ3w4lvVkyaQEsTb8XPvRwmbGR4e7lOgQIFlsrRYDhQ0lZGlTYE+Pj5yypQMfjRl5yDjJr300ktVUVQ6aDriQVScymH7mrNzHC4dTTBlbKZMmWojFmy3b99elC1bNrU5QhBP2XfIk+XUoi9EZciQoRQz60qXLl1ErsbQ7k6ic2/AKl2RkepMO2b9d4RtN33wwQeFQU6VggULtmrXrp1sb7abj1OVL1rAmt0QM1kgqmmlS5d2PH0rPngAkfZD429TvXp11507d44rWrRoEcl45ZVXIlFQw+FcivD79etXmeDROX2M1EvLcSyO9cuY8F5aasBjI/7TTz8tzsAXfeGFF3yyZ8/uxyAfpWOiyIQ7OTndMsqRHpM1a9aLcs2gvZ8lS5a3wZvbmDFjPixZsqSx9lxD/slpk3eNe/2EyjgmYa5cuVpt3bq1nuxxJ78GSIyVkbQbBNcp17lz57xG2ujRo4tBEG/IiVf09TXayA0iZJm1nFpZgZleKXfu3P9XpUqV29u3b79A+g2idercHDjVGYihnJQdOHBgwIQJE2rzrObt7d3o8OHDikolzKsfex4v5MuXzxekfgHRuEDo9SCEo5IuhMm/DLB+9b5YBjd5F2Pj58Px48cX4ncXThBHX4GwH6JXuCLik8olE4TH1gpBpqxVc164cGEt2PZJKLF4xowZz9I597x581ZicKrCTvOT/mKzZs06Fy9e/GCpUqUGXL169a6cUQuxqGrgGH148fWwv08hHPfNmzdX8/T0FEQV4P8Zc5sXLlyYzOw8wE/Wy51v27Zth4oVKwaTlQdWWoGBbQpBnQH5PRnUbfTxTRBj5zk1wBBeK7TwQJB7mRnWYf78+b2Y8dN++OEHORlLTrP4Fp3lVQjma+4L0AdPxFlJNzc3L0RYeYj9htRDnzvBtv1LlCjRzThRg3aEQ8WZSPTnV/SM9frtaYim2bJly9Yh28VMlc+q/bR3795Z6Bn/YUJ40OdPrl27dhVCnHn+/Hk/LKToJUuWvA5nKgKBik7ixrV8SzeL9oRAsR8GrYux1hiKXShpIlO53Q/rtstCRuz6/ORdkDKbNm36JjQ09E86bpd8nh9gHELEjCtF3kZJlx9UvdKhTUWkI0eOrM5szQdy5MjxG3IgMXXEyNFmks+AjZcZIXXIzij0AKV77Nmzx1ftiIyIeICcjzHa4dFInhnG85ulLnmW/p45evRoD+PdMNM+1LdZnaZsDaP/Ut2UKVPUJg7qPIkoeuQYFMRhFWR5QQhNTt64Ig8h9zcGBQWVMOpngjSG4H2lXtq4T9ItxIHnr7/+6iX5zHLVX9oYL3W2atVKtn9HpcScSwkoYSOnP+vHjwgI21NEAXt7zlzY/G04+TYMclLtVuF/BvMLyMcA5fgx/da8QTHe5cumsqouow5pw1RvbNv60ab27t27e0l58/m49DmjuT7ZDq2faqExO/PJal25lnp1qyBWa5f309tzSqy/ZcuWjZ2t4oCRNh3LyDySPX84wlYLIRtjpmerMZYTNrUnuGgk0bXl8klQqDSQWXUHAqmVzLoSSouTJ4qXvhFyiXCA+AqiTBZAHM3mN1+QTr9GONT/T207J5Bu3NsSyU/sOW3t2rXFpU+M0RpE0GlJk71+/BaKSfrll1/mTKT+x0Z8SlmFPbF7NNmeyNkYZocMfGAy60ooLU7emjVrbiCb2yAL96InFI+vIGzzOZSr92UZNeUbUk7crOYPDf1T2w8TSE/KfaLlEBUX0HdaIt8PMlbq8AZMzJrly5ffefPmzXVTp06Vo9tsCdSTYiUvLSA+bTcpVkRyqDg+durYbnyeu/SydDq+/ivWL6dm6Qcxp4d+xoH4Ov24nxJ55HRKHQSJzg7lMjiUtSXStlMC10kFMxHFK7Md8o3/5j4nx2XsmkC96WpJmHohtN8+KCBb0Xw7OCg3yQI09X/Z9QOH8WEHmj4FIppxIcycAUY0CrHRTI40kWtRznDmDDYfYmQCm8jITp06yXFkjzVzkMHvIHsH6e+WKOLRzIsae/FEWceV/a6WTMDUlcOZxQ9iEwVP9gZo6W3Wo4DsYNBvIMvH6KbSYCPPfF68g+bqFt81A1tS6hBEYqrVxB5/y8hDE1ffhBWHjPbX2TbR0pzkIQMrSJ4cfODQriISiHIevoMl5vZk/7x+H2uFxNMnm/6OsgzbPmvWrKrmejXTZgwB/eBjOegwo7yDKJz16tV7y1Rv7HHrDn2Mo2c1b968LDqLj1zjd/DFiRVizjdiDA59/e8BlC2HD9hRqmK1dcM8wiY2TpsI1deqi4kSzDO19evjvJR6DoVrnRRkVsnaduURw94fGBYW1s3cHjZ2BDHtz7CJRQuOkAigHEZA6LYHdvEBKSN72fV2z8qOVmz4DwxbGS6hvi8n5+XIPTazKJs2ISbxO8BhZuPWjeM7wH//shgB+Ph/w8ewRdLk9ErSLmLmldTPv70gByPKiRwQmFR9S2Y9/Q/HgSPvFMPkiD0LR66lEO99SLgITh05jfsoXG4cdWzA2VUMbjaDMcinlxM7fwz1LcLR1UQfn7rySloK4LFlBy8XCYKHY9suEzctgzwdSn2AGzYTptUG8afj3doNovylPAPtRefVhwQw8QqRF7Vy5cpP8IjVaNiwYV5EhbhKlduStGp4waqb2+PZnW+++WaVN954oxriZbwcW049r+DvroJ5tlLYIgO0SNqlL5fw3q2G0yyjnRPcb2eAOzH754CcrLqv3w3im33ixAk5H8cbgnAhXGp2wGgfffRRP7TtmYRWOzLTKstMhQhkhuajzSzMRpmx+XFbP9+/f/+vcSkLB6onsQM8iTY5fZNnS+CVq0laSZxUvXE1V2BMMoPQKIjWH4K8y/hJmWJDhw79Fg9n5RdffLFO1apVL8E91sknUogR+OJxPOrl5aU4Kv8HQuxbtBRASpSGjAyGL50tQ7StE67ZOnRy6/Tp0yPo1Cl+u/CNl8OFa8Tm7VC0cp3KLODFwxnEmszSgD///PMygyGeN6W44eu/D27umhvDBTy7SJEiVerXr18XN/Ey2vTv1avXl8TkS5OH+3vObQjxOu0G4IQpjE6gTB0QGsrvDJdRzz//vBx3Lo6RNbhhs4IoL4hFlUNHaACxBGgm9k/QpgJIfX/UqFF/yD0E+ioIitb7GIXb2K5fu0KMyg8PZ5A6nN3d3TNT3zQcP8chkChMSgmj18JNPA1Oco9x642L+2Xpl7h7CWTVhzgOQqzZIBo1AXA1H2OcIiDcSDjrcOr0FC5TqFChEnCqvloKICWIj4T19ALZYfjOJ8Cqx/HS2Qh51oBCJ6HYvIELczUyUtnAvIAz7FddQyRyJKiTfBiYQSsiaQReciTW2GqA2eItUTgCNQcDAgIWY/c2gTt4wC12M5sGvv766yMYlAoEawIJqKgoIUSWi3bUZkkILQpiPYyP/Z0ff/zxJZw/NUBsfsnjPQzZKeLGPmDAgDK0lQNX7xwUrqP0NxRvWWc/Pz8JsIhfPpJnFILkHfHrK88afbiHuJNxtdMH0Tuc6aMTBMarOp0n31vKNWrUyBuOoJQ4uQepSjmlnQfG3k0IIA/EoRZ3QBShctYeLusNjOW5QYMGndeekLZvg4KP6yL0pvzBGVEW2ect11CryPnFco3XzhPk/KqXDZQ/TJAGDK46kkS+78I/2c+u3hgWLJ/03urYINm3aVOiaGoBiIhABkNF6NavX6/86RCfDIySo0TXcoC0LrqMb4fvWz4uaCfIckT+o4U3YDa/INfI7jhWAaJlK4g1jkfXEGPvG/0DiTt0f/0uSaOOV+SQRXGr6xq5Ou6sR48en4klItc8X1c+dSbXEKB8FNGOXC8Pa5ePG9qNDx/xHt14dzVBILIvJQ9ONkXuV6xY0Uivq7X2hCDWVl26dOmr8n03w6ct8Msvv5QkCNFMrlF8ShmrUJmV9fGRF0SpKUCESpWHknOJN02OD+cnBwnakG8F9Q8Bx3Gp1qhRwwuPVl7jXgaLGSQuTUX5f/zxhzci4Eu5JhTrDStXmj4K0yuVKlUyYvc5iIi1nDt3rjpWXPz6LVq0KKM5fOHq7bff9jZ9jkzlUa687su3MfhfCCJl4aNhtfBMtrp161aQfNovbZT9+OOPy+DLV2MgC1PgVq2nTZtm7NVzk74a5iIx+2xYA8WN8ZXxYzxUXxGjXoJ49IbHNk9TAxJy4DglsayA8z+kJeSAcazPKZ78+Mq5JNKWuWxijp+E3iWhxRkJ+fyNZ2wJ1BEnjxC0+DnsWApz46nXgmcUBMlups+hWV+++B8Fa7ZbYIEFFlhggQUWWGCBBRZYYIEFFlhgwTMJ/w+9dmWowyAkwgAAAABJRU5ErkJggg=='\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير بأن خطة الامتثال السنوية بعنوان {{PlanTitle}} تتطلب اتخاذ إجراء منك </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>يرجى مراجعة الخطة واتخاذ الإجراء المناسب قبل الموعد النهائي.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          الايام المتبقية : {{RemainingDays}}\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "تذكير بالإجراء المطلوب بشأن خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير بانتهاء فترة مراجعة خطة الامتثال السنوية بعنوان {{PlanTitle}} </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>مدير الادارة </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد انتهت فترة مراجعة خطة الامتثال السنوية  {{PlanTitle}} دون اتخاذ أي إجراء.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "التصعيد: انتهت فترة مراجعة الخطة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تصعيد بانتهاء فترة مراجعة خطة الامتثال السنوية من قبل مدير الادارة بعنوان {{PlanTitle}} </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>مدير عام مراقبة الاداء </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد انتهت فترة مراجعة خطة الامتثال السنوية  {{PlanTitle}} دون اتخاذ أي إجراء.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "PerformanceMonitoringManager",
+                            Subject = "التصعيد: انتهت فترة مراجعة الخطة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تمت الموافقة على خطة الامتثال السنوية</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تمت الموافقة بنجاح على خطة الامتثال السنوية الخاصة بكم بعنوان {{PlanTitle}} من قبل {{SenderName}}</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            عنوان الخطة /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{PlanTitle}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            معرّف الطلب /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            #{{RequestNumber}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            تاريخ تقديم الطلب  /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{SubmissionDate}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "تمت الموافقة على خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تمت الموافقة على خطة الامتثال السنوية</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تمت الموافقة بنجاح على خطة الامتثال السنوية الخاصة بكم بعنوان {{PlanTitle}} من قبل {{SenderName}}</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            عنوان الخطة /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{PlanTitle}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            معرّف الطلب /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            #{{RequestNumber}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            تاريخ تقديم الطلب  /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{SubmissionDate}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "تمت الموافقة على خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تم الموافقة علي خطة الامتثال السنوية من قبل مدير الادارة {{SenderName}} وهي جاهزة لمراجعتك وموافقتك. </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>يرجى اتخاذ الإجراء المناسب (الموافقة أو طلب التعديل) خلال 7 أيام عمل.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            عنوان الخطة /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{PlanTitle}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            معرّف الطلب /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            #{{RequestNumber}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            تاريخ تقديم الطلب  /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{SubmissionDate}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "PerformanceMonitoringManager",
+                            Subject = "إشعار بالخطة تم استلامه بعد موافقة المدير المباشر",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تم ارجاع خطة الامتثال السنوية المقدمة من سيادتكم من مدير الادارة</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تم إرجاع خطة الامتثال السنوية الخاصة بك بعنوان {{PlanTitle}} لإجراء التعديلات عليها بواسطة {{SenderName}}.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            عنوان الخطة /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{PlanTitle}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            معرّف الطلب /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            #{{RequestNumber}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            تاريخ الارجاع  /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{SubmissionDate}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "خطة الامتثال السنوية تم إرجاعها للتعديل",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا تذكير بأن خطة الامتثال السنوية بعنوان {{PlanTitle}} تتطلب اتخاذ إجراء منك.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>يرجى مراجعة الخطة واتخاذ الإجراء المناسب قبل الموعد النهائي.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p style='font-size: 18px;\r\n                                        font-style: normal;\r\n                                        font-weight: 700;'>\r\n                                        <span>\r\n                                          الوقت المتبقي : {{RemainingDays}}\r\n                                        </span>\r\n\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "PerformanceMonitoringManager",
+                            Subject = "تذكير: مطلوب اتخاذ إجراء بشأن الخطة المعتمدة",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تمت الموافقة على خطة الامتثال السنوية من قبل مدير عام مراقبة الاداء</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> {{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تمت الموافقة بنجاح على خطة الامتثال السنوية من قبل مدير عام مراقبة الاداء بعنوان {{PlanTitle}} من قبل {{SenderName}}</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                           <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        عنوان الخطة /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{PlanTitle}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        معرّف الطلب /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        #{{RequestNumber}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        تاريخ الموافقة  /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{SubmissionDate}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceManager",
+                            Subject = "تمت الموافقة على خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تمت الموافقة على خطة الامتثال السنوية من قبل مدير عام مراقبة الاداء</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}}</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تمت الموافقة بنجاح على خطة الامتثال السنوية الخاصة بكم  من قبل مدير عام مراقبة الاداء بعنوان {{PlanTitle}} من قبل {{SenderName}}</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                           <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        عنوان الخطة /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{PlanTitle}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        معرّف الطلب /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        #{{RequestNumber}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                <p>\r\n                                    <span>\r\n                                        تاريخ الموافقة  /\r\n                                    </span>\r\n                                    <span style='font-size: 16px;\r\n                                        margin: 0 5px ;\r\n                                        font-style: normal;\r\n                                        font-weight: 600;'>\r\n                                        {{SubmissionDate}}\r\n                                    </span>\r\n                                </p>\r\n                            </td>\r\n                        </tr>\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "تمت الموافقة على خطة الامتثال السنوية",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,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'\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>تم ارجاع خطة الامتثال السنوية المقدمة من سيادتكم من مدير عام مراقبة الاداء</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>{{EmployeeName}} </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>لقد تم إرجاع خطة الامتثال السنوية الخاصة بك بعنوان {{PlanTitle}} لإجراء التعديلات عليها بواسطة {{SenderName}}.</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            عنوان الخطة /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{PlanTitle}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            معرّف الطلب /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            #{{RequestNumber}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>\r\n                                            تاريخ الارجاع  /\r\n                                        </span>\r\n                                        <span style='font-size: 16px;\r\n                                            margin: 0 5px ;\r\n                                            font-style: normal;\r\n                                            font-weight: 600;'>\r\n                                            {{SubmissionDate}}\r\n                                        </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n\r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          \r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              \r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "ComplianceSpecialist",
+                            Subject = "خطة الامتثال السنوية تم إرجاعها للتعديل",
+                            TemplateTypeId = 144L
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            Content = "<!DOCTYPE html>\r\n                <html lang='en' dir='rtl'>\r\n                <head>\r\n                    <meta charset='UTF-8' />\r\n                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\r\n                    <!-- <title>Document</title> -->\r\n                    <style>\r\n                        @font-face {\r\n                            font-family: 'IBM Plex Sans';\r\n                            src: url('https://cdnext.swcc.gov.sa/fonts/IBMPlexSans-Regular.ttf')\r\n                        }\r\n                    </style>\r\n                </head>\r\n                <body>\r\n                    <!-- <div width='708'>\r\n\r\n                    </div> -->\r\n                    <center>\r\n                        <table width='708px'\r\n                               style='max-width: 708px; border: 8px  ;font-family: 'IBM Plex Sans';border: 1px solid #E1E1E1; padding: 10px;'\r\n                               cellpadding='0'\r\n                               border='0'\r\n                               cellspacing='0'>\r\n                            <!-- email navbar start -->\r\n                            <tr>\r\n                                <td style='border-radius: 8px; background-color:#0066ff; '>\r\n                                    <div>\r\n                                        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAABjCAYAAABda7TNAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAB11SURBVHgB7Z0HfBXF1sD3phBKCFJCEwggUg3oU0SKCHyKiiCCDwuCGDqilAiC8FCk96Y0pQQQpPfeQw8QIPTQQie0EEILIeR+/zPuxs0liQlJHoG35/e7ye7M7MzsnDOnzsxqmgUWWGCBBRZYYIEFFlhggQUWWGCBBRZYkP7AWXv6wCmBdJv+syAJ8LQNlBDqw2+//datdu3aTc+dO5czU6ZM4Q8fPjzw+++/H968efNVvZxBBDGaBc8E2Nq2bZvTbrdHhoeH+9+8eXNaRETEwuvXrx8m7Q6/iEuXLk1t06ZNUdMzTpoFTz9cu3Zt15kzZ76PL69Hjx7ex48fXwEB2G/fvn0sMDCwhin7aRRr//MgbFsh7v79+xFz584to8UVUzbz/6+++iojHGG5/S8I2bFjx2emshYBPCUgrFohFJa+GcTvTkJ5xd6Z/W/pyL/F78rKlSvf1ss4a5YimK5BKWnjx493BXFXo6Ki/BIoEx+4yJ9Vq1YV4dnoEydONLl169ZefkGvvvpqZnMZC9IfKMQI0h88eHAhOjra/+7du2Fo8SEXLlxYt2nTpsGTJk2qVKxYMTfTM2azTj3fr18/UQjtq1evfpHnPpfrAwcONNXLWLM/nYFCGlr7josXL/4m19WqVctYtmzZ3CNGjCg7ZswYH5S8yWFhYSHgMQql78S0adPam4jAYPlKpjdt2jSrIHzGjBllMAUzc3kOPWA//+MQiQXpAAICAt4EMeH6bYJKWcuWLV3Xr1//LubddkEuBLF++PDh+UzPKaQuWbLkeclv3759HrkPDQ3tI/fbt2+voJe1kP+EQSln4OTy0qVL39TTEmLHcTx2DRo0yIBSN0AQev78+eWmcooT+Pv71xA/gJE4e/bsElIWjjFCT7JY/xMEW69evcoj009oyYM4RHD69OkZglTseUU8BQoUyCT/kfOTEBH+pmfETDyA8rjflPZMO37SLWVje48rXbp0veDg4Fl58uTxgggMLvCA2Rnh4eFxac+ePSEg9Thu21OYahe5fuBYz8SJE0sg34+A7BEg3pekDPyiqO8myl6DWrVqrdb+YvHRV65c+dXT07OVj4+Pp5+fX7iRrj2DkG4RHxMTcxTla/W+fftC16xZc/u5554DV9E2/mesX7++x40bN/K5uroWzpkzZ67s2bPn5pGs/G4g3w9v2bJl1rx581YsWLDgiqm+EGb0wYwZM9aR+/79+xft2rVrsM1mc9X+lu3RBw8e/LBMmTKLsBiKv/XWW8dJk/wHmgVpD7rWHZ6cZ95//303XLZlUPI6whG2ie8eEzCU+0HvvvuuUvSY0dswB+cZz2AxrDh27Ngo/VYmgSBZCwoK6iYiYu/evR/pea6aBWkPsN+8IOWSfvvYXAlCeAUOMFccOCh6+1D8skEMAThz2kn+119/7S4IlmifZrIa4AZN4Q6zyTpLP/rqyRby0xp0mzusZ8+ese7alMLChQsrUedBRMQ0QTaiQHEBHDlzQ0JCxprLDhs27DUIJUiuKXoJkTNTz7LMvbSGyMjIG4sXL65iTmvcuHGWcePGle7WrdsnW7du/Qmt/U8QtBkHz14QdJTfKTHjZaaafiF4+o6NGjVq3s6dO9txv4fZLLhXFoPu1RMZHqvJ4yjKJb594/7evXuHcPWu1bvxTAR50i0Fo7F/UKdOnbW7d+/+yMvLa1CuXLlEgXPnF0bI9Qxy+DzIOEi5haIAcn0Dxe1W5syZsczuP4Sl20DYQwI7ke7u7i4fA+XKlesOQguj0N2jnhcuX77si8UwDFYfPH369IZffPHFdGkbK+EW/2JwDGX87bff7nFfBr1hB21szZo1a2VNXxCiWZDqoOQpythImZqw/Nfbtm3rRXAlyXJWuMOyZcs+1715t/kfCJHIjL+Ghm/Ha9dfHDmw9RyDBg16j3zDZ6BEC3kX0Ak89TQ1yyEif4huh55msf00AiNAcw2bvrqeFp9TJY6zBVle586dO4d4LgbFLAjR0LpEiRJZO3bsmEnqOnr06EDR+KUsWntzEBmit/Pgww8/zKrXpwlXYcYXMrWjkH/u3LmN6AmGZWApfGkAygvXt2/fPPqsF8eLk0O+QoaYf4cOHRolwRqQfRrnyxdi3hkFDx8+/IHUMXXq1CJnz55dgAnXzshDJITBzsscOXJkHkGe5kY6OkZIkyZNXnDok3PFihUz6S7ernqaNfPTABRiQdwgZqCxAMNF/6loHbJeuWUx0Rb+8MMPnqZnVRlm548ym5HfHiC4PNc3Jb158+Z5RHTMnz+/FEi+ioevHOx+m/Ew1yGUKWKqT3EC4gCLrl692hEF8RoKZg1zngWpCwbLj8DF+n9GIgj4UQ/ETJGlVnqywfbVM+gIk2RyGs9IHZs3bxZLwYYjx7dDhw6yKNNGuZ27du3qg+wPNJU936hRo3ymfjhBaC7SpoR+xRyUa8RBZs1a0JkmoFj+zJkzS4lsxrmSXRAIBwgQe18vE7vcSvsb6TOZyaeMSojKfYq9fkiuxTbHxLuMlh6B5t8/X7584imM5LdNFDoJ83Idqst8ow8S9BlFvauMOqmvHfWcN7drQeqCwbanyCyDxZbX080IFxA9QIMVT2BGh5ifFc2+Zs2aBWX5Ncg6JZq9DgEiAoj9i6lnR86XI5iTQ1b9mOp1FmeS5MMlntNMXIX6NkA8RqTPCummATgxG0WxitLZq+MMUxo2SlcXylzX05SOgFn3Dt634IEDB2ZFXNRCAZyDrT8T5O8RhOPY+UTctoLYPn36fExIuAyWwXG9DtUO2vxaFMOJelqcVTvM/JWU32EyNy0CSEVQMxvt+zsQd1hPczb/37BhQzVBnqm8SkdRO7Z27VoVcCH61hAkjiSM+yMyvJiwfaMByu0gEjhgypQpn4pX0EifO3fua5R7aO6HDgrRo0ePzmuwD6yLn0z5FvtPJVCIFBkvvnc9TekAzZo1E/Zsx52bR/t7QYate/fustwqdiuVIbeJz6/w9fWtpHMRNTvnzJnTAE4wD9k/f/LkybWMZ6ReCKesqT0BhXRRFiUfoissSiYzXxxG0fgPXnQob0EKwUaotTJyOkK/V3Kdwb6Fpl9XT4v1p+PHH3vq1KlNcv3NN9/UaNOmTXa5xgsXxL24XzWcO8UggjfE20e9ysdvsG3uCfCd6alXJzM4Vq9A0fuPENXgwYNzm/I1XMiKGCAe0QcsxKcSqMFlVgbv37+/o1zDluei+BlBFEPOGq7XW0OHDu2FvZ4TLT9IgjkQwqwtW7aUWbRoUX3k/EVs8q0oaMpPz/8oCEjJ8ujo6J3M4OWmelXb4hzimcNwh9NwjDjixihD1K9fcHDwEs2CVAXbpEmTPEXRI7hS1MTK40TOdNks++j8zembNm0ST94Nfod1LV1B69atCxs6gvjkIYKNepZ4ARUhQWwtpQxOpT56nqNloaB9+/Zl4RYnNQtSFdRAM6PUalqUseJ6ehy2iia/AkXuFykzduzY5yVtwoQJVZmpe5iRfUHscpSxScxgD8nDNPODc0wl/wjPTjfXBduug3v3pvgGhgwZkktPdtESYOXoHF40e1qzINXBSViuaNvxmHdKsZPlWz4+PgXtf22hVuvvtm3b1gBu8a5RECthqPj6ZZOGrpiLh/AtyWvYsGF2wsI/C9MA4ZcgsIqm+hONy+PuLWUhPm1AzXpRvDDvtpvTBHDEVIJdB8tyK2T1XJS89kIAEt51rAjkq21VyO1ZvXv3fgEE+6JDXJQktP9V2P8l9KIGwhNT2FTeunXr/kPfVmkWpAkY5t394cOHF9ZMCCFoMxUTazCId4elh0kaBCAa+0P+X4MoNoSFhc2ErV8TpJMmMn8VtvwRlLtJiITKJsXNiAH8k4YeW0bqxGooollafZqAGlSUtRbM0CN6mpr1YpbhgXuVS1c09xuVK1fOCjuXXTPXR40a5XHy5MktOmvfu3Tp0qKJ1J8UxMWWw7Urfv+I0NDQrub+WJD6YGy0iASxauGEhGuFrRu2uMhaccPKNQiZjsK3QK6/++67XDiCBkMkMtuvys6b8ePHV+d5dy2Z0LVr1+xwmfFCSSidLfXkdLtQ45lhQ8jUDhUqVPBxd3cvh7fuNXzus202m5rJIGQb/vhfUNaUGxYOcBPkt/Dy8pptPN+iRYviKGTNvL2962bKlKkASeGUOUmwZy/EsA17fr+Hh0eYi4vLAzEfIRY3wrPeVatW/bR48eK1nZ2dPfEPLJ06dWqTn3/+WZxL1kaM/wIYsv7esGHDim7cuLExrDx2wyQ290DMt6n6ra1Lly7ZZGb27dtX4u2PaOgSievcufOLnTp1qohvv4O44O2PQjhK5YGgoKCxAwYMqKQvBde0/4F9d+kJDE26Epr5VWbeED8/v9gDkiCGN1HwjGibQgoIrSwzV0eYoZTFEgG2ekmI50/qO8Kzm3bs2DFy8eLFn2MelpaNGNqj3DKp+oAFqQxKnqLk9ZbpqK+QVcjQt2RF6ocmxG6VwlnTTti+/nzsPnrYeoDY7rh1u+EjyKVZkO7B8ONPF3ep/e/TLtTiyQULFlQzlVXIR9kbiUcuNjQrARpMusnx1G3N5nQOCvmXL1/uKTMfJ8q3co9TpgnOGMegiUI+rtoxYr+HhIQMgwusM9VjIfspA4V8NPvnCZ1KRC5S1svZH92BG8v2z54929FhEYcFTymIzFYI7N+/f+Fjx45NlgWW4rMnXt4f2V3SXBjl7d+4dY0onjXTnwGI42pFw3+d2S1boK/zuwmbD0QczNHX2xXULKQ/c/CIuYXmnxdvX21Zx6fb9ALWkafPOMQ3sy3ZboEFFlhggQUWWGACc/zZTUs6OD5nfta8li4+5etJ7VaJbTdHjhwepnTzu6Rmf11Mdaa/g5cXLVrUIjg4eLSWTCDy1e769etDjXsibIunT5/+tmO5xo0bF9qwYcNnROJqdujQoaL2BGH16tX1iPKpGD8u4j927dr1mWOZmjVr5ubdGo8dO7bG8OHDjf30j2zDSgLYGJ9NgwcPLvLee+8VJr6wzbQ07MkDsfDf8IAdSe5zc+bMkRDoPuOel4yYN29eK8dyAQEBzWRpEy++j3bmJVCdzeF/mkBgYGB3/Puhcn337t3Q48eP93MsM27cuDriMo6Ojt5G/F55BmV1MCHfdXgLfbSkg+3+/fsxEM+/Pv/8c7UiWPbra48JKbVbH/kuDJ27bdfPmElWRTZbBCHS28Y9iI2krkiHYi4VKlSY+Mknn2TH4fKv/Pnz/1t79B2c+Rk+d7uWPIdMsgiFOP1d/t3Xb+9AuLcd+9K6desl9DeLi4tLJQ8Pj+qS+Pvvv/ctXLhwfpB/SEsGyEJRCEyOdpXzdVN0xm5KEK8GVI4Jl7Vr2t+DbQZbPNeO69+T3YfXXnst808//XTLz8+vt/bXt+VcTPU97N27t3yO5IHujXuo/b3nLRby5MmTRf7LurymTZvm13fUyDuk5jo5450zyAIRYgRKBHJdFqIu8fLLLw9JoHyaQ0oQH/PVV1+5zZ49++aQIUOunjt3Tu0uhbLjIBsEeZgWQKjToJcvX/7FgQMH/GvXri3HiNuT2J56FvY+/Pvvv5c1bZmJuKlNEj179owh3r4YNphN7vfv338BjnGiW7duZ/VDk4Q47Hfu3FlMuX0zZszIg0y+4+/v33b37t13Jk6ceIFnb+DDH6f9tU7OFs8YmZdoJYXFCgFFU2cPxuiuq6trTgJFKu6P3P93rVq1Mvv6+srWbZuwbJ3w4lvVkyaQEsTb8XPvRwmbGR4e7lOgQIFlsrRYDhQ0lZGlTYE+Pj5yypQMfjRl5yDjJr300ktVUVQ6aDriQVScymH7mrNzHC4dTTBlbKZMmWojFmy3b99elC1bNrU5QhBP2XfIk+XUoi9EZciQoRQz60qXLl1ErsbQ7k6ic2/AKl2RkepMO2b9d4RtN33wwQeFQU6VggULtmrXrp1sb7abj1OVL1rAmt0QM1kgqmmlS5d2PH0rPngAkfZD429TvXp11507d44rWrRoEcl45ZVXIlFQw+FcivD79etXmeDROX2M1EvLcSyO9cuY8F5aasBjI/7TTz8tzsAXfeGFF3yyZ8/uxyAfpWOiyIQ7OTndMsqRHpM1a9aLcs2gvZ8lS5a3wZvbmDFjPixZsqSx9lxD/slpk3eNe/2EyjgmYa5cuVpt3bq1nuxxJ78GSIyVkbQbBNcp17lz57xG2ujRo4tBEG/IiVf09TXayA0iZJm1nFpZgZleKXfu3P9XpUqV29u3b79A+g2idercHDjVGYihnJQdOHBgwIQJE2rzrObt7d3o8OHDikolzKsfex4v5MuXzxekfgHRuEDo9SCEo5IuhMm/DLB+9b5YBjd5F2Pj58Px48cX4ncXThBHX4GwH6JXuCLik8olE4TH1gpBpqxVc164cGEt2PZJKLF4xowZz9I597x581ZicKrCTvOT/mKzZs06Fy9e/GCpUqUGXL169a6cUQuxqGrgGH148fWwv08hHPfNmzdX8/T0FEQV4P8Zc5sXLlyYzOw8wE/Wy51v27Zth4oVKwaTlQdWWoGBbQpBnQH5PRnUbfTxTRBj5zk1wBBeK7TwQJB7mRnWYf78+b2Y8dN++OEHORlLTrP4Fp3lVQjma+4L0AdPxFlJNzc3L0RYeYj9htRDnzvBtv1LlCjRzThRg3aEQ8WZSPTnV/SM9frtaYim2bJly9Yh28VMlc+q/bR3795Z6Bn/YUJ40OdPrl27dhVCnHn+/Hk/LKToJUuWvA5nKgKBik7ixrV8SzeL9oRAsR8GrYux1hiKXShpIlO53Q/rtstCRuz6/ORdkDKbNm36JjQ09E86bpd8nh9gHELEjCtF3kZJlx9UvdKhTUWkI0eOrM5szQdy5MjxG3IgMXXEyNFmks+AjZcZIXXIzij0AKV77Nmzx1ftiIyIeICcjzHa4dFInhnG85ulLnmW/p45evRoD+PdMNM+1LdZnaZsDaP/Ut2UKVPUJg7qPIkoeuQYFMRhFWR5QQhNTt64Ig8h9zcGBQWVMOpngjSG4H2lXtq4T9ItxIHnr7/+6iX5zHLVX9oYL3W2atVKtn9HpcScSwkoYSOnP+vHjwgI21NEAXt7zlzY/G04+TYMclLtVuF/BvMLyMcA5fgx/da8QTHe5cumsqouow5pw1RvbNv60ab27t27e0l58/m49DmjuT7ZDq2faqExO/PJal25lnp1qyBWa5f309tzSqy/ZcuWjZ2t4oCRNh3LyDySPX84wlYLIRtjpmerMZYTNrUnuGgk0bXl8klQqDSQWXUHAqmVzLoSSouTJ4qXvhFyiXCA+AqiTBZAHM3mN1+QTr9GONT/T207J5Bu3NsSyU/sOW3t2rXFpU+M0RpE0GlJk71+/BaKSfrll1/mTKT+x0Z8SlmFPbF7NNmeyNkYZocMfGAy60ooLU7emjVrbiCb2yAL96InFI+vIGzzOZSr92UZNeUbUk7crOYPDf1T2w8TSE/KfaLlEBUX0HdaIt8PMlbq8AZMzJrly5ffefPmzXVTp06Vo9tsCdSTYiUvLSA+bTcpVkRyqDg+durYbnyeu/SydDq+/ivWL6dm6Qcxp4d+xoH4Ov24nxJ55HRKHQSJzg7lMjiUtSXStlMC10kFMxHFK7Md8o3/5j4nx2XsmkC96WpJmHohtN8+KCBb0Xw7OCg3yQI09X/Z9QOH8WEHmj4FIppxIcycAUY0CrHRTI40kWtRznDmDDYfYmQCm8jITp06yXFkjzVzkMHvIHsH6e+WKOLRzIsae/FEWceV/a6WTMDUlcOZxQ9iEwVP9gZo6W3Wo4DsYNBvIMvH6KbSYCPPfF68g+bqFt81A1tS6hBEYqrVxB5/y8hDE1ffhBWHjPbX2TbR0pzkIQMrSJ4cfODQriISiHIevoMl5vZk/7x+H2uFxNMnm/6OsgzbPmvWrKrmejXTZgwB/eBjOegwo7yDKJz16tV7y1Rv7HHrDn2Mo2c1b968LDqLj1zjd/DFiRVizjdiDA59/e8BlC2HD9hRqmK1dcM8wiY2TpsI1deqi4kSzDO19evjvJR6DoVrnRRkVsnaduURw94fGBYW1s3cHjZ2BDHtz7CJRQuOkAigHEZA6LYHdvEBKSN72fV2z8qOVmz4DwxbGS6hvi8n5+XIPTazKJs2ISbxO8BhZuPWjeM7wH//shgB+Ph/w8ewRdLk9ErSLmLmldTPv70gByPKiRwQmFR9S2Y9/Q/HgSPvFMPkiD0LR66lEO99SLgITh05jfsoXG4cdWzA2VUMbjaDMcinlxM7fwz1LcLR1UQfn7rySloK4LFlBy8XCYKHY9suEzctgzwdSn2AGzYTptUG8afj3doNovylPAPtRefVhwQw8QqRF7Vy5cpP8IjVaNiwYV5EhbhKlduStGp4waqb2+PZnW+++WaVN954oxriZbwcW049r+DvroJ5tlLYIgO0SNqlL5fw3q2G0yyjnRPcb2eAOzH754CcrLqv3w3im33ixAk5H8cbgnAhXGp2wGgfffRRP7TtmYRWOzLTKstMhQhkhuajzSzMRpmx+XFbP9+/f/+vcSkLB6onsQM8iTY5fZNnS+CVq0laSZxUvXE1V2BMMoPQKIjWH4K8y/hJmWJDhw79Fg9n5RdffLFO1apVL8E91sknUogR+OJxPOrl5aU4Kv8HQuxbtBRASpSGjAyGL50tQ7StE67ZOnRy6/Tp0yPo1Cl+u/CNl8OFa8Tm7VC0cp3KLODFwxnEmszSgD///PMygyGeN6W44eu/D27umhvDBTy7SJEiVerXr18XN/Ey2vTv1avXl8TkS5OH+3vObQjxOu0G4IQpjE6gTB0QGsrvDJdRzz//vBx3Lo6RNbhhs4IoL4hFlUNHaACxBGgm9k/QpgJIfX/UqFF/yD0E+ioIitb7GIXb2K5fu0KMyg8PZ5A6nN3d3TNT3zQcP8chkChMSgmj18JNPA1Oco9x642L+2Xpl7h7CWTVhzgOQqzZIBo1AXA1H2OcIiDcSDjrcOr0FC5TqFChEnCqvloKICWIj4T19ALZYfjOJ8Cqx/HS2Qh51oBCJ6HYvIELczUyUtnAvIAz7FddQyRyJKiTfBiYQSsiaQReciTW2GqA2eItUTgCNQcDAgIWY/c2gTt4wC12M5sGvv766yMYlAoEawIJqKgoIUSWi3bUZkkILQpiPYyP/Z0ff/zxJZw/NUBsfsnjPQzZKeLGPmDAgDK0lQNX7xwUrqP0NxRvWWc/Pz8JsIhfPpJnFILkHfHrK88afbiHuJNxtdMH0Tuc6aMTBMarOp0n31vKNWrUyBuOoJQ4uQepSjmlnQfG3k0IIA/EoRZ3QBShctYeLusNjOW5QYMGndeekLZvg4KP6yL0pvzBGVEW2ect11CryPnFco3XzhPk/KqXDZQ/TJAGDK46kkS+78I/2c+u3hgWLJ/03urYINm3aVOiaGoBiIhABkNF6NavX6/86RCfDIySo0TXcoC0LrqMb4fvWz4uaCfIckT+o4U3YDa/INfI7jhWAaJlK4g1jkfXEGPvG/0DiTt0f/0uSaOOV+SQRXGr6xq5Ou6sR48en4klItc8X1c+dSbXEKB8FNGOXC8Pa5ePG9qNDx/xHt14dzVBILIvJQ9ONkXuV6xY0Uivq7X2hCDWVl26dOmr8n03w6ct8Msvv5QkCNFMrlF8ShmrUJmV9fGRF0SpKUCESpWHknOJN02OD+cnBwnakG8F9Q8Bx3Gp1qhRwwuPVl7jXgaLGSQuTUX5f/zxhzci4Eu5JhTrDStXmj4K0yuVKlUyYvc5iIi1nDt3rjpWXPz6LVq0KKM5fOHq7bff9jZ9jkzlUa687su3MfhfCCJl4aNhtfBMtrp161aQfNovbZT9+OOPy+DLV2MgC1PgVq2nTZtm7NVzk74a5iIx+2xYA8WN8ZXxYzxUXxGjXoJ49IbHNk9TAxJy4DglsayA8z+kJeSAcazPKZ78+Mq5JNKWuWxijp+E3iWhxRkJ+fyNZ2wJ1BEnjxC0+DnsWApz46nXgmcUBMlups+hWV+++B8Fa7ZbYIEFFlhggQUWWGCBBRZYYIEFFlhgwTMJ/w+9dmWowyAkwgAAAABJRU5ErkJggg=='\r\n                                             alt='swa icon' />\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- email navbar end -->\r\n                            <!-- send from start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>من /</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>النظام </span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  start -->\r\n                            <tr>\r\n                                <td style='padding: 5px 8px;border-radius: 4px;\r\n                background: #07DDB9;  font-weight: 700;'>\r\n                                    <p>\r\n                                        <span>الموضوع: </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>إشعار الزيارات السنوية المجدولة</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subject  end -->\r\n                            <!-- subtitle start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <p>\r\n                                        <span>عزيزي:</span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span> ممثل المرخص له </span>\r\n                                        <!-- DYNAMIC FROM BACKEND -->\r\n                                        <span>هذا إشعار رسمي من هيئة المياه السعودية بخصوص جدولة الزيارات وأنواعها والأماكن التي سيتم زيارتها</span>\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- subtitle end -->\r\n                            <!-- details start -->\r\n                        \r\n\r\n                            <!-- details end -->\r\n                            <!-- url start -->\r\n                            <tr>\r\n                                <td>\r\n                                    <div style='border: 1px solid #E1E1E1; padding: 15px 8px; border-radius: 8px;'>\r\n\r\n                                        <span>\r\n                                          للاطلاع\r\n                                        </span>\r\n                                        <span style='float: left;'>\r\n                                            <a style='color:#0066ff; padding:8px 15px;  margin:0;border-radius: 4px; ' href='{{ActionUrl}}'>\r\n                                              اضغط هنا\r\n                                            </a>\r\n                                        </span>\r\n                                    </div>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- url end -->\r\n                            <!-- footer start -->\r\n                            <tr>\r\n                                <td style='padding-top: 50px; float: left;'>\r\n                                    <p>\r\n                                        اطيب التحيات ,,,\r\n                                    </p>\r\n                                    <p style='\r\n                                                font-style: normal;\r\n                                                font-weight: 600;'>\r\n                                        الهيئة السعودية للمياه\r\n                                    </p>\r\n                                </td>\r\n                            </tr>\r\n                            <!-- footer end -->\r\n                        </table>\r\n                    </center>\r\n                </body>\r\n                </html>",
+                            Role = "LicensedEntity",
+                            Subject = "إشعار الزيارات السنوية المجدولة",
+                            TemplateTypeId = 144L
+                        });
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.VisitStatusHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ActionAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ActionByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ActionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ComplianceDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NewStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RequestedNewDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplianceDetailsId");
+
+                    b.ToTable("VisitStatusHistories");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.VisitSurveyAnswer", b =>
@@ -2760,56 +4087,56 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631920"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2024),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2023),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي مصلحة تجارية أو شراكة أو نشاط مالي قد يؤثر على الزيارة؟",
                             QuestionEn = "Do you have any business interest, partnership, or financial activity that might affect the visit?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631921"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2027),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2027),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يمتلكون عملاً تجاريًا أو لديهم مصلحة مالية مع الكيان الذي تتم زيارته؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who own a business or have a financial interest in the entity being visited?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631922"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2030),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2030),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل تشغل حاليًا أي منصب إداري أو عضوية في منظمة لها علاقات مباشرة أو غير مباشرة مع الجهة التي تتم زيارتها؟",
                             QuestionEn = "Do you currently hold any management position or membership in an organization that has direct or indirect ties to the visited entity?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631923"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2034),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2034),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يشغلون مناصب إدارية  أو عضوية في جهة مرتبطة بالجهة التي تتم زيارتها؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who hold administrative or membership positions in an organization related to the entity being visited?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631924"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2036),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2036),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي علاقات أو اتصالات سابقة مع موظفي الجهة التي قد تؤثر  على الزيارة؟",
                             QuestionEn = "Do you have any previous relationships or contacts with staff members that may affect the visit?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631925"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2041),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2041),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي أسباب قد تؤثر على قدرتك على إجراء الزيارة بموضوعية  واستقلالية؟",
                             QuestionEn = "Do you have any reasons that might affect your ability to conduct the visit objectively and independently?"
                         },
                         new
                         {
                             Id = new Guid("f1f58c6f-0860-482a-be61-aa065b631926"),
-                            CreatedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2044),
-                            ModifiedOn = new DateTime(2025, 6, 24, 13, 9, 33, 622, DateTimeKind.Local).AddTicks(2043),
+                            CreatedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedOn = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             QuestionAr = "هل لديك أي أقارب من الدرجة الأولى إلى الرابعة يمتلكون عملاً تجاريًا أو لديهم مصلحة مالية مع الكيان الذي تتم زيارته؟",
                             QuestionEn = "Do you have any first- to fourth-degree relatives who own a business or have a financial interest in the entity being visited?"
                         });
@@ -2830,53 +4157,33 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.DocumentExtensionRequest", b =>
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Attachment", b =>
                 {
-                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
-                        .WithMany()
-                        .HasForeignKey("ComplianceDetailsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ComplianceDetails");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.ExtensionStatusHistory", b =>
-                {
-                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.DocumentExtensionRequest", "Request")
-                        .WithMany("StatusHistories")
-                        .HasForeignKey("RequestId")
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", "AttachmentType")
+                        .WithMany("AttachmentTypes")
+                        .HasForeignKey("AttachmentTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("FK_StatusHistories_RequestId");
+                        .HasConstraintName("FK_Attachments_LookupValue_AttachmentTypeId");
 
-                    b.Navigation("Request");
+                    b.Navigation("AttachmentType");
                 });
 
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.RescheduleRequest", b =>
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Auditors", b =>
                 {
-                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
-                        .WithMany()
-                        .HasForeignKey("ComplianceDetailsID")
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "ComplianceReport")
+                        .WithMany("Auditors")
+                        .HasForeignKey("ReportID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ComplianceDetails");
+                    b.Navigation("ComplianceReport");
                 });
 
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.VisitDocument", b =>
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.TeamShortage", b =>
                 {
                     b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
-                        .WithMany("VisitDocuments")
-                        .HasForeignKey("ComplianceDetailsID");
-
-                    b.Navigation("ComplianceDetails");
-                });
-
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.VisitStatusHistory", b =>
-                {
-                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
-                        .WithMany("VisitStatusHistory")
+                        .WithMany()
                         .HasForeignKey("ComplianceDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2966,6 +4273,17 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.Navigation("VisitType");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
+                        .WithMany()
+                        .HasForeignKey("ComplianceDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceDetails");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceRequest", b =>
                 {
                     b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", "Status")
@@ -3006,6 +4324,18 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.Navigation("ComplianceRequest");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitDisclosure", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitSpecialist", "ComplianceVisitSpecialist")
+                        .WithOne("ComplianceVisitDisclosure")
+                        .HasForeignKey("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitDisclosure", "ComplianceVisitSpecialistId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_ComplianceVisitDisclosure_ComplianceVisitSpecialistId");
+
+                    b.Navigation("ComplianceVisitSpecialist");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitSpecialist", b =>
                 {
                     b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
@@ -3018,6 +4348,70 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.Navigation("ComplianceDetails");
                 });
 
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveActionPlan", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveEvidence", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveActionPlan", "CorrectiveActionPlan")
+                        .WithMany("Evidences")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CorrectiveActionPlan");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.DocumentExtensionRequest", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
+                        .WithMany()
+                        .HasForeignKey("ComplianceDetailsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", "LicensedEntity")
+                        .WithMany()
+                        .HasForeignKey("LicensedEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceDetails");
+
+                    b.Navigation("LicensedEntity");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ExtensionStatusHistory", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.DocumentExtensionRequest", "Request")
+                        .WithMany("StatusHistories")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_StatusHistories_RequestId");
+
+                    b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.LicenseParticipant", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "ComplianceReport")
+                        .WithMany("Participants")
+                        .HasForeignKey("ReportID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceReport");
+                });
+
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", b =>
                 {
                     b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.CategoryLookup", "Category")
@@ -3028,6 +4422,95 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                         .HasConstraintName("FK_LookupValueCategory_CategoryID");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.PreviousRecommendations", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "ComplianceReport")
+                        .WithOne("PreviousRecommendations")
+                        .HasForeignKey("ComplianceAndPeformanceSystem.Core.Entities.PreviousRecommendations", "ReportID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceReport");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Questaion", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "ComplianceReport")
+                        .WithMany("Questaions")
+                        .HasForeignKey("ReportID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceReport");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportEntries", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ReportSubCategory", "SubCategory")
+                        .WithMany("Entries")
+                        .HasForeignKey("SupCategoryID");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportRequestActivity", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", null)
+                        .WithMany("ReportActivities")
+                        .HasForeignKey("ComplianceDetailsId");
+
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", "Report")
+                        .WithMany("ReportActivities")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportSubCategory", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ReportCategory", "Category")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("CategoryID");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.RescheduleRequest", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
+                        .WithMany()
+                        .HasForeignKey("ComplianceDetailsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceDetails");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.Template", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", "TemplateType")
+                        .WithMany("Templates")
+                        .HasForeignKey("TemplateTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Template_TemplateTypeId");
+
+                    b.Navigation("TemplateType");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.VisitStatusHistory", b =>
+                {
+                    b.HasOne("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", "ComplianceDetails")
+                        .WithMany("VisitStatusHistory")
+                        .HasForeignKey("ComplianceDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ComplianceDetails");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.VisitSurveyAnswer", b =>
@@ -3056,20 +4539,28 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
                     b.Navigation("LookupValues");
                 });
 
-            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit.DocumentExtensionRequest", b =>
-                {
-                    b.Navigation("StatusHistories");
-                });
-
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceDetails", b =>
                 {
                     b.Navigation("ComplianceRequestActivities");
 
                     b.Navigation("ComplianceVisitSpecialists");
 
-                    b.Navigation("VisitDocuments");
+                    b.Navigation("ReportActivities");
 
                     b.Navigation("VisitStatusHistory");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceReport", b =>
+                {
+                    b.Navigation("Auditors");
+
+                    b.Navigation("Participants");
+
+                    b.Navigation("PreviousRecommendations");
+
+                    b.Navigation("Questaions");
+
+                    b.Navigation("ReportActivities");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceRequest", b =>
@@ -3085,12 +4576,26 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ComplianceVisitSpecialist", b =>
                 {
+                    b.Navigation("ComplianceVisitDisclosure");
+
                     b.Navigation("VisitSurveyAnswers");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.CorrectiveActionPlan", b =>
+                {
+                    b.Navigation("Evidences");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.DocumentExtensionRequest", b =>
+                {
+                    b.Navigation("StatusHistories");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.LookupValue", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("AttachmentTypes");
 
                     b.Navigation("LicensedEntities");
 
@@ -3102,9 +4607,21 @@ namespace ComplianceAndPeformanceSystem.DAL.Migrations
 
                     b.Navigation("Status");
 
+                    b.Navigation("Templates");
+
                     b.Navigation("VisitStatus");
 
                     b.Navigation("VisitTypes");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportCategory", b =>
+                {
+                    b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.ReportSubCategory", b =>
+                {
+                    b.Navigation("Entries");
                 });
 
             modelBuilder.Entity("ComplianceAndPeformanceSystem.Core.Entities.VisitSurveyQuestion", b =>

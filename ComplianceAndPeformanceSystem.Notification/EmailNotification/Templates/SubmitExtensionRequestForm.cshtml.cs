@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ComplianceAndPeformanceSystem.Notification.EmailNotification.Templates
 {
-    public class SubmitExtensionRequestForm : PageModel
+    public class SubmitExtensionRequestFormModel : PageModel
     {
         public void OnGet()
         {

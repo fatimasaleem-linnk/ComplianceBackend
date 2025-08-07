@@ -9,7 +9,7 @@ public class ComplianceVisitModel
     public long PlantNameId { get; set; }
     public long? LocationId { get; set; }
     public long? QuarterPlannedForVisitId { get; set; }
-    public long VisitTypeId { get; set; }
+    public int VisitTypeId { get; set; }
     public DateTime VisitDate { get; set; }
     public long DesignedCapacity  { get; set; }
     public string? VisitReferenceNumber { get; set; }

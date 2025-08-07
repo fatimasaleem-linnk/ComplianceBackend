@@ -10,8 +10,17 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
     public async Task<ResponseResult<List<UserDto>>> GetUsers(List<string> rolesName)
     {
         List<UserDto> users = new List<UserDto>();
-        if (rolesName.Contains(RoleEnum.ComplianceSpecialist))
+        if (rolesName.Contains(RoleEnum.ComplianceSpecialist) || rolesName.Count == 0 || rolesName == null)
         {
+
+            users.Add(new UserDto()
+            {
+                Email = "MAhmed1ebb94@swa.gov.sa",
+                Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
+                Id = 4.ToString(),
+                UserName = "Mohammed Maher",
+                MobileNumber = "0562572162"
+            });
 
             users.Add(new UserDto()
             {
@@ -28,7 +37,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 Email = "efarag2@swa.gov.sa",
                 Id = 2.ToString(),
                 Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
-                UserName = "Khaled Alasmary"
+                UserName = "Khaled Alasmary",
+                MobileNumber = "0562572162"
             });
 
             users.Add(new UserDto()
@@ -40,18 +50,20 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 MobileNumber = "0569065085"
             });
 
-
             users.Add(new UserDto()
             {
-                Email = "MAhmed1ebb94@swa.gov.sa",
-                Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
-                Id = 4.ToString(),
-                UserName = "Mohammed Maher"
+                Roles = new List<string>() { RoleEnum.ComplianceManager },
+                //Email = "SKhan7@swa.gov.sa",
+                Email = "Q3@swa.gov.sa",
+                Id = 5.ToString(),
+                UserName = "Saeed Khan",
+                MobileNumber = "0562572162"
             });
 
-        }
+            
 
-        if (rolesName.Contains(RoleEnum.PerformanceMonitoringManager))
+        }
+        if (rolesName.Contains(RoleEnum.PerformanceMonitoringManager) || rolesName.Count == 0 || rolesName == null)
         {
             users.Add(new UserDto()
             {
@@ -59,13 +71,13 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 Email = "u112233@swa.gov.sa",
                 Roles = new List<string>() { RoleEnum.PerformanceMonitoringManager },
                 Id = 6.ToString(),
-                UserName = "Osama Mohammed"
+                UserName = "Osama Mohammed",
+                MobileNumber = "0562572162"
             });
            
 
         }
-
-        if (rolesName.Contains(RoleEnum.ComplianceManager))
+        if (rolesName.Contains(RoleEnum.ComplianceManager) || rolesName.Count == 0 || rolesName == null)
         {
             users.Add(new UserDto()
             {
@@ -82,10 +94,11 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
                 //Email = "SKhan7@swa.gov.sa",
                 Email = "Q3@swa.gov.sa",
                 Id = 5.ToString(),
-                UserName = "Saeed Khan"
+                UserName = "Saeed Khan",
+                MobileNumber = "0562572162"
             });
         }
-        if (rolesName.Contains(RoleEnum.LicensedEntity))
+        if (rolesName.Contains(RoleEnum.LicensedEntity) || rolesName.Count == 0 || rolesName == null)
         {
 
             users.Add(new UserDto()
@@ -119,7 +132,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             Email = "efarag2@swa.gov.sa",
             Id = 2.ToString(),
             Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
-            UserName = "Khaled Alasmary"
+            UserName = "Khaled Alasmary",
+            MobileNumber = "0562572162"
         });
 
         users.Add(new UserDto()
@@ -137,7 +151,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             Email = "MAhmed1ebb94@swa.gov.sa",
             Roles = new List<string>() { RoleEnum.ComplianceSpecialist },
             Id = 4.ToString(),
-            UserName = "Mohammed Maher"
+            UserName = "Mohammed Maher",
+            MobileNumber = "0562572162"
         });
 
         users.Add(new UserDto()
@@ -146,7 +161,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             Email = "u112233@swa.gov.sa",
             Roles = new List<string>() { RoleEnum.PerformanceMonitoringManager },
             Id = 6.ToString(),
-            UserName = "Osama Mohammed"
+            UserName = "Osama Mohammed",
+            MobileNumber = "0562572162"
         });
 
         users.Add(new UserDto()
@@ -155,7 +171,8 @@ public class UserRepository/*(ISWAESContext sWAESContext)*/ : IUserRepository
             //Email = "SKhan7@swa.gov.sa",
             Email = "Q3@swa.gov.sa",
             Id = 5.ToString(),
-            UserName = "Saeed Khan"
+            UserName = "Saeed Khan",
+            MobileNumber = "0562572162"
         });
 
         users.Add(new UserDto()

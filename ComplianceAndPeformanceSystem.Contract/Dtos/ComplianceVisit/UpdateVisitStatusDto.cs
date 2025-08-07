@@ -1,9 +1,8 @@
-﻿namespace ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit
+﻿namespace ComplianceAndPeformanceSystem.Contract.Dtos;
+
+public class UpdateVisitStatusDto
 {
-    public class UpdateVisitStatusDto
-    {
-        public int NewStatus { get; set; }
-        public string? Note { get; set; }
-        public Guid ComplianceDetailsID { get; set; }
-    }
+    public int NewStatus { get; set; }
+    public string? Note { get; set; }
+    public Guid ComplianceDetailsID { get; set; }
 }

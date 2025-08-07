@@ -1,12 +1,6 @@
-﻿using Azure.Core;
-using ComplianceAndPeformanceSystem.Contract.Enums;
-using ComplianceAndPeformanceSystem.Core.Entities;
+﻿using ComplianceAndPeformanceSystem.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using System.ComponentModel;
-using System.Numerics;
 
 namespace ComplianceAndPeformanceSystem.DAL.Seeds;
 
@@ -21,10 +15,10 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             {
                 Id = 1,
                 Role = "ComplianceManager",
-                MessageType = "info",
+                MessageType = "warning",
                 MessageTitleAR = "يمكنك الأن تعيين احد الأخصائين لإدارج الخطة السنوية",
                 MessageTitleEn = "You can now appoint a specialist to include the annual plan.",
-                MessageBodyAR = "يرجي التدخل لإدراج احد المتخصين لوضع الخطة من الرابط ادناه",
+                MessageBodyAR = "يرجى التدخل لإدراج احد المختصين لوضع الخطة من الرابط ادناه",
                 MessageBodyEn = "Please intervene to include a specialist to develop the plan from the link below",
                 ActionUrl = "/",
             },
@@ -35,7 +29,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "error",
                 MessageTitleAR = "يمكنك الأن تعيين احد الأخصائين لإدارج الخطة السنوية",
                 MessageTitleEn = "You can now appoint a specialist to include the annual plan.",
-                MessageBodyAR = "يرجي التدخل لإدراج احد المتخصين لوضع الخطة من الرابط ادناه",
+                MessageBodyAR = "يرجى التدخل لإدراج احد المختصين لوضع الخطة من الرابط ادناه",
                 MessageBodyEn = "Please intervene to include a specialist to develop the plan from the link below",
                 ActionUrl = "/",
             },
@@ -46,7 +40,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "info",
                 MessageTitleAR = "خطة الامتثال السنوية الجديدة المقدمة للمراجعة",
                 MessageTitleEn = "New Annual Compliance Plan Submitted for Review",
-                MessageBodyAR = " وهي جاهزة لمراجعتك واعتمادك حيث ان الوقت المخصص للمراجعة هو ٧ ايام",
+                MessageBodyAR = " وهي جاهزة لمراجعتك واعتمادك حيث أن الوقت المخصص للمراجعة هو ٧ أيام",
                 MessageBodyEn = "It is ready for your review and approval, as the review time is 7 days.",
                 ActionUrl = "/",
             },
@@ -55,9 +49,9 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 4,
                 Role = "ComplianceManager",
                 MessageType = "info",
-                MessageTitleAR = "الوقت المتبقي للإنتهاء من مراجعتك للخطة الزمنية هو ٥ ايام",
+                MessageTitleAR = "الوقت المتبقي للإنتهاء من مراجعتك للخطة الزمنية هو ٥ أيام",
                 MessageTitleEn = "The time remaining to complete the review of the timeline is 5 days.",
-                MessageBodyAR = " يرجي الانتهاء من مراجعة الخطة في الوقت المحدد حيث ان ذلك يسهل ويساعد علي اكتمال المراحل القادمة بشكل جيد",
+                MessageBodyAR = " يرجى الانتهاء من مراجعة الخطة في الوقت المحدد حيث أن ذلك يسهل ويساعد على اكتمال المراحل القادمة بشكل جيد",
                 MessageBodyEn = "Please complete the plan review on time as this will facilitate and help complete the next stages well.",
                 ActionUrl = "/",
             },
@@ -90,7 +84,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "info",
                 MessageTitleAR = "الاخصائي  قد تلقى تعديلات من المدير العام لمراقبة الاداء",
                 MessageTitleEn = "The specialist has received modifications from Performance Monitoring Manager.",
-                MessageBodyAR = "يرجي العلم ان دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
+                MessageBodyAR = "يرجى العلم أن دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
                 MessageBodyEn = "Please note that the role of the manager here is to receive notifications only and cannot access the plan to make any changes to it.",
                 ActionUrl = "/",
             },
@@ -101,7 +95,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "info",
                 MessageTitleAR = "الاخصائي  قد ارسل الخطة بعد التعديل الى المدير العام لمراقبة الاداء",
                 MessageTitleEn = "The specialist sent the modified plan to Performance Monitoring Manager.",
-                MessageBodyAR = "يرجي العلم ان دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء اي تعديلات عليها",
+                MessageBodyAR = "يرجى العلم أن دور المدير هنا متلقي للاشعارات فقط ولا يمكنه الدخول للخطة لاجراء أي تعديلات عليها",
                 MessageBodyEn = "Please note that the role of the manager here is to receive notifications only and cannot access the plan to make any changes to it.",
                 ActionUrl = "/",
             },
@@ -113,7 +107,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "info",
                 MessageTitleAR = "انتهت فترة مراجعة خطة الامتثال السنوية بعنوان {{PlanTitle}} دون اتخاذ أي إجراء.",
                 MessageTitleEn = "The annual compliance plan review period for {{PlanTitle}} has ended without any action.",
-                MessageBodyAR = "يرجي  التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا فوريًا لحل هذه المهمة المتأخرة.",
+                MessageBodyAR = "يرجى  التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا فوريًا لحل هذه المهمة المتأخرة.",
                 MessageBodyEn = "Please intervene to ensure the plan is reviewed. Immediate attention is required to resolve this delayed task.",
                 ActionUrl = "/",
 
@@ -123,9 +117,9 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 10,
                 Role = "PerformanceMonitoringManager",
                 MessageType = "info",
-                MessageTitleAR = "تم عمل خطة الامتثال السنوي من قبل الاخصائي وقبولها من قبل المدير المسؤول الخطة جاهزة لمراجعتك خلال ٧ ايام ",
+                MessageTitleAR = "تم عمل خطة الامتثال السنوي من قبل الاخصائي وقبولها من قبل المدير المسؤول الخطة جاهزة لمراجعتك خلال ٧ أيام ",
                 MessageTitleEn = "The annual compliance plan has been prepared by the specialist and accepted by the responsible manager. The plan is ready for your review within 7 days.",
-                MessageBodyAR = "يرجي التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا لمراجة الخطة بشكل كامل واعتمادها او ارجعها الي الاخصايئ للعمل التعديلات",
+                MessageBodyAR = "يرجى التدخل لضمان مراجعة الخطة يتطلب الأمر اهتمامًا لمراجة الخطة بشكل كامل واعتمادها او ارجعها الي الاخصائي للعمل التعديلات",
                 MessageBodyEn = "Please intervene to ensure the plan is reviewed. It requires attention to review the plan completely and approve it or return it to the specialist to make amendments.",
                 ActionUrl = "/",
             },
@@ -145,7 +139,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 12,
                 Role = "PerformanceMonitoringManager",
                 MessageType = "info",
-                MessageTitleAR = "نأسف لإبلاغك بأن مراجعة خطة الامتثال السنوية لم تكتمل في الإطار الزمني المحدد لذا فضلاً يرجي الانتهاء منها في اقرب وقت",
+                MessageTitleAR = "نأسف لإبلاغك بأن مراجعة خطة الامتثال السنوية لم تكتمل في الإطار الزمني المحدد لذا فضلاً يرجى الانتهاء منها في اقرب وقت",
                 MessageTitleEn = "We regret to inform you that the review of the annual compliance plan was not completed within the specified time frame, so please complete it as soon as possible.",
                 MessageBodyAR = "يرجى التأكد من إكمال جميع الخطوات المطلوبة، وتقديم الخطة في الوقت المحدد يعد تقديمك في الوقت المناسب أمرًا بالغ الأهمية لتحقيق أهداف الامتثال\r\nإذا كنت بحاجة إلى مساعدة، يرجى الاتصال بمديرك على الفور للحصول على الخطة في الرابط ادناه",
                 MessageBodyEn = "Please ensure you complete all required steps and submit the plan on time. Your timely submission is critical to achieving compliance goals. If you need assistance, please contact your manager immediately to obtain the plan at the link below.",
@@ -157,8 +151,8 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
             {
                 Id = 13,
                 Role = "ComplianceSpecialist",
-                MessageType = "info",
-                MessageTitleAR = "إبدأ الخطة",
+                MessageType = "warning",
+                MessageTitleAR = "ابدأ الخطة",
                 MessageTitleEn = "Start Plan",
                 MessageBodyAR = "يتعين عليك جمع وتحليل البيانات ذات الصلة، واستكمال التقييمات اللازمة، والبدء في صياغة الخطة في النظام. ويجب إكمال عملية الإعداد في غضون 60 يوم عمل بدءًا من اليوم للوصول إلى نموذج إعداد خطة الامتثال، ",
                 MessageBodyEn = "You must collect and analyze relevant data, complete the necessary assessments, and begin drafting the plan in the system. The preparation process must be completed within 20 business days from today to access the compliance plan preparation form.",
@@ -169,7 +163,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 14,
                 Role = "ComplianceSpecialist",
                 MessageType = "error",
-                MessageTitleAR = "إبدأ الخطة",
+                MessageTitleAR = "ابدأ الخطة",
                 MessageTitleEn = "Start Plan",
                 MessageBodyAR = "يتعين عليك جمع وتحليل البيانات ذات الصلة، واستكمال التقييمات اللازمة، والبدء في صياغة الخطة في النظام. ويجب إكمال عملية الإعداد في غضون 60 يوم عمل بدءًا من اليوم للوصول إلى نموذج إعداد خطة الامتثال، ",
                 MessageBodyEn = "You must collect and analyze relevant data, complete the necessary assessments, and begin drafting the plan in the system. The preparation process must be completed within 20 business days from today to access the compliance plan preparation form.",
@@ -268,7 +262,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 23,
                 Role = "ComplianceSpecialist",
                 MessageType = "success",
-                MessageTitleAR = " تمت اعادة الخطة من قبل مدير الادارة ",
+                MessageTitleAR = " تمت إعادة الخطة من قبل مدير الادارة ",
                 MessageTitleEn = "The plan has been Returned by the Compliance Manager and .",
                 MessageBodyAR = " وسبب الارجاع {{ReturnReason}}",
                 MessageBodyEn = "Return reason is {{ReturnReason}}",
@@ -279,10 +273,68 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 Id = 24,
                 Role = "ComplianceSpecialist",
                 MessageType = "success",
-                MessageTitleAR = "تمت اعادة الخطة من قبل مدير عام مراقبة الالتزام  ",
+                MessageTitleAR = "تمت إعادة الخطة من قبل مدير عام مراقبة الالتزام  ",
                 MessageTitleEn = "The plan has been Returned by the Performance Monitoring Manager",
                 MessageBodyAR = " وسبب الارجاع {{ReturnReason}}",
                 MessageBodyEn = "Return reason is {{ReturnReason}}.",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 39,
+                Role = "ComplianceSpecialist",
+                MessageType = "error",
+                MessageTitleAR = "انتهت فترة التحضير",
+                MessageTitleEn = "The preparation period has ended. ",
+                MessageBodyAR = " يُرجى إكمال الإعداد في أقرب وقت ممكن",
+                MessageBodyEn = "Please complete the setup as soon as possible.",
+                ActionUrl = "/",
+            },
+
+            new ComplianceNotificationMassage()
+            {
+                Id = 40,
+                Role = "PerformanceMonitoringManager",
+                MessageType = "error",
+                MessageTitleAR = "انتهت فترة الموافقة على الخطة",
+                MessageTitleEn = "The Approval for Plan period has ended. ",
+                MessageBodyAR = " يُرجى اعطاء الموافقة او ارجاع الخطة",
+                MessageBodyEn = "Please approve or return the Plan as soon as possible.",
+                ActionUrl = "/",
+            },
+
+            new ComplianceNotificationMassage()
+            {
+                Id = 41,
+                Role = "ComplianceManager",
+                MessageType = "error",
+                MessageTitleAR = "انتهت فترة الموافقة على الخطة",
+                MessageTitleEn = "The Approval for Plan period has ended. ",
+                MessageBodyAR = " يُرجى اعطاء الموافقة او ارجاع الخطة",
+                MessageBodyEn = "Please approve or return the Plan as soon as possible.",
+                ActionUrl = "/",
+            },
+
+            new ComplianceNotificationMassage()
+            {
+                Id = 42,
+                Role = "PerformanceMonitoringManager",
+                MessageType = "success",
+                MessageTitleAR = "حالة مراجعة خطة الزيارات",
+                MessageTitleEn = "Visit Plan Review Status",
+                MessageBodyAR = "جاري المراجعة الأن من قبل المدير العام لمراقبة الاداء",
+                MessageBodyEn = "The plan is currently being reviewed by the Performance Monitoring Manager",
+                ActionUrl = "/",
+            },
+            new ComplianceNotificationMassage()
+            {
+                Id = 43,
+                Role = "ComplianceManager",
+                MessageType = "info",
+                MessageTitleAR = "حالة مراجعة خطة الزيارات",
+                MessageTitleEn = "Visit Plan Review Status",
+                MessageBodyAR = "جاري المراجعة الأن من قبل المدير المباشر ",
+                MessageBodyEn = "The plan is currently being reviewed by the Compliance Manager.",
                 ActionUrl = "/",
             },
             #endregion
@@ -352,7 +404,7 @@ public class ComplianceNotificationMassageSeed : IEntityTypeConfiguration<Compli
                 MessageType = "info",
                 MessageTitleAR = "لقد تم تعيينك في الزيارة {VisitDate} تأكد من ارسال نماذج الإفصاح خلال يومين ",
                 MessageTitleEn = "You have been assigned to {VisitDate}. Please ensure you submit your disclosure forms within 2 days.",
-                MessageBodyAR = "لقد تم تعيينك في الزيارة {VisitDate} يرجي العلم بان المدة المحددة لتحميل النماذج وارساله لنا في خلال يومين لتحميل النموذج في الرابط ادناه",
+                MessageBodyAR = "لقد تم تعيينك في الزيارة {VisitDate} يرجى العلم بان المدة المحددة لتحميل النماذج وارساله لنا في خلال يومين لتحميل النموذج في الرابط ادناه",
                 MessageBodyEn = "You have been appointed for visit {VisitDate} Please note that the time limit for downloading the forms and sending them to us is two days. To download the form, use the link below.",
                 ActionUrl = "/",
             },

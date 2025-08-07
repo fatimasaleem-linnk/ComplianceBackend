@@ -35,6 +35,8 @@ public static class DependencyInjection
         services.AddScoped<ILookupRepository, LookupRepository>();
         services.AddScoped<IComplianceRequestRepository, ComplianceRequestRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+        services.AddScoped<ITemplateRepository, TemplateRepository>();
 
         return services;
     }

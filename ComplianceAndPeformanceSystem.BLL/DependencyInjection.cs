@@ -13,6 +13,7 @@ public static class DependencyInjection
 
         services.AddScoped<ILookupService, LookupService>();
         services.AddScoped<IComplianceRequestService, ComplianceRequestService>();
+        services.AddScoped<IAttachmentService, AttachmentService>();
         return services;
     }
 }

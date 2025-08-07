@@ -1,9 +1,8 @@
-﻿using ComplianceAndPeformanceSystem.Contract.Common.Models;
-using ComplianceAndPeformanceSystem.Contract.Dtos.Compliance;
+﻿using ComplianceAndPeformanceSystem.Contract.Dtos;
+using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
 using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
-using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -24,7 +23,6 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.GetNotifications());
         }
 
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetComplianceRequestStatus()
@@ -32,13 +30,12 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.GetComplianceRequestStatus());
         }
 
-
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetComplianceRequest()
         {
-            return Ok(await requestService.GetComplianceRequest());
+            var result = await requestService.GetComplianceRequest(null);
+            return Ok(result);
         }
 
         [HttpGet]
@@ -48,14 +45,12 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.GetComplianceSpecialist());
         }
 
-
         [HttpPost]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> AssignComplianceSpecialist(AssignComplianceSpecialistModel model)
         {
             return Ok(await requestService.AssignComplianceSpecialist(model));
         }
-
 
         [HttpPost]
         [EnableRateLimiting("fixed")]
@@ -64,14 +59,12 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.SaveCompliancePlan(model));
         }
 
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> DeleteCompliancePlan(Guid planId)
         {
             return Ok(await requestService.DeleteCompliancePlan(planId));
         }
-
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
@@ -80,15 +73,12 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.GetComplianceActivities(requestId));
         }
 
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> SendComplianceRequest(Guid requestId)
         {
             return Ok(await requestService.SendComplianceRequest(requestId));
         }
-
-
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
@@ -97,8 +87,6 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.ApproveComplianceRequestByComplianceManager(new ApproveOrRejectComplianceRequestModel() { RequestId = requestId, IsApproved = true }));
         }
 
-
-
         [HttpPost]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> ReturnComplianceRequestByComplianceManager(ApproveOrRejectComplianceRequestModel model)
@@ -106,16 +94,12 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.ReturnComplianceRequestByComplianceManager(model));
         }
 
-
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> ApproveComplianceRequestByPerformanceMonitoringManager(Guid requestId)
         {
             return Ok(await requestService.ApproveComplianceRequestByPerformanceMonitoringManager(new ApproveOrRejectComplianceRequestModel() { RequestId = requestId, IsApproved = true }));
         }
-
-
 
         [HttpPost]
         [EnableRateLimiting("fixed")]
@@ -125,9 +109,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         }
         #endregion
 
-
         #region Phase 2
-
         [HttpGet]
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> GetComplianceVisitDetail(Guid id)
@@ -151,7 +133,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
         [EnableRateLimiting("fixed")]
         public async Task<IActionResult> RescheduleComplianceVisit(ComplianceVisitModel model)
         {
-            var result = await requestService.SaveComplianceVisit(model, (long) VisitStatusEnum.Rescheduled);
+            var result = await requestService.SaveComplianceVisit(model, (long)VisitStatusEnum.Rescheduled);
 
             if (!result.Succeeded)
                 return BadRequest(result);
@@ -161,9 +143,9 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> GetComplianceRequestSpecialists()
+        public async Task<IActionResult> GetComplianceRequestSpecialists(Guid visitId)
         {
-            return Ok(await requestService.GetComplianceRequestSpecialists());
+            return Ok(await requestService.GetComplianceRequestSpecialists(visitId));
         }
 
         [HttpPost]
@@ -190,7 +172,7 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
 
         [HttpGet]
         [EnableRateLimiting("fixed")]
-        public async Task<IActionResult> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId)
+        public async Task<IActionResult> GetVisitDisclosureFormForComplianceManager(Guid visitId, string visitSpecialistId)
         {
             return Ok(await requestService.GetVisitDisclosureFormForComplianceManager(visitId, visitSpecialistId));
         }
@@ -202,6 +184,8 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
             return Ok(await requestService.GetVisitDisclosureFormForLoggedInSpecialist(visitId));
         }
 
+        [HttpPost]
+        [EnableRateLimiting("fixed")]
         public async Task<IActionResult> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model)
         {
             var result = await requestService.SaveVisitDisclosureForm(model);
@@ -210,6 +194,17 @@ namespace ComplianceAndPeformanceSystem.API.Controllers
                 return BadRequest(result);
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [EnableRateLimiting("fixed")]
+        public async Task<IActionResult> SubmitTeamShortageRequest([FromBody] TeamShortageDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await requestService.SubmitTeamShortageRequest(dto);
+            return Ok(new { message = "تم إرسال طلب معالجة نقص الفريق بنجاح", data = result });
         }
 
         #endregion Figma Part 2 unmerged

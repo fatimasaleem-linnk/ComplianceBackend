@@ -1,18 +1,20 @@
-﻿namespace ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit
+﻿namespace ComplianceAndPeformanceSystem.Core.Entities;
+
+public class DocumentExtensionRequest : TrackedEntity
 {
-    public class DocumentExtensionRequest : TrackedEntity
-    {
-        public long LicensedEntityId { get; set; }
-        public Guid ComplianceDetailsID { get; set; }
-        public ComplianceDetails? ComplianceDetails { get; set; }
+    public long LicensedEntityId { get; set; }
+    public Guid ComplianceDetailsID { get; set; }
+    public string? LicensedEntityName { get; set; }
 
-        public int? RequestedDays { get; set; }
-        public string? Reason { get; set; }
-        public int? ExtensionStatus { get; set; }
-        public DateTime? ReviewedAt { get; set; }
-        public string? DecisionReason { get; set; }
-        public int? FinalDays { get; set; }
+    public ComplianceDetails? ComplianceDetails { get; set; }
 
-        public ICollection<ExtensionStatusHistory>? StatusHistories { get; set; }
-    }
+    public int? RequestedDays { get; set; }
+    public string? Reason { get; set; }
+    public int? ExtensionStatus { get; set; }
+    public DateTime? ReviewedAt { get; set; }
+    public string? DecisionReason { get; set; }
+    public int? FinalDays { get; set; }
+    public ICollection<ExtensionStatusHistory>? StatusHistories { get; set; }
+    public virtual LookupValue? LicensedEntity {  get; set; }
+
 }

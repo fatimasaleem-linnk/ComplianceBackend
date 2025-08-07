@@ -9,5 +9,5 @@ public class CompliancePlanModel
     public required long PlantNameId { get; set; }
     public long? LocationId { get; set; }
     public long? QuarterPlannedForVisitId { get; set; }
-    public required long VisitTypeId { get; set; }
+    public int VisitTypeId { get; set; }
 }

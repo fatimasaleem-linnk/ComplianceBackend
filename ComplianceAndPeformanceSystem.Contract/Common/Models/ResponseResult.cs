@@ -1,6 +1,4 @@
-﻿using ComplianceAndPeformanceSystem.Contract.Dtos.ComplianceVisit;
-
-namespace ComplianceAndPeformanceSystem.Contract.Common.Models;
+﻿namespace ComplianceAndPeformanceSystem.Contract.Common.Models;
 
 public class ResponseResult<T>
 {
@@ -18,16 +16,11 @@ public class ResponseResult<T>
 
     public static ResponseResult<T> Success(T? model)
     {
-        return new ResponseResult<T>(true, new string[] { },model);
+        return new ResponseResult<T>(true, new string[] { }, model);
     }
 
     public static ResponseResult<T> Failure(IEnumerable<string> errors, T? model)
     {
         return new ResponseResult<T>(false, errors, model);
-    }
-
-    public static ResponseResult<ComplianceDetailsDto> Success(ResponseResult<ComplianceDetailsDto> result)
-    {
-        throw new NotImplementedException();
     }
 }

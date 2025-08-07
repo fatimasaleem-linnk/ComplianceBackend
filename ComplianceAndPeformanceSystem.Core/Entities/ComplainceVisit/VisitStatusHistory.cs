@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit
+namespace ComplianceAndPeformanceSystem.Core.Entities;
+
+public class VisitStatusHistory
 {
-    public class VisitStatusHistory
-    {
-        [Key]
-        public int Id { get; set; }
-        public Guid ComplianceDetailsId { get; set; }
-        public ComplianceDetails? ComplianceDetails { get; set; }
-        public string? ActionByUserId { get; set; }
-        public DateTime ActionAt { get; set; }
-        public string? OldStatus { get; set; }
-        public string? NewStatus { get; set; }
-        public string? ActionReason { get; set; }
-        public DateTime? RequestedNewDate { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+    public Guid ComplianceDetailsId { get; set; }
+    public ComplianceDetails? ComplianceDetails { get; set; }
+    public string? ActionByUserId { get; set; }
+    public DateTime ActionAt { get; set; }
+    public string? OldStatus { get; set; }
+    public string? NewStatus { get; set; }
+    public string? ActionReason { get; set; }
+    public DateTime? RequestedNewDate { get; set; }
 }

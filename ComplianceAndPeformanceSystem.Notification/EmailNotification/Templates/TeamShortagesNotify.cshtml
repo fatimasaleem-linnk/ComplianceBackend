@@ -1,0 +1,54 @@
+﻿@model ComplianceAndPeformanceSystem.Contract.Models.NotificationMessageModel
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <center>
+        <table width="708px" style="border:1px solid #E1E1E1; font-family:'IBM Plex Sans';">
+            <tr>
+                <td style="background-color:#0066ff; padding:10px;">
+                    <img src="data:image/png;base64,iVBORw0K..." alt="swa icon" />
+                </td>
+            </tr>
+            <tr>
+                <td style="background: #07DDB9; font-weight:700; padding:5px;">
+                    <p>
+                        <span>الموضوع: </span>
+                        <span>@Model.Subject</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td><p>عزيزي: @Model.Content["EmployeeName"]</p></td>
+            </tr>
+            <tr>
+                <td><p style="font-weight:700;">تفاصيل:</p></td>
+            </tr>
+            <tr>
+                <td><p>رقم الزيارة / @Model.Content["VisitNumber"]</p></td>
+            </tr>
+            <tr>
+                <td><p>إسم الجهة / @Model.Content["LicensedEntityName"]</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="border:1px solid #E1E1E1; padding:15px;">
+                        <a style="color:#0066ff;" href="@Model.Content["ActionUrl"]">رابط تفاصيل الزيارة</a>
+                        <p>@Model.Body</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top:20px;">
+                    <p>اطيب التحيات ,,,</p>
+                    <p style="font-weight:600;">الهيئة السعودية للمياه</p>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

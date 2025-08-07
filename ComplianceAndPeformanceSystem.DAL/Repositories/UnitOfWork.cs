@@ -1,6 +1,8 @@
-﻿using ComplianceAndPeformanceSystem.Contract.Helper;
+﻿using ComplianceAndPeformanceSystem.Contract.Enums;
+using ComplianceAndPeformanceSystem.Contract.Helper;
 using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ComplianceAndPeformanceSystem.DAL.Repositories;
 
@@ -10,15 +12,16 @@ public class UnitOfWork(
     ISWAESContext eswaContext,
     ICurrentUserService currentUserService,
     ICurrentLanguageService currentLanguageService,
-    IBlobService blobService
+    Func<NotificationTypeEnum, INotificationService> notificationService
     ) : IUnitOfWork
 {
     private readonly IComplianceAndPeformanceDbContext _context = context;
     private readonly ISWAESContext _eswaContext = eswaContext;
     private ILookupRepository _lookupRepository;
     private IComplianceRequestRepository _complianceRequestRepository;
+    private IAttachmentRepository _attachmentRepository;
     private IUserRepository _userRepository;
-    private IBlobService _blobService = blobService;
+    private ITemplateRepository _templateRepository;
 
     public ILookupRepository LookupRepository
     {
@@ -31,13 +34,34 @@ public class UnitOfWork(
         }
     }
 
+    public IAttachmentRepository AttachmentRepository
+    {
+        get
+        {
+            if (_attachmentRepository == null)
+                _attachmentRepository = new AttachmentRepository(_context);
+            return _attachmentRepository;
+
+        }
+    }
+
+    public ITemplateRepository TemplateRepository
+    {
+        get
+        {
+            if (_templateRepository == null)
+                _templateRepository = new TemplateRepository(_context,currentLanguageService);
+            return _templateRepository;
+
+        }
+    }
 
     public IComplianceRequestRepository ComplianceRequestRepository
     {
         get
         {
             if (_complianceRequestRepository == null)
-                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService, currentLanguageService,  _blobService);
+                _complianceRequestRepository = new ComplianceRequestRepository(_context ,currentUserService, currentLanguageService, _userRepository, notificationService);
             return _complianceRequestRepository;
         }
     }

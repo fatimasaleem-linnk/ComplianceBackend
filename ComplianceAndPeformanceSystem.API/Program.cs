@@ -3,6 +3,7 @@ using ComplianceAndPeformanceSystem.API.Extensions;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using Hangfire;
 using Microsoft.AspNetCore.Http.Timeouts;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using System.Diagnostics;
@@ -58,11 +59,11 @@ builder.Services.AddRequestTimeouts(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger();
-app.UseCustomSwaggerConfig();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseCustomSwaggerConfig();
+}
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseAuthentication();
@@ -70,7 +71,10 @@ app.UseAuthorization();
 
 //app.MigrateDatabase();
 app.UseRateLimiter();
-app.UseHangfireDashboard();
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new[] { new HangfireAuthorizationFilter() }
+});
 app.UseCustomExceptionHandler();
 app.UseCors("CorsPolicy");
 

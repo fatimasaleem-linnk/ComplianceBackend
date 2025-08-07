@@ -6,6 +6,8 @@ public class LookupValue : TrackedEntity
     public long CategoryId { get; set; }
     public string? ValueEn { get; set; }
     public string? ValueAr { get; set; }
+    public string? LicenseNumber { get; set; }
+
     public virtual CategoryLookup? Category { get; set; }
     public virtual ICollection<ComplianceDetails> LicensedEntities { get; set; }
     public virtual ICollection<ComplianceDetails> Activities { get; set; }
@@ -15,4 +17,6 @@ public class LookupValue : TrackedEntity
     public virtual ICollection<ComplianceDetails> VisitTypes { get; set; }
     public virtual ICollection<ComplianceRequest> Status { get; set; }
     public virtual ICollection<ComplianceDetails> VisitStatus { get; set; }
+    public virtual ICollection<Attachment> AttachmentTypes { get; set; } 
+    public virtual ICollection<Template> Templates { get; set; }
 }

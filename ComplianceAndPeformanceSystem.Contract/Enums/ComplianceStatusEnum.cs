@@ -8,6 +8,9 @@ public enum ComplianceStatusEnum
     ApprovalOfTheComplianceManager = 119 ,
     ApprovalOfPerformanceMonitoringManager = 120,
     ReturnPlanOfComplianceManager = 121,
-    ReturnPlanOfPerformanceMonitoringManager = 122
+    ReturnPlanOfPerformanceMonitoringManager = 122,
+    ComplianceSpecialistPreparingDelayed = 141,
+    ComplianceManagerOverdue = 142,
+    PeformanceMonitoringManagerOverdue = 143
 
 }

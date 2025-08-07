@@ -7,17 +7,174 @@ using ComplianceAndPeformanceSystem.Contract.Enums;
 using ComplianceAndPeformanceSystem.Contract.IRepositories;
 using ComplianceAndPeformanceSystem.Contract.IServices;
 using ComplianceAndPeformanceSystem.Contract.Models;
-using ComplianceAndPeformanceSystem.Contract.Models.Compliance;
 using ComplianceAndPeformanceSystem.Core.Entities;
+using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
 using Hangfire;
 using Microsoft.AspNetCore.Http;
-using System.Data.Common;
+using Newtonsoft.Json;
+using System.IO.Pipelines;
 
 namespace ComplianceAndPeformanceSystem.BLL.Services;
 
-public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserService currentUserService, ICurrentLanguageService currentLanguageService,
-    Func<NotificationTypeEnum, INotificationService> notificationService) : IComplianceRequestService
+public class ComplianceRequestService(IUnitOfWork unitOfWork, ICurrentUserService currentUserService, ICurrentLanguageService currentLanguageService, IAttachmentService attachmentService,
+Func<NotificationTypeEnum, INotificationService> notificationService) : IComplianceRequestService
 {
+    public async Task<ResponseResult<ComplianceRequestDto>> GetComplianceforSpecilest(ComplianceRequestFilterDto? filter)
+    {
+        // Get latest compliance request
+        var record = await unitOfWork.ComplianceRequestRepository.GetLatestComplianceRequest() ?? throw new NotFoundException("ComplianceRequest", "Not found");
+
+        if (DateTime.Now.Subtract(record.CreatedOn).Days > 365)
+            throw new NotFoundException("ComplianceRequest", "Yearly Compliance Request not found \r\n لم يتم العثور على طلب الامتثال السنوي");
+
+        //  Security check
+        if (!(currentUserService != null &&
+            (record.ComplianceSpecialists.Any(s => s.SpecialistUserName == currentUserService.User.UserName) ||
+             currentUserService.User.Role.Contains(RoleEnum.PerformanceMonitoringManager) ||
+             currentUserService.User.Role.Contains(RoleEnum.ComplianceManager) ||
+             currentUserService.User.Role.Contains(RoleEnum.ComplianceSpecialist) 
+             )))
+        {
+            return null;
+        }
+
+        // Filter ComplianceDetails
+        var complianceDetailsQuery = record.ComplianceDetails
+            .Where(s => s.IsDeleted == false)
+            .AsQueryable();
+
+        if (filter != null)
+        {
+            if (filter.VisitTypeID.HasValue)
+                complianceDetailsQuery = complianceDetailsQuery.Where(s => s.VisitTypeId == filter.VisitTypeID.Value);
+
+            if (filter.VisitStatusID.HasValue)
+                complianceDetailsQuery = complianceDetailsQuery.Where(s => s.VisitStatusId == filter.VisitStatusID.Value);
+
+            if (filter.LicenseeEntityID.HasValue)
+                complianceDetailsQuery = complianceDetailsQuery.Where(s => s.LicensedEntityId == filter.LicenseeEntityID.Value);
+
+            if (!string.IsNullOrWhiteSpace(filter.VisitReferanceNumber))
+                complianceDetailsQuery = complianceDetailsQuery.Where(s => s.VisitReferenceNumber == filter.VisitReferanceNumber);
+
+            if (filter.VisitDate.HasValue)
+                complianceDetailsQuery = complianceDetailsQuery.Where(s => s.VisitDate.HasValue &&
+                                                                             s.VisitDate.Value.Date == filter.VisitDate.Value.Date);
+        }
+
+        var complianceDetails = complianceDetailsQuery.OrderByDescending(s => s.Seq).ToList();
+        var visitIds = complianceDetails.Select(s => s.Id).ToList();
+
+        // Fetch Attachments & Lookup Values
+        var visitDocuments = await unitOfWork.ComplianceRequestRepository.GetVisitAttachments(visitIds);
+        var categoryLookupValue = (await unitOfWork.ComplianceRequestRepository.GetLookupValues()).ToDictionary(k => k.Id, v => v);
+
+        // Build DTO
+        var complianceRequestDto = BuildComplianceRequestDto(record, complianceDetails, visitDocuments, categoryLookupValue);
+
+        return ResponseResult<ComplianceRequestDto>.Success(complianceRequestDto);
+    }
+    private ComplianceRequestDto BuildComplianceRequestDto(ComplianceRequest record, List<ComplianceDetails> complianceDetails, List<AttachmentDto> visitDocuments, Dictionary<long, LookupValue> lookupValues)
+    {
+        return new ComplianceRequestDto
+        {
+            Id = record.Id,
+            Seq = record.Seq,
+            LastSendDate = record.LastSendDate,
+            AssignTaskName = currentLanguageService.Language == LanguageEnum.En
+                ? record.AssignTaskNameEn
+                : record.AssignTaskNameAr,
+            CreatedOn = record.CreatedOn,
+            AssignedOn = record.AssignedOn,
+            StatusId = record.StatusId,
+            StatusName = currentLanguageService.Language == LanguageEnum.En
+                ? record.Status.ValueEn
+                : record.Status.ValueAr,
+            PassedDays = record.PassedDays,
+            RemainingDays = record.RemainingDays,
+            AssignedSpecialists = record.ComplianceSpecialists?.Select(a => new ComplianceSpecialistDto
+            {
+                SpecialistUserEmail = a.SpecialistUserEmail,
+                SpecialistUserId = a.SpecialistUserId,
+                SpecialistUserName = a.SpecialistUserName
+            }).ToList(),
+
+            CompliancePlans = complianceDetails.Select(s => new CompliancePlanDto
+            {
+                Id = s.Id,
+                Seq = s.Seq,
+                ActivityId = s.ActivityId,
+                ComplianceRequestId = s.ComplianceRequestId,
+
+                ActivityName = GetLookupValueName(lookupValues, s.ActivityId),
+                LicensedEntityId = s.LicensedEntityId,
+                LicensedEntityName = GetLookupValueName(lookupValues, s.LicensedEntityId),
+
+                LocationId = s.LocationId,
+                LocationName = GetLookupValueName(lookupValues, s.LocationId),
+                PlantNameId = s.PlantNameId,
+                PlantName = GetLookupValueName(lookupValues, s.PlantNameId),
+
+                QuarterPlannedForVisitId = s.QuarterPlannedForVisitId,
+                QuarterPlannedForVisitName = GetLookupValueName(lookupValues, s.QuarterPlannedForVisitId),
+                QuarterPlannedForVisitNameEn = lookupValues.ContainsKey(s.QuarterPlannedForVisitId ?? 0)
+                    ? lookupValues[s.QuarterPlannedForVisitId.Value].ValueEn
+                    : null,
+
+                VisitTypeId = s.VisitTypeId,
+                VisitTypeName = GetLookupValueName(lookupValues, s.VisitTypeId),
+
+                VisitDate = s.VisitDate,
+                VisitReferenceNumber = s.VisitReferenceNumber,
+                DesignedCapacity = s.DesignedCapacity,
+
+                VisitStatusId = s.VisitStatusId,
+                VisitStatusName = GetLookupValueName(lookupValues, s.VisitStatusId),
+
+                ModifiedOn = s.ModifiedOn,
+                CreatedOn = s.CreatedOn,
+                LocationVisit = s.LocationVisit,
+                ScheduledDate = s.ScheduledDate,
+                CancelledAt = s.CancelledAt,
+                CancellationReason = s.CancellationReason,
+                RescheduleReason = s.RescheduleReason,
+
+                ComplianceVisitSpecialists = s.ComplianceVisitSpecialists?.Select(a => new ComplianceVisitSpecialistModel()
+                {
+                    ComplianceDetailsId = a.ComplianceDetailsId,
+                    Id = a.Id,
+                    MobileNumber = a.MobileNumber,
+                    CreatedOn = a.CreatedOn,
+                    SpecialistUserEmail = a.SpecialistUserEmail,
+                    SpecialistUserId = a.SpecialistUserId,
+                    SpecialistUserName = a.SpecialistUserName,
+                    IsSubmitted = unitOfWork.ComplianceRequestRepository.GetComplianceVisitDisclosure(a.Id) == true,
+                }).ToList(),
+
+                VisitStatusHistory = s.VisitStatusHistory?.Select(a => new VisitStatusHistory
+                {
+                    Id = a.Id,
+                    ActionAt = a.ActionAt,
+                    ActionByUserId = a.ActionByUserId,
+                    ActionReason = a.ActionReason,
+                    ComplianceDetailsId = a.ComplianceDetailsId,
+                    NewStatus = a.NewStatus,
+                    OldStatus = a.OldStatus,
+                    RequestedNewDate = a.RequestedNewDate
+                }).ToList(),
+
+                VisitDocuments = visitDocuments.Where(a => a.EntityId == s.Id).ToList()
+            }).ToList()
+        };
+    }
+    private string GetLookupValueName(Dictionary<long, LookupValue> lookupValues, long? id)
+    {
+        if (!id.HasValue || !lookupValues.ContainsKey(id.Value))
+            return null;
+
+        return currentLanguageService.Language == LanguageEnum.En ? lookupValues[id.Value].ValueEn : lookupValues[id.Value].ValueAr;
+    }
+    
     public async Task CreateComplianceRequest()
     {
         await unitOfWork.ComplianceRequestRepository.CreateComplianceRequest();
@@ -26,37 +183,101 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         BackgroundJob.Enqueue(() =>
             SendCreateComplanceRequest()
         );
-       
-    }
 
+    }
     public async Task SendCreateComplanceRequest()
     {
         var complianceManager = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         if (complianceManager != null && complianceManager.Model != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var template = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model?.FirstOrDefault(s => s.Id == (long)TemplateEnum.StartPreparingPlan10thSeptember);
+            if (template != null)
             {
-                Content = new Dictionary<string, object>() { { "EmployeeName", "مدير الادارة" }, { "ActionUrl", "#" } },
-                ViewName = "CreateComplianceRequest.cshtml",
-                Subject = "البدء بإعداد خطة الامتثال السنوية",
-                To = complianceManager.Model.Select(s => s.Email).ToList()
-            });
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "مدير الادارة");
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = complianceManager.Model.Select(s => s.Email).ToList()
+                });
+            }
+        }
+
+       
+    }
+
+
+    public async Task<ResponseResult<bool>> AssignComplianceSpecialist(AssignComplianceSpecialistModel model)
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.AssignComplianceSpecialist(model);
+        await unitOfWork.CommitAsync();
+        BackgroundJob.Enqueue(() =>
+            SendAssignComplianceSpecialist(result.Model)
+        );
+
+        return ResponseResult<bool>.Success(true);
+    }
+
+    public async Task SendAssignComplianceSpecialist(KeyValuePair<List<string>, List<string>> result)
+    {
+        var allUsers = (await unitOfWork.UserRepository.GetUsers(new List<string>())).Model;
+        if (allUsers != null && allUsers != null)
+        {
+            var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+            var newlyAssignedSpecialistForPreparingPlanTemplate = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.NewlyAssignedSpecialistForPreparingPlan);
+            var cancelTheAssignmentSpecialistForPrepareThePlanTemplate = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.CancelTheAssignmentSpecialistForPrepareThePlan);
+            if (newlyAssignedSpecialistForPreparingPlanTemplate != null)
+            {
+                newlyAssignedSpecialistForPreparingPlanTemplate.Content = newlyAssignedSpecialistForPreparingPlanTemplate.Content.Replace("{{EmployeeName}}", "اخصائي الالتزام");
+                newlyAssignedSpecialistForPreparingPlanTemplate.Content = newlyAssignedSpecialistForPreparingPlanTemplate.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+                
+                var users = allUsers.Where(s => result.Key.Contains(s.Id)).ToList();
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Body = newlyAssignedSpecialistForPreparingPlanTemplate.Content,
+                    Subject = newlyAssignedSpecialistForPreparingPlanTemplate.Subject,
+                    To = users.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
+                    CC = allUsers.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager) || s.Roles.Contains(RoleEnum.ComplianceManager)).Select(s => s.Email).ToList(),
+                });
+            }
+
+
+            if (cancelTheAssignmentSpecialistForPrepareThePlanTemplate != null)
+            {
+                cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Content = cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Content.Replace("{{EmployeeName}}", "اخصائي الالتزام");
+                cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Content = cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                var users = allUsers.Where(s => result.Value.Contains(s.Id)).ToList();
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Body = cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Content,
+                    Subject = cancelTheAssignmentSpecialistForPrepareThePlanTemplate.Subject,
+                    To = users.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
+                    CC = allUsers.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager) || s.Roles.Contains(RoleEnum.ComplianceManager)).Select(s => s.Email).ToList(),
+                });
+            }
         }
     }
+
     public async Task UpdateRemainingDays()
     {
         await unitOfWork.ComplianceRequestRepository.UpdateRemainingDays();
         await unitOfWork.CommitAsync();
     }
 
+
+
     public async Task<ResponseResult<List<ComplianceNotificationMessageDto>>> GetNotifications()
     {
         List<ComplianceNotificationMessageDto> notificationsResult = new List<ComplianceNotificationMessageDto>();
-        var notifications = (await unitOfWork.ComplianceRequestRepository.GetComplianceNotifications(currentUserService.User.Role)).Model;
-        var complianceRequest = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest())?.Model;
+        var notifications = (await unitOfWork.ComplianceRequestRepository.GetComplianceNotifications(null)).Model;
+        var complianceRequest = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null))?.Model;
         if (notifications != null && complianceRequest != null && notificationsResult != null)
         {
-            if(currentUserService.User.Role.Contains(RoleEnum.ComplianceSpecialist))
+            if (currentUserService.User.Role.Contains(RoleEnum.ComplianceSpecialist))
             {
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.New && (complianceRequest.CompliancePlans == null || complianceRequest.CompliancePlans.Count() == 0) && (complianceRequest.AssignedSpecialists != null && complianceRequest.AssignedSpecialists.Any(s => s.SpecialistUserId == currentUserService.User.UserId)))
                 {
@@ -77,6 +298,26 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     }
                 }
 
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceSpecialistPreparingDelayed)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 39);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceManagerOverdue)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 41);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 40);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.New && (complianceRequest.CompliancePlans != null && complianceRequest.CompliancePlans.Count() > 0) && (complianceRequest.AssignedSpecialists != null && complianceRequest.AssignedSpecialists.Any(s => s.SpecialistUserId == currentUserService.User.UserId)))
                 {
@@ -109,7 +350,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     }
                 }
 
-                if(complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
                 {
                     var notification = notifications.FirstOrDefault(s => s.Id == 19);
                     if (notification != null)
@@ -131,7 +372,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 }
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ApprovalOfPerformanceMonitoringManager)
-                {    
+                {
                     //plan approved noptification
                     var notification = notifications.FirstOrDefault(s => s.Id == 21);
                     if (notification != null)
@@ -149,7 +390,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     };
 
                     if (notificationDates.Contains(today))
-                    {                        
+                    {
                         var secondNotification = notifications.FirstOrDefault(s => s.Id == 31);
 
                         string currentMonthName = DateTime.Now.ToString("MMMM");
@@ -162,13 +403,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     }
 
                     //submit disclosure form notification
-                    var scheduledVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatusForLoggedInUser(currentUserService.User.UserId, (long) VisitStatusEnum.Scheduled));
+                    var scheduledVisits = (await unitOfWork.ComplianceRequestRepository.GetVisitsByStatusForLoggedInUser(currentUserService.User.UserId, (long)VisitStatusEnum.Scheduled));
 
                     if (scheduledVisits != null && scheduledVisits.Model != null && scheduledVisits.Model.Count() > 0)
                     {
                         foreach (var visit in scheduledVisits.Model)
                         {
-                            if (visit.ComplianceVisitSpecialists?.FirstOrDefault(vs=> vs.SpecialistUserId.Equals(currentUserService.User.UserId))?.ComplianceVisitDisclosure == null)
+                            if (visit.ComplianceVisitSpecialists?.FirstOrDefault(vs => vs.SpecialistUserId.Equals(currentUserService.User.UserId))?.ComplianceVisitDisclosure == null)
                             {
                                 var visitnotification = notifications.FirstOrDefault(s => s.Id == 30);
 
@@ -212,7 +453,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                         notificationsResult.Add(notification);
 
                     }
-                        
+
                 }
 
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfPerformanceMonitoringManager)
@@ -248,6 +489,51 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     }
                 }
 
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceSpecialistPreparingDelayed)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 39);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceManagerOverdue)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 41);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfComplianceManager)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 23);
+                    if (notification != null)
+                    {
+                        var note = await unitOfWork.ComplianceRequestRepository.GetComplianceApproval(complianceRequest.Id);
+                        notification.MessageBody = notification.MessageBody.Replace("{{ReturnReason}}", note.Model);
+                        notificationsResult.Add(notification);
+
+                    }
+
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfPerformanceMonitoringManager)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 24);
+                    if (notification != null)
+                    {
+                        var note = await unitOfWork.ComplianceRequestRepository.GetComplianceApproval(complianceRequest.Id);
+                        notification.MessageBody = notification.MessageBody.Replace("{{ReturnReason}}", note.Model);
+                        notificationsResult.Add(notification);
+                    }
+                }
+
+                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue)
+                {
+                    var notification = notifications.FirstOrDefault(s => s.Id == 40);
+                    if (notification != null)
+                        notificationsResult.Add(notification);
+                }
+
                 if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
                 {
                     if (complianceRequest.RemainingDays > 5)
@@ -278,7 +564,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                         if (notification != null)
                             notificationsResult.Add(notification);
                     }
-                    
+
 
                     if (complianceRequest.RemainingDays <= 0)
                     {
@@ -314,8 +600,8 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                         new DateTime(today.Year, 10, 1).AddDays(-7),
                     };
 
-                    if (notificationDates.Contains(today)) 
-                    {                       
+                    if (notificationDates.Contains(today))
+                    {
                         var quarterNotification = notifications.FirstOrDefault(s => s.Id == 25);
 
                         string currentMonthName = DateTime.Now.ToString("MMMM");
@@ -325,13 +611,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
                         if (quarterNotification != null)
                             notificationsResult.Add(quarterNotification);
-                                            
+
                     }
 
                     //notification to assign team to new visits 
                     var scheduledVisits = (await unitOfWork.ComplianceRequestRepository.GetNewVisitsForCurrentQuarter());
 
-                    if (scheduledVisits!=null && scheduledVisits?.Count() > 0 ) 
+                    if (scheduledVisits != null && scheduledVisits?.Count() > 0)
                     {
                         foreach (var visit in scheduledVisits)
                         {
@@ -397,63 +683,121 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
             if (currentUserService.User.Role.Contains(RoleEnum.PerformanceMonitoringManager))
             {
-                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager)
+                if (complianceRequest != null)
                 {
-                    if (complianceRequest.RemainingDays > 5)
+
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfComplianceManager)
                     {
-                        var notification = notifications.FirstOrDefault(s => s.Id == 10);
+                        var notification = notifications.FirstOrDefault(s => s.Id == 23);
                         if (notification != null)
+                        {
+                            var note = await unitOfWork.ComplianceRequestRepository.GetComplianceApproval(complianceRequest.Id);
+                            notification.MessageBody = notification.MessageBody.Replace("{{ReturnReason}}", note.Model);
                             notificationsResult.Add(notification);
-                        
+
+                        }
+
                     }
 
-
-                    if (complianceRequest.RemainingDays == 2)
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ReturnPlanOfPerformanceMonitoringManager)
                     {
-                        var notification = notifications.FirstOrDefault(s => s.Id == 11);
+                        var notification = notifications.FirstOrDefault(s => s.Id == 24);
+                        if (notification != null)
+                        {
+                            var note = await unitOfWork.ComplianceRequestRepository.GetComplianceApproval(complianceRequest.Id);
+                            notification.MessageBody = notification.MessageBody.Replace("{{ReturnReason}}", note.Model);
+                            notificationsResult.Add(notification);
+                        }
+                    }
+
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
+                    {
+                        var notification = notifications.FirstOrDefault(s => s.Id == 43);
                         if (notification != null)
                             notificationsResult.Add(notification);
                     }
 
-                    
-                    if (complianceRequest.RemainingDays <= 0)
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager)
                     {
-                        var notification = notifications.FirstOrDefault(s => s.Id == 12);
+                        var notification = notifications.FirstOrDefault(s => s.Id == 42);
+                        if (notification != null)
+                            notificationsResult.Add(notification);
+
+                        if (complianceRequest.RemainingDays > 5)
+                        {
+                            notification = notifications.FirstOrDefault(s => s.Id == 10);
+                            if (notification != null)
+                                notificationsResult.Add(notification);
+
+                        }
+
+
+                        if (complianceRequest.RemainingDays == 2)
+                        {
+                            notification = notifications.FirstOrDefault(s => s.Id == 11);
+                            if (notification != null)
+                                notificationsResult.Add(notification);
+                        }
+
+
+                        if (complianceRequest.RemainingDays <= 0)
+                        {
+                            notification = notifications.FirstOrDefault(s => s.Id == 12);
+                            if (notification != null)
+                                notificationsResult.Add(notification);
+                        }
+
+
+                    }
+
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceSpecialistPreparingDelayed)
+                    {
+                        var notification = notifications.FirstOrDefault(s => s.Id == 39);
                         if (notification != null)
                             notificationsResult.Add(notification);
                     }
+
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.ComplianceManagerOverdue)
+                    {
+                        var notification = notifications.FirstOrDefault(s => s.Id == 41);
+                        if (notification != null)
+                            notificationsResult.Add(notification);
+                    }
+
+                    if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue)
+                    {
+                        var notification = notifications.FirstOrDefault(s => s.Id == 40);
+                        if (notification != null)
+                            notificationsResult.Add(notification);
+                    }
+
                 }
 
-
-                if (complianceRequest.StatusId == (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
-                {
-                    var notification = notifications.FirstOrDefault(s => s.Id == 9);
-                    if (notification != null)
-                    {
-                        notification.MessageTitle = notification.MessageTitle.Replace("{{PlanTitle}}", complianceRequest.AssignTaskName);
-                        notificationsResult.Add(notification);
-                    }
-                }
             }
+
+            
 
         }
 
 
         return ResponseResult<List<ComplianceNotificationMessageDto>>.Success(notificationsResult);
-    
-    }
 
-    public async Task<ResponseResult<ComplianceRequestDto>> GetComplianceRequest()
+    }
+    public async Task<ResponseResult<ComplianceRequestDto>> GetComplianceRequest(ComplianceRequestFilterDto filter)
     {
-        var result = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
-        if (result != null && result.Model != null)
-            result.Model.ComplianceNotificationMessages = GetNotifications()?.Result?.Model;
+        var result = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(filter);
+        //if (result != null && result.Model != null)
+        //{
+        //    result.Model.ComplianceNotificationMessages = GetNotifications()?.Result?.Model;
+        //}
+        result.Model.ComplianceNotificationMessages = [];
         return result;
     }
 
+
     public async Task<ResponseResult<GetComplianceRequestStatusDto>> GetComplianceRequestStatus()
     {
-        var compliance = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
+        var compliance = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null);
         return ResponseResult<GetComplianceRequestStatusDto>.Success(new GetComplianceRequestStatusDto()
         {
             LastSendDate = compliance?.Model?.LastSendDate,
@@ -463,6 +807,30 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 new StateDto()
                 {
                     IsApproved = true,
+                    StatusName = compliance?.Model?.StatusName,
+                }
+            } :
+            compliance?.Model?.StatusId == (int)ComplianceStatusEnum.ComplianceSpecialistPreparingDelayed ? new List<StateDto>()
+            {
+                new StateDto()
+                {
+                    IsApproved = false,
+                    StatusName = compliance?.Model?.StatusName,
+                }
+            }:
+            compliance?.Model?.StatusId == (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue ? new List<StateDto>()
+            {
+                new StateDto()
+                {
+                    IsApproved = false,
+                    StatusName = compliance?.Model?.StatusName,
+                }
+            } :
+            compliance?.Model?.StatusId == (int)ComplianceStatusEnum.ComplianceManagerOverdue ? new List<StateDto>()
+            {
+                new StateDto()
+                {
+                    IsApproved = false,
                     StatusName = compliance?.Model?.StatusName,
                 }
             } :
@@ -530,43 +898,17 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     StatusName = compliance?.Model?.StatusName,
                 }
             } : new List<StateDto>()
-            
+
         });
     }
-
     public async Task<ResponseResult<List<UserDto>>> GetComplianceSpecialist()
     {
         return await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceSpecialist });
     }
+
     
-    public async Task<ResponseResult<bool>> AssignComplianceSpecialist(AssignComplianceSpecialistModel model)
-    {
-        var result = await unitOfWork.ComplianceRequestRepository.AssignComplianceSpecialist(model);
-        await unitOfWork.CommitAsync();
-        BackgroundJob.Enqueue(() => 
-            SendAssignComplianceSpecialist(result.Model)
-        );
 
-        return ResponseResult<bool>.Success(true);
-    }
-
-
-    public async Task SendAssignComplianceSpecialist(KeyValuePair<List<string>, bool> result)
-    {
-        var allUsers = (await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceSpecialist, RoleEnum.PerformanceMonitoringManager })).Model;
-        if (allUsers != null && allUsers != null)
-        {
-            var users = allUsers.Where(s => result.Key.Contains(s.Id)).ToList();
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
-            {
-                Content = new Dictionary<string, object>() { { "EmployeeName", "اخصائي الالتزام" }, { "ActionUrl", "#" } },
-                ViewName = "AssignComplianceSpecialist.cshtml",
-                Subject = result.Value == false ? "البدء بإعداد خطة الامتثال السنوية":"تعيين اخصائي للخطة الامتثال السنوية",
-                To = users.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
-                CC = allUsers.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager)).Select(s => s.Email).ToList(),
-            });
-        }
-    }
+  
 
     public async Task<ResponseResult<bool>> SaveCompliancePlan(CompliancePlanModel model)
     {
@@ -574,19 +916,16 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         await unitOfWork.CommitAsync();
         return result;
     }
-
     public async Task<ResponseResult<bool>> DeleteCompliancePlan(Guid planId)
     {
         var result = await unitOfWork.ComplianceRequestRepository.DeleteCompliancePlan(planId);
         await unitOfWork.CommitAsync();
         return result;
     }
-
     public async Task<ResponseResult<List<ComplianceActivityDto>>> GetComplianceActivities(Guid requestId)
     {
         return await unitOfWork.ComplianceRequestRepository.GetComplianceActivities(requestId);
     }
-
     public async Task<ResponseResult<bool>> SendComplianceRequest(Guid requestId)
     {
         var result = await unitOfWork.ComplianceRequestRepository.SendComplianceRequest(requestId);
@@ -609,47 +948,117 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
         return ResponseResult<bool>.Success(true);
     }
-
-
     public async Task SendComplianceRequestForPerformanceMonitoringManager(string senderName)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
-        var performanceMonitoringManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.PerformanceMonitoringManager });
-        if (performanceMonitoringManagers != null && performanceMonitoringManagers.Model != null)
+
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null, isEmail: true)).Model;
+        if (request != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var users = await unitOfWork.UserRepository.GetUsers(new List<string>());
+            if (users != null && users.Model != null)
             {
-                Content = new Dictionary<string, object>() { { "EmployeeName", "مدير عام مراقبة الاداء" }, { "SenderName", senderName }, { "PlanTitle", request.Model.AssignTaskName }, { "RequestNumber", request.Model.Seq }, { "SubmissionDate", DateTime.Now }, { "ActionUrl", "#" } },
-                ViewName = "SendComplianceRequest.cshtml",
-                Subject = "خطة امتثال سنوية جديدة مُقدمة للمراجعة",
-                To = performanceMonitoringManagers.Model.Select(s => s.Email).ToList(),
-                CC = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList()
-            });
+                var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+                var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.NewAnnualCompliancePlanSubmittedForReviewForComplianceManager);
+                if (template != null)
+                {
+
+                    template.Content = template.Content.Replace("{{EmployeeName}}", "مدير عام مراقبة الاداء");
+                    template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                    template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                    template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                    template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                    template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Subject = template.Subject,
+                        Body = template.Content,
+                        To = users.Model.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager)).Select(s => s.Email).ToList(),
+                        CC = users.Model.Where(s => s.Roles.Contains(RoleEnum.ComplianceManager)).Select(s => s.Email).ToList(),
+                    });
+                }
+
+
+                template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.SubmissionConfirmationForAnnualCompliancePlanForSpecialist);
+                if (template != null)
+                {
+
+                    template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                    template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                    template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                    template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                    template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                    template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Subject = template.Subject,
+                        Body = template.Content,
+                        To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                    });
+                }
+            }
+
         }
     }
 
     public async Task SendComplianceRequestForPerformanceComplianceManager(string senderName)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
-        var complianceManager = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
-        if (complianceManager != null && complianceManager.Model != null)
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null, isEmail: true)).Model;
+        if (request != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
+            if (complianceManagers != null && complianceManagers.Model != null)
             {
-                Content = new Dictionary<string, object>() { { "EmployeeName", "مدير الادارة" }, { "SenderName", senderName }, { "PlanTitle", request.Model.AssignTaskName }, { "RequestNumber", request.Model.Seq }, { "SubmissionDate", DateTime.Now }, { "ActionUrl", "#" } },
-                ViewName = "SendComplianceRequest.cshtml",
-                Subject = "خطة امتثال سنوية جديدة مُقدمة للمراجعة",
-                To = complianceManager.Model.Select(s => s.Email).ToList(),
-                CC = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList()
-            });
+                var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+                var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.NewAnnualCompliancePlanSubmittedForReviewForComplianceManager);
+                if (template != null)
+                {
+
+                    template.Content = template.Content.Replace("{{EmployeeName}}", "مدير الادارة");
+                    template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                    template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                    template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                    template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                    template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Subject = template.Subject,
+                        Body = template.Content,
+                        To = complianceManagers.Model.Select(s => s.Email).ToList(),
+                    });
+                }
+
+
+                template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.SubmissionConfirmationForAnnualCompliancePlanForSpecialist);
+                if (template != null)
+                {
+
+                    template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                    template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                    template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                    template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                    template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                    template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                    await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                    {
+                        Subject = template.Subject,
+                        Body = template.Content,
+                        To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                    });
+                }
+            }
+
         }
     }
     public async Task<ResponseResult<bool>> ApproveComplianceRequestByComplianceManager(ApproveOrRejectComplianceRequestModel model)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
-        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null);
+        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfComplianceManager && request?.Model?.StatusId != (int)ComplianceStatusEnum.ComplianceManagerOverdue)
             throw new ValidationException(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Compliance Manager role only can be Approve" : "لا يمكن الموافقة الا من قبل مدير الاداره اولا") });
-        
+
         model.Role = RoleEnum.ComplianceManager;
         model.IsApproved = true;
         var result = await unitOfWork.ComplianceRequestRepository.ApproveOrRejectComplianceRequest(model, ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager);
@@ -666,25 +1075,79 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
     public async Task ApproveComplianceRequestByComplianceManager(string senderName)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
-        var performanceMonitoringManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.PerformanceMonitoringManager });
-        if (performanceMonitoringManagers != null && performanceMonitoringManagers.Model != null)
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true)).Model;
+        var users = await unitOfWork.UserRepository.GetUsers(new List<string>());
+        if (users != null && users.Model != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+            var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanApprovedForComplianceSpecialist);
+            if (template != null)
             {
-                Content = new Dictionary<string, object>() { { "EmployeeName", "مدير عام مراقبة الاداء" }, { "SenderName", senderName }, { "PlanTitle", request.Model.AssignTaskName }, { "RequestNumber", request.Model.Seq }, { "SubmissionDate", DateTime.Now }, { "ActionUrl", "#" } },
-                ViewName = "SendComplianceRequest.cshtml",
-                Subject = "خطة امتثال سنوية جديدة مُقدمة للمراجعة",
-                To = performanceMonitoringManagers.Model.Select(s => s.Email).ToList(),
-                CC = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList()
-            });
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                });
+            }
+
+
+            template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanApprovedForComplianceManager);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "مدير الادارة");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = users.Model.Where(s => s.Roles.Contains(RoleEnum.ComplianceManager)).Select(s => s.Email).ToList(),
+                });
+            }
+
+
+
+            template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.NotificationOfPlanReceivedAfterDirectManagerApprovalForPerformanceMonitoringManager);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "مدير عام مراقبة الاداء");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = users.Model.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager)).Select(s => s.Email).ToList(),
+                });
+            }
+
+           
         }
     }
 
     public async Task<ResponseResult<bool>> ReturnComplianceRequestByComplianceManager(ApproveOrRejectComplianceRequestModel model)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
-        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfComplianceManager)
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null);
+        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfComplianceManager && request?.Model?.StatusId != (int)ComplianceStatusEnum.ComplianceManagerOverdue)
             throw new ValidationException(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Compliance Manager role only can be Return" : "لا يمكن الارجاع الا من قبل مدير الاداره اولا") });
 
 
@@ -701,28 +1164,41 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
     }
 
-
     public async Task ReturnComplianceRequestByComplianceManager(string senderName)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true))?.Model;
         var complianceManager = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         if (complianceManager != null && complianceManager.Model != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+            var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanReturnedForModificationsForComplianceSpecialist);
+            if (template != null)
             {
-                Content = new Dictionary<string, object>() { { "From", "مدير الادارة" }, { "EmployeeName", "اخصائي" }, { "SenderName", senderName }, { "PlanTitle", request.Model.AssignTaskName }, { "RequestNumber", request.Model.Seq }, { "SubmissionDate", DateTime.Now }, { "ActionUrl", "#" } },
-                ViewName = "ReturnComplianceRequest.cshtml",
-                Subject = "تم ارجاع خطة امتثال السنوية المُقدمة ",
-                To = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
-                CC = complianceManager.Model.Select(s => s.Email).ToList()
-            });
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                    CC = complianceManager.Model.Select(s => s.Email).ToList()
+                });
+            }
+
+   
         }
     }
 
     public async Task<ResponseResult<bool>> ApproveComplianceRequestByPerformanceMonitoringManager(ApproveOrRejectComplianceRequestModel model)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
-        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager)
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null);
+        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager && request?.Model?.StatusId != (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue)
             throw new ValidationException(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Performance Monitoring Manager role only can be Approve" : "لا يمكن الموافقة الا من قبل مدير مراقبة الاداء اولا") });
 
 
@@ -732,14 +1208,102 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         await unitOfWork.CommitAsync();
         await UpdateRemainingDays();
 
+
+        BackgroundJob.Enqueue(() => ApproveComplianceRequestByPeformanceMonitoringManager(currentUserService.User.UserName));
+
         return result;
 
     }
 
+    public async Task ApproveComplianceRequestByPeformanceMonitoringManager(string senderName)
+    {
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null, isEmail: true)).Model;
+        var users = await unitOfWork.UserRepository.GetUsers(new List<string>());
+        if (users != null && users.Model != null)
+        {
+            var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+            var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanApprovedByPerformanceMonitoringManagerForComplianceSpecialist);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                });
+            }
+
+
+            template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanApprovedByPerformanceMonitoringManagerForComplianceManager);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "مدير الادارة");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = users.Model.Where(s => s.Roles.Contains(RoleEnum.ComplianceManager)).Select(s => s.Email).ToList(),
+                });
+            }
+
+
+
+            template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanApprovedByPerformanceMonitoringManagerForComplianceManager);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "مدير عام مراقبة الاداء");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = users.Model.Where(s => s.Roles.Contains(RoleEnum.PerformanceMonitoringManager)).Select(s => s.Email).ToList(),
+                });
+            }
+
+
+
+            template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualScheduledVisitsNoticeForLicensedEntity);
+            if (template != null)
+            {
+
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = users.Model.Where(s => s.Roles.Contains(RoleEnum.LicensedEntity)).Select(s => s.Email).ToList(),
+                });
+            }
+        }
+    }
+
     public async Task<ResponseResult<bool>> ReturnComplianceRequestByPerformanceMonitoringManager(ApproveOrRejectComplianceRequestModel model)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest();
-        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager)
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null);
+        if (request?.Model?.StatusId != (int)ComplianceStatusEnum.PendingReviewOfPerformanceMonitoringManager && request?.Model?.StatusId != (int)ComplianceStatusEnum.PeformanceMonitoringManagerOverdue)
             throw new ValidationException(new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Performance Monitoring Manager role only can be Returned" : "لا يمكن الارجاع الا من قبل مدير مراقبة الاداء اولا") });
 
 
@@ -757,25 +1321,33 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
     public async Task ReturnComplianceRequestByPerformanceMonitoringManager(string senderName)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
-        var PerformanceMonitoringManager = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.PerformanceMonitoringManager });
-        if (PerformanceMonitoringManager != null && PerformanceMonitoringManager.Model != null)
+        var request = (await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true)).Model;
+        var users = await unitOfWork.UserRepository.GetUsers(new List<string>());
+        if (users != null && users.Model != null)
         {
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            var templates = (await unitOfWork.TemplateRepository.GetTemplates(TemplateTypeEnum.Email)).Model;
+            var template = templates?.FirstOrDefault(s => s.Id == (long)TemplateEnum.AnnualCompliancePlanReturnedForModificationsByPeformanceMentoringManagerForComplianceSpecialistAndComplianceManager);
+            if (template != null)
             {
-                Content = new Dictionary<string, object>() { { "From", "مدير الادارة" }, { "EmployeeName", "اخصائي" }, { "SenderName", senderName }, { "PlanTitle", request.Model.AssignTaskName }, { "RequestNumber", request.Model.Seq }, { "SubmissionDate", DateTime.Now }, { "ActionUrl", "#" } },
-                ViewName = "ReturnComplianceRequest.cshtml",
-                Subject = "تم ارجاع خطة امتثال السنوية المُقدمة ",
-                To = request.Model.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
-                CC = PerformanceMonitoringManager.Model.Select(s => s.Email).ToList()
-            });
+
+                template.Content = template.Content.Replace("{{EmployeeName}}", "اخصائي الامتثال");
+                template.Content = template.Content.Replace("{{SenderName}}", senderName);
+                template.Content = template.Content.Replace("{{PlanTitle}}", request.AssignTaskName);
+                template.Content = template.Content.Replace("{{RequestNumber}}", request.Seq.ToString());
+                template.Content = template.Content.Replace("{{SubmissionDate}}", DateTime.Now.ToString("dd-MM-yyyy hh:mm tt"));
+                template.Content = template.Content.Replace("{{ActionUrl}}", "https://apptest.swcc.gov.sa/compliance/tasks");
+
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Subject = template.Subject,
+                    Body = template.Content,
+                    To = request.AssignedSpecialists.Select(s => s.SpecialistUserEmail).ToList(),
+                    CC = users.Model.Where(s => s.Roles.Contains(RoleEnum.ComplianceManager) || s.Roles.Contains(RoleEnum.PerformanceMonitoringManager)).Select(s => s.Email).ToList()
+                });
+            }
         }
     }
 
-    public async Task<ResponseResult<bool>> ChangeRequestStatus(long requestStatusId)
-    {
-        throw new NotImplementedException();
-    }
 
     #region phase 2
 
@@ -793,22 +1365,22 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
         if (!notificationDates.Contains(today)) return;
 
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true);
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
 
         string currentMonthName = DateTime.Now.ToString("MMMM");
 
         var quarterName = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitName;
-        
+
         var quarterNameEnForPendingVisits = request.Model?.CompliancePlans?.Where(p => p.QuarterPlannedForVisitNameEn.Contains(currentMonthName)).FirstOrDefault()?.QuarterPlannedForVisitNameEn;
         quarterNameEnForPendingVisits = string.Join(" ", quarterNameEnForPendingVisits.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2));
 
 
-        int? pendingVists = request.Model?.CompliancePlans?.Where( p =>
+        int? pendingVists = request.Model?.CompliancePlans?.Where(p =>
             p.QuarterPlannedForVisitNameEn.StartsWith(quarterNameEnForPendingVisits)
         ).Count();
-        
-        if (complianceManagers != null && complianceManagers.Model != null && pendingVists!=null && pendingVists > 0)
+
+        if (complianceManagers != null && complianceManagers.Model != null && pendingVists != null && pendingVists > 0)
         {
             await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
             {
@@ -827,9 +1399,9 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         return result;
     }
 
-    public async Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists()
+    public async Task<ResponseResult<List<ComplianceSpecialistDto>>> GetComplianceRequestSpecialists(Guid visitId)
     {
-        var result = await unitOfWork.ComplianceRequestRepository.GetComplianceRequestSpecialists();
+        var result = await unitOfWork.ComplianceRequestRepository.GetComplianceRequestSpecialists(visitId);
         return result;
     }
 
@@ -840,13 +1412,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
         if (result.Succeeded)
             BackgroundJob.Enqueue(() => NotifyComplianceManagerOnSaveVisitSchedule(model.Id));
-       
+
         return result;
     }
 
-    public async Task NotifyComplianceManagerOnSaveVisitSchedule(Guid complianceDetailId) 
+    public async Task NotifyComplianceManagerOnSaveVisitSchedule(Guid complianceDetailId)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true);
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         var visit = request?.Model?.CompliancePlans?.FirstOrDefault(cp => cp.Id.Equals(complianceDetailId));
 
@@ -866,18 +1438,18 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 },
                 ViewName = "VisitTeamAssignment.cshtml",
                 Subject = $"إشعار الزيارة القادمة – {visit.LicensedEntityName}",
-                To = complianceManagers.Model.Select(s => s.Email).ToList(),               
+                To = complianceManagers.Model.Select(s => s.Email).ToList(),
             });
         }
     }
 
     public async Task SendUpcomingVisitNotificationsEmailAsync()
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true);
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         var complianceVisits = request?.Model?.CompliancePlans?.Where(cp => !string.IsNullOrEmpty(cp.VisitReferenceNumber));
 
-        foreach (var visit in complianceVisits) 
+        foreach (var visit in complianceVisits)
         {
             if (visit == null || visit.VisitDate == null)
                 return; // No visit
@@ -891,7 +1463,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             if (complianceManagers != null && complianceManagers.Model != null)
             {
                 var visitSpecialists = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitSpecialists(visit.Id));
-                List<string> listCC =  visitSpecialists != null && visitSpecialists.Model != null ? visitSpecialists.Model.Select(s => s.SpecialistUserEmail).ToList() : new List<string>();
+                List<string> listCC = visitSpecialists != null && visitSpecialists.Model != null ? visitSpecialists.Model.Select(s => s.SpecialistUserEmail).ToList() : new List<string>();
 
                 await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
                 {
@@ -913,10 +1485,10 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             }
         }
     }
-
+     
     public async Task SendUpcomingVisitNotificationsSMSAsync()
     {
-        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(isEmail: true);
+        var request = await unitOfWork.ComplianceRequestRepository.GetComplianceRequest(null,isEmail: true);
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         var complianceVisits = request?.Model?.CompliancePlans?.Where(cp => !string.IsNullOrEmpty(cp.VisitReferenceNumber));
 
@@ -930,9 +1502,9 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
             if (daysUntilVisit != 10)
                 return;
-                        
+
             List<string> listSendTo = complianceManagers?.Model?
-                            .Where(c => !String.IsNullOrEmpty(c.MobileNumber))
+                            .Where(c => !string.IsNullOrEmpty(c.MobileNumber))
                             .Select(s => s.MobileNumber).ToList() ?? new List<string>();
 
             var visitSpecialists = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitSpecialists(visit.Id));
@@ -974,19 +1546,20 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
     public async Task<ResponseResult<bool>> AssignComplianceVisitSpecialists(AssignComplianceVisitSpecialistModel model)
     {
         var result = await unitOfWork.ComplianceRequestRepository.AssignComplianceVisitSpecialists(model);
-        await unitOfWork.CommitAsync();
-        BackgroundJob.Enqueue(() =>
-            NotifyAssignedAndConflictedComplianceVisitSpecialist(result.Model, model.ComplianceDetailsId)
-        );
-        if(result.Succeeded)
+        if (result.Succeeded)
+        {
+            await unitOfWork.CommitAsync();
+            BackgroundJob.Enqueue(() =>
+                NotifyAssignedAndConflictedComplianceVisitSpecialist(result.Model, model.ComplianceDetailsId));
             return ResponseResult<bool>.Success(true);
+        }
         else
-            return ResponseResult<bool>.Failure(new List<string> { "An error occured while assigning visit specialists." }, false);
+            return ResponseResult<bool>.Failure(result.Errors, false);
     }
 
     public async Task NotifyAssignedAndConflictedComplianceVisitSpecialist(AssignComplianceVisitSpecialistResponseModel result, Guid visitId)
     {
-        var visit = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(visitId)).Model;
+         var visit = (await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(visitId)).Model;
 
         var allUsers = (await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceSpecialist })).Model;
         if (allUsers != null && allUsers != null)
@@ -1010,11 +1583,11 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 To = newlyAssignedUsers.Where(s => s.Roles.Contains(RoleEnum.ComplianceSpecialist)).Select(s => s.Email).ToList(),
             });
 
-            if (result.IsUpdate && result.NotifyConflictUsers != null && result.NotifyConflictUsers.Count()>0) 
+            if (result.IsUpdate && result.NotifyConflictUsers != null && result.NotifyConflictUsers.Count() > 0)
             {
                 var removedDueToConflictUsers = allUsers.Where(s => result.NotifyConflictUsers.Contains(s.Id)).ToList();
 
-                foreach (var conflictedUser in removedDueToConflictUsers) 
+                foreach (var conflictedUser in removedDueToConflictUsers)
                 {
                     await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
                     {
@@ -1040,15 +1613,89 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
     }
 
     #region Part03-05
-    public async Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> attachmentvm, Guid ComplianceDetailsID)
+    private void ValidateVisitAttachments(List<IFormFile> visitAttachments)
     {
-        var request = await unitOfWork.ComplianceRequestRepository.AddAttachment(attachmentvm, ComplianceDetailsID);
-        if (!request.Model != false)
-            throw new ValidationException([new KeyValuePair<string, string>("Status", currentLanguageService.Language == LanguageEnum.En ? "Visit documents cannot be saved." : "لا يمكن حفظ  مستندات الزيارة ")]);
-        else
-            await SendNotificationToLicensedEntityforUploadDocument(ComplianceDetailsID, currentUserService.User.UserName);
-        await SendSMSUploadAttachmentSecsessed(ComplianceDetailsID);
-        return request;
+        List<KeyValuePair<string, string>> businessRules = [];
+
+        if (visitAttachments != null)
+        {
+            if (visitAttachments.Count > 8)
+                businessRules.Add(new KeyValuePair<string, string>("visitsAttachments", "عدد الملفات يجب ان تكون اقل من او تساوي 8 ملفات"));
+            else
+            {
+                foreach (var item in visitAttachments)
+                {
+                    string[] splittedString = item.FileName.Split('.');
+                    var extension = splittedString[splittedString.Length - 1];
+
+                    if (!(extension.Equals("pdf", StringComparison.CurrentCultureIgnoreCase) || extension.ToLower() == "png" || extension.ToLower() == "jpg" || extension.ToLower() == "jpeg"))
+                        businessRules.Add(new KeyValuePair<string, string>("visitsAttachments", "برجاء رفع الملف المرفق  بامتداد  png او jpg"));
+
+                    if (item.Length > 5 * 1024 * 1024)
+                        businessRules.Add(new KeyValuePair<string, string>("RequestAttachments", " MBالملف المرفق  يجب ان تكون مساحتها اقل من 5 "));
+
+                }
+            }
+        }
+        if (businessRules.Count > 0) throw new ValidationException(businessRules);
+    }
+    public async Task<ResponseResult<bool>> AddVisitAttachment(List<IFormFile> visitAttachments, Guid complianceDetailsId)
+    {
+        ValidateVisitAttachments(visitAttachments);
+        if (currentUserService.User.Role.Any(s => s.Contains(RoleEnum.LicensedEntity)))
+        {
+            if (visitAttachments.Count > 0)
+            {
+                foreach (var file in visitAttachments)
+                {
+                    var attachmentGuid = Guid.NewGuid().ToString();
+                    var attachment = new Attachment
+                    {
+                        AttachmentGuid = attachmentGuid,
+                        AttachmentName = $"{file.FileName}",
+                        EntityId = complianceDetailsId,
+                        EntityName = AttachmentEntityEnum.VisitAttachment,
+                        AttachmentTypeId = (long)AttachmentTypeEnum.VisitAttachment
+                    };
+
+                    List<KeyValuePair<Stream, string>> attachemnts = new List<KeyValuePair<Stream, string>>();
+                    var fileSplitted = attachment.AttachmentName.Split('.');
+                    string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                    string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.VisitAttachment, new Dictionary<string, string>() { { "ComplianceDetailsID", complianceDetailsId.ToString() } });
+                    dir += $"/{attachmentGuid}.{fileExtension}";
+                    attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                    attachmentService.UploadAttachment(attachemnts);
+                    await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                    await unitOfWork.CommitAsync();
+
+
+                    await SendNotificationToLicensedEntityforUploadDocument(complianceDetailsId, currentUserService.User.UserName);
+                    await SendSMSUploadAttachmentSecsessed(complianceDetailsId);
+                }
+            }
+        }
+
+        
+        return ResponseResult<bool>.Success(true);
+    }
+    public async Task<AttachmentDto> DownloadAttachmentForAttachmentId(Guid attachmentId)
+    {
+        var record = await unitOfWork.AttachmentRepository.GetAttachmentById(attachmentId);
+        if (record != null)
+        {
+            var fileSplitted = record.AttachmentName.Split('.');
+            string fileExtension = fileSplitted[fileSplitted.Length - 1];
+            string dir = attachmentService.GetMappedDirectory(record.EntityName, new Dictionary<string, string>() { { "ComplianceDetailsID", record.EntityId.ToString() } });
+            dir += $"/{record.AttachmentGuid}.{fileExtension}";
+            record.Content = attachmentService.DownloadAttachment(dir);
+
+            return record;
+
+        }
+        throw new ValidationException(new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("message", "لم يتم العثور علي هذا الملف ") });
+
     }
     public async Task SendSMSUploadAttachmentSecsessed(Guid ComplianceDetailsID)
     {
@@ -1058,7 +1705,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
 
             if (SendTo != null)
@@ -1089,12 +1736,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
         var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
 
-        if (LicensedEntity != null)
-        {
+        
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
 
+        if (SendTo != null)
+        {
             await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
             {
                 Content = new Dictionary<string, object>() {
@@ -1113,7 +1761,8 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
         return ResponseResult<bool>.Success(false);
     }
-
+    
+    
     // no doc upload 
     public async Task SendNotificationToComplianceManagerforNoDocumentsSubmitted()
     {
@@ -1178,7 +1827,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         {
             foreach (var visit in complianceVisits)
             {
-                string messageBody = "Entity [LicenseeName] failed to upload required documents for visit on [VisitDate]. Please follow up\r\n Best regards,\r\n";
+                string messageBody = $"Entity {visit.LicensedEntityName} failed to upload required documents for visit on {visit.VisitDate}. Please follow up\r\n Best regards,\r\n";
                 var content = new Dictionary<string, string>() {
 
                      { "{VisitDate}", visit?.VisitDate?.ToShortDateString() ?? ""},
@@ -1193,15 +1842,13 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                 await notificationService(NotificationTypeEnum.SMS).SendAsync(
                 new NotificationMessageModel()
                 {
-                    To = ComplianceManager?.Select(s => s.Email).ToList() ?? new List<string>(),
+                    To = ComplianceManager?.Select(s => s.Email).ToList() ?? [],
                     Body = messageBody,
                 }
                 );
             }
         }
     }
-
-
     public async Task<ResponseResult<ComplianceDetailsDto>>? GetComplianceVisitByComplianceDetailsID(Guid ComplianceDetailsID)
     {
         var result = await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
@@ -1214,13 +1861,11 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         else
             return null;
     }
-
     public async Task<ResponseResult<List<ComplianceDetailsDto>>> GetComplianceVisit()
         => await unitOfWork.ComplianceRequestRepository.GetComplianceVisit();
-
-    public async Task<ResponseResult<DocumentExtensionRequestDto>> AddExtensionRequest(DocumentExtensionRequestDto request, Guid complianceDetailsId)
+    public async Task<ResponseResult<DocumentExtensionRequestDto>> AddExtensionRequest(ExtensionRequestModel request)
     {
-        var res = unitOfWork.ComplianceRequestRepository.AddExtensionRequest(request, complianceDetailsId)?.Result;
+        var res = unitOfWork.ComplianceRequestRepository.AddExtensionRequest(request)?.Result;
         if (!res.Succeeded)
             throw new Exception("Can't Add Extension Request");
         else
@@ -1229,7 +1874,6 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         return res;
 
     }
-
     public async Task SendNotificationToEntityforExtensionRequestApproved(Guid RequestID)
     {
         var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
@@ -1239,23 +1883,26 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", currentUserService.User.UserName ?? ""},
                     { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", currentUserService.User.UserName ?? ""},
                     { "SubmissionDate", DateTime.Now.ToShortDateString() },
                     { "ActionUrl", "#" }
                 },
-                Body = $"Dear {currentUserService.User.UserName}, Your request for an extension of {request?.RequestedDays} days has been approved. The new deadline for submission is {visit?.VisitDate?.ToShortDateString()}.",
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = "تم قبول طلب التمديد",
-                To = LicensedEmail
-            });
+                    Body = $"Dear {currentUserService.User.UserName}, Your request for an extension of {request?.RequestedDays} days has been approved. The new deadline for submission is {visit?.VisitDate?.ToShortDateString()}.",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = "تم قبول طلب التمديد",
+                    To = LicensedEmail
+                });
+            }
         }
     }
     public async Task SendNotifycationToEntityforExtensionRequestSubmitted(Guid RequestID)
@@ -1267,23 +1914,26 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", currentUserService.User.UserName ?? ""},
                     { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", visit?.LicensedEntityName ?? ""},
                     { "SubmissionDate", DateTime.Now.ToShortDateString() },
                     { "ActionUrl", "#" }
                 },
-                Body = $"Dear {visit?.LicensedEntityName}, Your request for an extension of {request?.RequestedDays} days has been submitted and is awaiting review. You will be notified of the decision soon.",
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = "تم تقديم طلب التمديد",
-                To = LicensedEmail
-            });
+                    Body = $"Dear {visit?.LicensedEntityName}, Your request for an extension of {request?.RequestedDays} days has been submitted and is awaiting review. You will be notified of the decision soon.",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = "تم تقديم طلب التمديد",
+                    To = LicensedEmail
+                });
+            }
         }
     }
     public async Task SendNotifycationToEntityforExtensionRequestRejection(Guid RequestID)
@@ -1295,37 +1945,37 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", currentUserService.User.UserName ?? ""},
                     { "VisitNumber", request?.ComplianceDetails?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", visit?.LicensedEntityName ?? ""},
                     { "SubmissionDate", DateTime.Now.ToShortDateString() },
                     { "ActionUrl", "#" }
                 },
-                Body = $"Dear {visit?.LicensedEntityName},Your extension request has been rejected. Reason: {request?.Reason ?? ""}.",
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = "تم رفض طلب التمديد",
-                To = LicensedEmail
-            });
+                    Body = $"Dear {visit?.LicensedEntityName},Your extension request has been rejected. Reason: {request?.Reason ?? ""}.",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = "تم رفض طلب التمديد",
+                    To = LicensedEmail
+                });
+            }
         }
     }
-
     public async Task<ResponseResult<DocumentExtensionRequestDto>> GetExtensionRequest(Guid id)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequest(id);
     public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> ExtensionRequests()
     => await unitOfWork.ComplianceRequestRepository.ExtensionRequests();
-
     public async Task<ResponseResult<List<DocumentExtensionRequestDto>>> GetExtensionRequestByEntityId(long licensedEntityId)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestByEntityId(licensedEntityId);
-
-    public async Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto dto, Guid requestId, Guid managerId)
+    public async Task<ResponseResult<DocumentExtensionReviewDto>> UpdateExtensionRequest(DocumentExtensionReviewDto dto)
     {
-        var res = await unitOfWork.ComplianceRequestRepository.UpdateExtensionRequest(dto, requestId, managerId);
+        var res = await unitOfWork.ComplianceRequestRepository.UpdateExtensionRequest(dto);
         if (!res.Succeeded)
             throw new Exception("Can't Update Extension Request");
 
@@ -1344,66 +1994,81 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
         return res;
     }
-
     public async Task<ResponseResult<List<ExtensionStatusHistoryDto>>> GetExtensionRequestHistory(Guid requestId)
         => await unitOfWork.ComplianceRequestRepository.GetExtensionRequestHistory(requestId);
-
-    public async Task<ResponseResult<ComplianceDetailsDto>> CancelVisitByManager(CancelVisitDto dto)
+    public async Task<ResponseResult<bool>> CancelVisitByManager(CancelVisitDto dto)
     {
         var res = unitOfWork.ComplianceRequestRepository.CancelVisitByManager(dto)?.Result;
-        if (!res.Succeeded)
-            throw new Exception("Can't Cancel a Visit");
-        else
-            await SendSMSToEntityForCancelVisit(res.Model.Id);
-        await SendNotificationToEntityForCancelVisit(res.Model.Id);
+        if (res.Model == true)
+        {
+            await SendSMSToEntityForCancelVisit(dto.ComplianceDetailsId);
+            await SendNotificationToEntityForCancelVisit(dto.ComplianceDetailsId);
+        }
         return res;
     }
-
-    public async Task<ResponseResult<ReviewRescheduleDto>> RequestReschedule(RequestRescheduleDto dto)
+    public async Task<ResponseResult<RequestRescheduleDto>> RequestReschedule(RequestRescheduleDto dto)
     {
         var res = unitOfWork.ComplianceRequestRepository.RequestReschedule(dto)?.Result;
+        var visit = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(a => a.Id == res?.Model?.ComplianceDetailsID).FirstOrDefault();
         if (!res.Succeeded)
         {
             throw new Exception("Can't Reschedule a Visit");
         }
-        else if (res.Model?.Status == (long?)VisitStatusEnum.Rescheduled)
+        else
+        {
+            await SendSMSToEntityForRequestRescheduleVisit(res.Model.Id, res.Model.LicensedEntityId);
+            await SendNotificationToEntityForRequestRescheduleVisit(res.Model.Id, res.Model.LicensedEntityId);
+        }
+        return res;
+    }
+    public async Task<ResponseResult<SpecialistRescheduleDto>> SpecialistReschedule(RequestRescheduleDto dto)
+    {
+        var res = unitOfWork.ComplianceRequestRepository.SpecialistReschedule(dto)?.Result;
+        var visit = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(a => a.Id == res?.Model?.ComplianceDetailsID).FirstOrDefault();
+
+        if (!res.Succeeded)
+        {
+            throw new Exception("Can't Reschedule a Visit");
+        }
+        else
         {
             await SendSMSToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
             await SendNotificationToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
         }
-        else if (res.Model?.Status == (long?)VisitStatusEnum.RescheduleRequested)
-        {
-            await SendSMSToEntityForRequestRescheduleVisit(res.Model.RequestId, res.Model.LicensedEntityId);
-            await SendNotificationToEntityForRequestRescheduleVisit(res.Model.RequestId, res.Model.LicensedEntityId);
-        }
         return res;
     }
-
-    public async Task<ResponseResult<List<ReviewRescheduleDto>>>? GetRescheduleRequests(long? LicensedID)
+    public async Task<ResponseResult<List<RequestRescheduleDto>>>? GetRescheduleRequests(long? LicensedID)
        => await unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicensedID);
-
-    public async Task<ResponseResult<ComplianceDetailsDto>> ReviewReschedule(ReviewRescheduleDto dto)
+    public async Task<ResponseResult<RequestRescheduleDto>> ReviewReschedule(ReviewRescheduleDto dto)
     {
         var res = unitOfWork.ComplianceRequestRepository.ReviewRescheduleAsync(dto)?.Result;
         if (!res.Succeeded)
         {
             throw new Exception("Can't Reschedule a Visit");
         }
-        else if (res?.Model.VisitStatusId == (long?)VisitStatusEnum.Rescheduled)
+        else if (res?.Model?.StatusID == 2 || res?.Model?.StatusID == 4)
         {
-            await SendSMSToEntityForRescheduleVisit(res.Model.Id);
-            await SendNotificationToEntityForRescheduleVisit(res.Model.Id);
+            await SendSMSToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
+            await SendNotificationToEntityForRescheduleVisit(res.Model.ComplianceDetailsID);
         }
-        else
+        else if (res?.Model?.StatusID == 3)
         {
-               /// await SendSMSToEntityForRequestRescheduleVisit(res.re, res?.LicensedEntityId);
-                //await SendNotificationToEntityForRequestRescheduleVisit(res.Model.Id);
+            await SendSMSToEntityForRejectRescheduleVisit(res.Model.ComplianceDetailsID, res.Model);
+            await SendNotificationToEntityRejectForRescheduleVisit(res.Model.ComplianceDetailsID, res.Model);
         }
-            return res;
+        return res;
     }
-
     public async Task<ResponseResult<ComplianceDetailsDto>> UpdateVisitStatus(UpdateVisitStatusDto statusDto)
-        => await unitOfWork.ComplianceRequestRepository.UpdateVisitStatus(statusDto);
+    {
+        var result = await unitOfWork.ComplianceRequestRepository.UpdateVisitStatus(statusDto);
+        if (result.Succeeded && result.Model != null)
+        {
+            await SendSMSToEntityForUpdateStatus(result.Model.Id);
+            await SendNotificationToEntityForUpdateStatus(result.Model.Id);
+            return result;
+        }
+        return result;
+    }
     public static DateTime BusinessDays(DateTime start, int days)
     {
         int CheckDays = 0;
@@ -1417,7 +2082,6 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         }
         return current;
     }
-
     public async Task SendNotifycationToManagerRequestSubmitted(Guid RequestID)
     {
         var request = unitOfWork.ComplianceRequestRepository.GetExtensionRequest(RequestID)?.Result?.Model;
@@ -1498,11 +2162,12 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var visit = GetComplianceVisit().Result?.Model?.FirstOrDefault(x => x.Id == request?.ComplianceDetailsID);
 
         var allEmails = managerEmails;
+
         if (!string.IsNullOrEmpty(specialistEmail))
             allEmails.Add(specialistEmail);
         allEmails = allEmails.Distinct().ToList();
 
-        if (request != null && allEmails.Any())
+        if (request != null && allEmails.Count != 0)
         {
             await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
             {
@@ -1530,10 +2195,10 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
 
-            if (SendTo != null)
+            if (mobileNumbers != null)
             {
                 string messageBody = $"Your compliance visit {complianceVisits?.VisitReferenceNumber} has been cancelled.\r\n\r\nReason for cancellation: {complianceVisits?.CancellationReason}\r\n\r\nIf you have any questions, please contact the compliance Manager.";
 
@@ -1564,24 +2229,27 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
-            var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", request?.LicensedEntityName ?? ""},
                     { "VisitNumber", request?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", request?.LicensedEntityName ?? ""},
                     { "SubmissionDate", DateTime.Now.ToShortDateString() },
                     { "ActionUrl", "#" }
                 },
-                Body = $"Your compliance visit {request?.VisitReferenceNumber} has been cancelled.\\r\\n\\r\\nReason for cancellation: {request?.CancellationReason} \\r\\n\\r\\nIf you have any questions, please contact the compliance Manager.\"\r\n",
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = " تم إلغاء زيارة الإمتثال",
-                To = LicensedEmail
-            });
-            return ResponseResult<bool>.Success(true);
+                    Body = $"Your compliance visit {request?.VisitReferenceNumber} has been cancelled.\\r\\n\\r\\nReason for cancellation: {request?.CancellationReason} \\r\\n\\r\\nIf you have any questions, please contact the compliance Manager.\"\r\n",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = " تم إلغاء زيارة الإمتثال",
+                    To = LicensedEmail
+                });
+                return ResponseResult<bool>.Success(true);
+            }
         }
         return ResponseResult<bool>.Success(false);
     }
@@ -1595,10 +2263,10 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
 
-            if (SendTo != null)
+            if (mobileNumbers.Count > 0)
             {
                 string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nYour compliance visit {complianceVisits?.VisitReferenceNumber} has been rescheduled.\r\n\r\nNew visit date: {complianceVisits?.ScheduledDate}\r\nReason for rescheduling: {complianceVisits?.RescheduleReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
 
@@ -1629,12 +2297,154 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = request?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
+                    { "EmployeeName", request?.LicensedEntityName ?? ""},
+                    { "VisitNumber", request?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", request?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                    },
+
+                    Body = $"Dear {request?.LicensedEntityName},\r\n\r\nYour compliance visit {request?.VisitReferenceNumber} has been rescheduled.\r\n\r\nNew visit date: {request?.ScheduledDate}\r\nReason for rescheduling: {request?.RescheduleReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = " تم إعادة جدولة زيارة الإمتثال",
+                    To = LicensedEmail
+                });
+                return ResponseResult<bool>.Success(true);
+            }
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+
+
+    // Reject Reschedule Request
+    public async Task SendSMSToEntityForRejectRescheduleVisit(Guid ComplianceDetailsID, RequestRescheduleDto dto)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (mobileNumbers != null)
+            {
+                string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nYour Reschedule Request for compliance visit {complianceVisits?.VisitReferenceNumber} has been Rejected .\r\n\r\r\nReason for Rejection: {dto?.ReviewReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+        }
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToEntityRejectForRescheduleVisit(Guid ComplianceDetailsID, RequestRescheduleDto dto)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
+            if (SendTo != null)
+            {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
+                    { "EmployeeName", request?.LicensedEntityName ?? ""},
+                    { "VisitNumber", request?.VisitReferenceNumber ?? ""},
+                    { "LicensedEntityName", request?.LicensedEntityName ?? ""},
+                    { "SubmissionDate", DateTime.Now.ToShortDateString() },
+                    { "ActionUrl", "#" }
+                    },
+
+                    Body = $"Dear {request?.LicensedEntityName},\r\n\r\nYour Reschedule Request for compliance visit {request?.VisitReferenceNumber} has been Rejected .\r\n\r\r\nReason for Rejection: {dto?.ReviewReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = " تم رفض طلب إعادة جدولة زيارة الإمتثال",
+                    To = LicensedEmail
+                });
+                return ResponseResult<bool>.Success(true);
+            }
+        }
+        return ResponseResult<bool>.Success(false);
+    }
+
+    // Update Status
+    public async Task SendSMSToEntityForUpdateStatus(Guid ComplianceDetailsID)
+    {
+        var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers([RoleEnum.LicensedEntity]).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
+
+            if (mobileNumbers != null)
+            {
+                string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nYour compliance visit {complianceVisits?.VisitReferenceNumber} has Updated Status.\r\n\r\r\n The New Status is : {complianceVisits?.VisitStatusName}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
+
+                var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", complianceVisits?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                foreach (var pair in content)
+                {
+                    messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                }
+
+                await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                    new NotificationMessageModel()
+                    {
+                        Subject = "Visit Update Status !",
+                        To = mobileNumbers,
+                        Body = messageBody,
+                    }
+                );
+            }
+
+
+        }
+    }
+    public async Task<ResponseResult<bool>> SendNotificationToEntityForUpdateStatus(Guid ComplianceDetailsID)
+    {
+        var request = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == ComplianceDetailsID).FirstOrDefault();
+        var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
+
+        if (LicensedEntity != null)
+        {
+            var _LicensedEntityId = request?.LicensedEntityId.ToString();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.Email) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var LicensedEmail = new List<string> { SendTo?.Email ?? "" };
+            if (SendTo != null)
+            {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", request?.LicensedEntityName ?? ""},
                     { "VisitNumber", request?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", request?.LicensedEntityName ?? ""},
@@ -1642,28 +2452,29 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     { "ActionUrl", "#" }
                 },
 
-                Body = $"Dear {request?.LicensedEntityName},\r\n\r\nYour compliance visit {request?.VisitReferenceNumber} has been rescheduled.\r\n\r\nNew visit date: {request?.ScheduledDate}\r\nReason for rescheduling: {request?.RescheduleReason}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = " تم إعادة جدولة زيارة الإمتثال",
-                To = LicensedEmail
-            });
-            return ResponseResult<bool>.Success(true);
+                    Body = $"Dear {request?.LicensedEntityName},\r\n\r\nYour compliance visit {request?.VisitReferenceNumber} has Updated Status.\r\n\r\r\n The New Status is : {request?.VisitStatusName}\r\n\r\nIf you have any questions, please contact the compliance team.\r\n\r\nBest regards,  \r\n [The Saudi Water Authority]",
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = " تم تعديل حالة الزيارة ",
+                    To = LicensedEmail
+                });
+                return ResponseResult<bool>.Success(true);
+            }
         }
         return ResponseResult<bool>.Success(false);
     }
 
     public async Task SendSMSToEntityForRequestRescheduleVisit(int RequestId, long LicenseID)
     {
-        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.RequestId == RequestId).FirstOrDefault();
+        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.Id == RequestId).FirstOrDefault();
         var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == _request?.ComplianceDetailsID).FirstOrDefault();
         var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var mobileNumbers = new List<string> { SendTo?.MobileNumber ?? "" };
 
-            if (SendTo != null)
+            if (mobileNumbers != null)
             {
                 string messageBody = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nA reschedule request has been submitted for the compliance visit {complianceVisits?.VisitReferenceNumber}." +
                     $"\r\n\r\nReason for reschedule: {complianceVisits?.RescheduleReason}\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]";
@@ -1689,7 +2500,7 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
     }
     public async Task<ResponseResult<bool>> SendNotificationToEntityForRequestRescheduleVisit(int RequestId, long LicenseID)
     {
-        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.RequestId == RequestId).FirstOrDefault();
+        var _request = unitOfWork.ComplianceRequestRepository.GetRescheduleRequests(LicenseID)?.Result?.Model?.Where(a => a.Id == RequestId).FirstOrDefault();
         var complianceVisits = unitOfWork.ComplianceRequestRepository.GetComplianceVisit()?.Result?.Model?.Where(s => s.Id == _request?.ComplianceDetailsID).FirstOrDefault();
 
         var LicensedEntity = unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.LicensedEntity }).Result.Model?.ToList();
@@ -1697,12 +2508,14 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         if (LicensedEntity != null)
         {
             var _LicensedEntityId = complianceVisits?.LicensedEntityId.ToString();
-            var SendTo = LicensedEntity?.Where(c => !String.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
+            var SendTo = LicensedEntity?.Where(c => !string.IsNullOrEmpty(c.MobileNumber) & c.Id == _LicensedEntityId).FirstOrDefault();
             var LicensedEmail = new List<string> { SendTo?.MobileNumber ?? "" };
 
-            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            if (SendTo != null)
             {
-                Content = new Dictionary<string, object>() {
+                await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+                {
+                    Content = new Dictionary<string, object>() {
                     { "EmployeeName", complianceVisits?.LicensedEntityName ?? ""},
                     { "VisitNumber", complianceVisits?.VisitReferenceNumber ?? ""},
                     { "LicensedEntityName", complianceVisits?.LicensedEntityName ?? ""},
@@ -1710,14 +2523,15 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
                     { "ActionUrl", "#" }
                 },
 
-                Body = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nA reschedule request has been submitted for the compliance visit {complianceVisits?.VisitReferenceNumber}." +
+                    Body = $"Dear {complianceVisits?.LicensedEntityName},\r\n\r\nA reschedule request has been submitted for the compliance visit {complianceVisits?.VisitReferenceNumber}." +
                     $"\r\n\r\nReason for reschedule: {complianceVisits?.RescheduleReason}\r\n\r\nBest regards,  \r\n[The Saudi Water Authority]",
 
-                ViewName = "SubmitExtensionRequestForm.cshtml",
-                Subject = " تم تقديم طلب إعادة جدولة زيارة ",
-                To = LicensedEmail
-            });
-            return ResponseResult<bool>.Success(true);
+                    ViewName = "SubmitExtensionRequestForm.cshtml",
+                    Subject = " تم تقديم طلب إعادة جدولة زيارة ",
+                    To = LicensedEmail
+                });
+                return ResponseResult<bool>.Success(true);
+            }
         }
         return ResponseResult<bool>.Success(false);
     }
@@ -1731,18 +2545,16 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
         var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureReportForComplianceManager(visitId);
         return result;
     }
-    public async Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForComplianceManager(Guid visitId, Guid visitSpecialistId)
+    public async Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForComplianceManager(Guid visitId, string visitSpecialistId)
     {
         var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureFormForComplianceManager(visitId, visitSpecialistId);
         return result;
     }
-
     public async Task<ResponseResult<ComplianceVisitDisclosureDto>> GetVisitDisclosureFormForLoggedInSpecialist(Guid visitId)
     {
         var result = await unitOfWork.ComplianceRequestRepository.GetVisitDisclosureFormForLoggedInSpecialist(visitId);
         return result;
     }
-
     public async Task<ResponseResult<bool>> SaveVisitDisclosureForm(ComplianceVisitDisclosureDto model)
     {
         var result = await unitOfWork.ComplianceRequestRepository.SaveVisitDisclosureForm(model);
@@ -1753,15 +2565,16 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
         return result;
     }
-
     public async Task NotifyForDisclosureFormConflicts(ComplianceVisitDisclosureDto disclosureDto)
     {
         var complianceManagers = await unitOfWork.UserRepository.GetUsers(new List<string>() { RoleEnum.ComplianceManager });
         var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(disclosureDto.ComplianceDetailId);
-        var conflictedVisitSpecialist = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDisclosureBySpecialistId(disclosureDto.ComplianceVisitSpecialistId);
+        var conflictedVisitSpecialist = unitOfWork.ComplianceRequestRepository.GetComplianceVisitDisclosureBySpecialistId(disclosureDto.ComplianceVisitSpecialistId).Result.Model;
 
-        if (visit.Model.VisitStatusId.Equals((long)VisitStatusEnum.ConflictOfInterestDisclosure)
-            && conflictedVisitSpecialist.Model.HasConflicts
+        long conflictStatus = (long)VisitStatusEnum.ConflictOfInterestDisclosure;
+
+        if (visit.Model.VisitStatusId.Equals(conflictStatus)
+            && conflictedVisitSpecialist != null ? conflictedVisitSpecialist.HasConflicts : false
             && complianceManagers != null
             && complianceManagers.Model != null
         )
@@ -1770,19 +2583,21 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
             {
                 Content = new Dictionary<string, object>() {
                     { "EmployeeName", "مدير الادارة" },
-                    { "VisitDate", visit.Model.VisitDate },
-                    { "LicenseeName", visit.Model.LicensedEntityName },
-                    { "VisitSpecialistName", visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s=> s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserName},
+                    { "VisitDate", visit?.Model?.VisitDate },
+                    { "LicenseeName", visit?.Model?.LicensedEntityName },
+                    { "VisitSpecialistName", visit.Model?.ComplianceVisitSpecialists?.FirstOrDefault(s=> s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId))?.SpecialistUserName},
                     { "ActionUrl", "#" }
                 },
                 ViewName = "VisitTeamMemberDisclosureConflict.cshtml",
                 Subject = $"تم تحديد الصراع في مهمة الفريق.",
                 To = complianceManagers.Model.Select(s => s.Email).ToList(),
-                CC = new List<string> { visit.Model.ComplianceVisitSpecialists.FirstOrDefault(s => s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId)).SpecialistUserEmail }
+                CC = new List<string>
+                { 
+                    visit?.Model?.ComplianceVisitSpecialists?.FirstOrDefault(s => s.Id.Equals(disclosureDto.ComplianceVisitSpecialistId))?.SpecialistUserEmail
+                }
             });
         }
     }
-
     public async Task SendVisitDisclosureNotSubmittedNotificationAsync()
     {
         int reminderAfterDays = 2;
@@ -1821,8 +2636,437 @@ public class ComplianceRequestService(IUnitOfWork unitOfWork ,ICurrentUserServic
 
         }
     }
-
-
     #endregion Figma part 2 unmerged
 
+    #region Complaince Report 
+    public async Task<List<ReportCategoryDto>> GetReportStructureDto()
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetReportStructureDto();
+    }
+    public async Task<List<ReportCategory>> GetCategory()
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetCategory();
+    }
+
+    public async Task<List<ReportSubCategory>> GetSubCategory(int? CategoryID)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetSubCategory(CategoryID);
+    }
+
+    public async Task<List<ReportEntries>> GetEntries(int? SubCategoryID)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetEntries(SubCategoryID);
+    }
+
+    public async Task<ResponseResult<ComplianceReportDto>> AddComplianceReport(ComplianceReportDto reportDto)
+    {
+        if (reportDto.Attachments != null)
+            ValidateVisitAttachments(reportDto.Attachments);
+
+            // Deserialize nested JSON if present (handle nulls gracefully)
+            var auditors = !string.IsNullOrWhiteSpace(reportDto.AuditorsJS)
+                ? JsonConvert.DeserializeObject<List<AuditorsDto>>(reportDto.AuditorsJS)
+                : reportDto.Auditors?.ToList();
+
+            var participants = !string.IsNullOrWhiteSpace(reportDto.ParticipantsJS)
+                ? JsonConvert.DeserializeObject<List<LicenseParticipantDto>>(reportDto.ParticipantsJS)
+                : reportDto.Participants?.ToList();
+
+            var questions = !string.IsNullOrWhiteSpace(reportDto.QuestaionsJS)
+                ? JsonConvert.DeserializeObject<List<QuestaionDto>>(reportDto.QuestaionsJS)
+                : reportDto.Questaions?.ToList();
+        
+            var previous = !string.IsNullOrWhiteSpace(reportDto.PreviousJS)
+                ? JsonConvert.DeserializeObject<PreviousRecommendationsDto>(reportDto.PreviousJS)
+                : reportDto.PreviousRecommendations;
+
+            reportDto.Auditors = auditors;
+            reportDto.Participants = participants;
+            reportDto.Questaions = questions;
+            reportDto.PreviousRecommendations = previous;
+
+        
+        if (currentUserService.User.Role.Any(a => a.Contains(RoleEnum.ComplianceSpecialist)))
+        {
+            var ReportObject = unitOfWork.ComplianceRequestRepository.AddComplianceReport(reportDto).Result.Model;
+            if (reportDto.Attachments != null && reportDto.Attachments.Count > 0)
+            {
+                reportDto.AttachmentsList = new List<AttachmentDto>();
+                foreach (var file in reportDto.Attachments)
+                {
+                    var attachmentGuid = Guid.NewGuid().ToString();
+                    var attachment = new Attachment
+                    {
+                        AttachmentGuid = attachmentGuid,
+                        AttachmentName = $"{file.FileName}",
+                        EntityId = ReportObject.Id,
+                        EntityName = AttachmentEntityEnum.Report,
+                        AttachmentTypeId = (long)AttachmentTypeEnum.ReportAttachment
+                    };
+
+                    List<KeyValuePair<Stream, string>> attachemnts = [];
+                    var fileSplitted = attachment.AttachmentName.Split('.');
+                    string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                    string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.Report, new Dictionary<string, string>() { { "ReportId", reportDto.Id.ToString() } });
+                    dir += $"/{attachmentGuid}.{fileExtension}";
+                    attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                    attachmentService.UploadAttachment(attachemnts);
+                    await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                    await unitOfWork.CommitAsync();
+
+                    reportDto.AttachmentsList.Add(new AttachmentDto()
+                    {
+                        AttachmentId = attachment.Id,
+                        AttachmentGuid = attachmentGuid,
+                        AttachmentName = attachment.AttachmentName,
+                        AttachmentType = (AttachmentTypeEnum)attachment.AttachmentTypeId,
+                        EntityId = attachment.EntityId,
+                        EntityName = attachment.EntityName,
+                    });
+                }
+            }
+            var getreport = unitOfWork.ComplianceRequestRepository.GetComplianceReport(reportDto.Id).Result.Model;
+            return ResponseResult<ComplianceReportDto>.Success(getreport);
+        }
+        return ResponseResult<ComplianceReportDto>.Success(null);
+
+    }
+
+    public async Task<ResponseResult<ComplianceReportDto>> GetComplianceReport(Guid? id)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetComplianceReport(id);
+    }
+    public async Task<ResponseResult<List<ComplianceReportDto>>> GetAllComplianceReports()
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetAllComplianceReports();
+    }
+
+    public async Task<CorrectiveActionPlan> AddCorrectPlan(CorrectiveActionPlanDto dto)
+    {
+        var plan = await unitOfWork.ComplianceRequestRepository.AddCorrectPlan(dto);
+        ValidateVisitAttachments(dto.Files);
+        if (dto.Files != null && dto.Files.Count > 0)
+        {
+            dto.FileList = [];
+            foreach (var file in dto.Files)
+            {
+                var attachmentGuid = Guid.NewGuid().ToString();
+                var attachment = new Attachment
+                {
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = $"{file.FileName}",
+                    EntityId = plan.Id,
+                    EntityName = AttachmentEntityEnum.Report,
+                    AttachmentTypeId = (long)AttachmentTypeEnum.CorrectPlanAttachment
+                };
+
+                List<KeyValuePair<Stream, string>> attachemnts = [];
+                var fileSplitted = attachment.AttachmentName.Split('.');
+                string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.Report, new Dictionary<string, string>() { { "ReportId", plan.Id.ToString() } });
+                dir += $"/{attachmentGuid}.{fileExtension}";
+                attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                attachmentService.UploadAttachment(attachemnts);
+                await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                await unitOfWork.CommitAsync();
+
+                dto.FileList.Add(new AttachmentDto()
+                {
+                    AttachmentId = attachment.Id,
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = attachment.AttachmentName,
+                    AttachmentType = (AttachmentTypeEnum)attachment.AttachmentTypeId,
+                    EntityId = attachment.EntityId,
+                    EntityName = attachment.EntityName,
+                });
+            }
+        }
+        return plan;
+    }
+
+    public async Task<CorrectiveActionPlanDto?> GetCorrectPlanById(Guid planId)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetPlanWithAttachments(planId);
+    }
+    public async Task<CorrectiveEvidence> UploadEvidence(EvidenceUploadDto dto)
+    {
+        ValidateVisitAttachments(dto.Files);
+        var record = await unitOfWork.ComplianceRequestRepository.UploadEvidence(dto);
+        if (dto.Files != null && dto.Files.Count > 0)
+        {
+            dto.FileList = [];
+            foreach (var file in dto.Files)
+            {
+                var attachmentGuid = Guid.NewGuid().ToString();
+                var attachment = new Attachment
+                {
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = $"{file.FileName}",
+                    EntityId = record.Id,
+                    EntityName = AttachmentEntityEnum.Report,
+                    AttachmentTypeId = (long)AttachmentTypeEnum.CorrectPlanAttachment
+                };
+
+                List<KeyValuePair<Stream, string>> attachemnts = [];
+                var fileSplitted = attachment.AttachmentName.Split('.');
+                string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.Report, new Dictionary<string, string>() { { "ReportId", record.Id.ToString() } });
+                dir += $"/{attachmentGuid}.{fileExtension}";
+                attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                attachmentService.UploadAttachment(attachemnts);
+                await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                await unitOfWork.CommitAsync();
+
+                dto.FileList.Add(new AttachmentDto()
+                {
+                    AttachmentId = attachment.Id,
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = attachment.AttachmentName,
+                    AttachmentType = (AttachmentTypeEnum)attachment.AttachmentTypeId,
+                    EntityId = attachment.EntityId,
+                    EntityName = attachment.EntityName,
+                });
+            }
+        }
+        return record;
+    }
+    public async Task ReviewEvidence(EvidenceReviewDto dto)
+    {
+        await unitOfWork.ComplianceRequestRepository.ReviewEvidence(dto);  
+    }
+    public async Task ReviewReport(ComplianceReportReviewDto dto)
+    {
+        await unitOfWork.ComplianceRequestRepository.ReviewReport(dto);
+    }
+
+    public async Task<ResponseResult<bool>> SaveComplianceReportActivity(ReportRequestActivityModel model)
+    {
+        if (model.ReplyAttachments != null)
+            ValidateVisitAttachments(model.ReplyAttachments);
+
+        if (model.RequestAttachments != null)
+            ValidateVisitAttachments(model.RequestAttachments);
+
+        var  reportActivityId = await unitOfWork.ComplianceRequestRepository.SaveComplianceReportActivity(model);
+        if (model.ReplyAttachments != null && model.ReplyAttachments.Count > 0)
+        {
+            foreach (var file in model.ReplyAttachments)
+            {
+                var attachmentGuid = Guid.NewGuid().ToString();
+                var attachment = new Attachment
+                {
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = $"{file.FileName}",
+                    EntityId = reportActivityId.Model,
+                    EntityName = AttachmentEntityEnum.Report,
+                    AttachmentTypeId = (long)AttachmentTypeEnum.ReportReplyAttachment
+                };
+
+                List<KeyValuePair<Stream, string>> attachemnts = new List<KeyValuePair<Stream, string>>();
+                var fileSplitted = attachment.AttachmentName.Split('.');
+                string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.Report, new Dictionary<string, string>() { { "ReportId", reportActivityId.Model.ToString() } });
+                dir += $"/{attachmentGuid}.{fileExtension}";
+                attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                attachmentService.UploadAttachment(attachemnts);
+                await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                await unitOfWork.CommitAsync();
+
+            }
+        }
+
+        if (model.RequestAttachments != null && model.RequestAttachments.Count > 0)
+        {
+            foreach (var file in model.RequestAttachments)
+            {
+                var attachmentGuid = Guid.NewGuid().ToString();
+                var attachment = new Attachment
+                {
+                    AttachmentGuid = attachmentGuid,
+                    AttachmentName = $"{file.FileName}",
+                    EntityId = reportActivityId.Model,
+                    EntityName = AttachmentEntityEnum.Report,
+                    AttachmentTypeId = (long)AttachmentTypeEnum.ReportSendAttachment
+                };
+
+                List<KeyValuePair<Stream, string>> attachemnts = new List<KeyValuePair<Stream, string>>();
+                var fileSplitted = attachment.AttachmentName.Split('.');
+                string fileExtension = fileSplitted[fileSplitted.Length - 1];
+
+                string dir = attachmentService.GetMappedDirectory(AttachmentEntityEnum.Report, new Dictionary<string, string>() { { "ReportId", reportActivityId.Model.ToString() } });
+                dir += $"/{attachmentGuid}.{fileExtension}";
+                attachemnts.Add(new KeyValuePair<Stream, string>(file.OpenReadStream(), dir));
+
+                attachmentService.UploadAttachment(attachemnts);
+                await unitOfWork.AttachmentRepository.AddAttachment(attachment);
+                await unitOfWork.CommitAsync();
+
+            }
+        }
+        return ResponseResult<bool>.Success(true);
+    }
+    public async Task<ResponseResult<ReportRequestActivityDto>> GetComplianceReportActivity(Guid id)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetComplianceReportActivity(id);
+    }
+    public async Task<ResponseResult<List<ReportRequestActivityDto>>> GetComplianceReportActivities(bool isReply)
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetComplianceReportActivities(isReply);
+    }
+
+    public async Task<ResponseResult<List<RequestRescheduleDto>>> GetRescheduleRequestsForManager()
+    {
+        return await unitOfWork.ComplianceRequestRepository.GetRescheduleRequestsForManager();
+    }
+
+    public async Task<TeamShortageDto> SubmitTeamShortageRequest(TeamShortageDto dto)
+    {
+        var visit = await unitOfWork.ComplianceRequestRepository.GetComplianceVisitDetail(dto.ComplianceDetailsId);
+
+        var entity = new TeamShortage
+        {
+            ComplianceDetailsId = dto.ComplianceDetailsId,
+            VisitDate = visit.Model?.VisitDate,
+            LicensedEntityId = visit.Model?.LicensedEntityId,
+            ShortageReason = dto.ShortageReason,
+            CreatedBy = currentUserService.User.UserName
+        };
+        var result = await unitOfWork.ComplianceRequestRepository.AddTeamShortage(entity);
+
+        if (result != null)
+        {
+            var team = new TeamShortageDto
+            {
+                Id = result.Id,
+                ComplianceDetailsId = result.ComplianceDetailsId,
+                VisitDate = result.VisitDate,
+                LicensedEntityId = result.LicensedEntityId,
+                LicensedEntityName = result?.ComplianceDetails?.LicensedEntity.ValueAr ?? "",
+                ShortageReason = result?.ShortageReason,
+                CreatedOn = result.CreatedOn,
+                CreatedBy = result?.CreatedBy
+            };
+
+            List<Guid> VisitIDs = [result.ComplianceDetailsId];
+
+            await SendNotifycationToManagerForTeamShortage(VisitIDs);
+            await SendSmsToSpecialistForTeamShortage(VisitIDs);
+            return team;
+        }
+        else return new TeamShortageDto();
+    }
+
+    public async Task<List<TeamShortageDto>> GetByComplianceDetailsIds(List<Guid> complianceDetailsIds)
+    {
+        if (complianceDetailsIds == null || complianceDetailsIds.Count < 1)
+            throw new Exception("Please Assign at least On Visit ID.");
+        else
+        {
+            var items = await unitOfWork.ComplianceRequestRepository.GetTeamShortageByVisitId(complianceDetailsIds);
+
+            return items.Select(sr => new TeamShortageDto
+            {
+                Id = sr.Id,
+                ComplianceDetailsId = sr.ComplianceDetailsId,
+                VisitDate = sr.VisitDate,
+                LicensedEntityId = sr.LicensedEntityId,
+                ShortageReason = sr.ShortageReason,
+                CreatedOn = sr.CreatedOn,
+                CreatedBy = sr.CreatedBy
+            }).ToList();
+        }
+    }
+
+    public async Task SendNotifycationToManagerForTeamShortage(List<Guid> VisitDeatilasID)
+    {
+        var request =  unitOfWork.ComplianceRequestRepository.GetTeamShortageByVisitId(VisitDeatilasID).Result.FirstOrDefault();
+        var managers = unitOfWork.UserRepository.GetUsers(new List<string> { RoleEnum.ComplianceManager }).Result.Model;
+
+        var managerEmails = managers?.Where(c => !string.IsNullOrEmpty(c.Email)).Select(c => c.Email).ToList() ?? new List<string>();
+
+        var visit = GetComplianceVisitDetail(request.ComplianceDetailsId).Result?.Model;
+
+        var allEmails = managerEmails;
+        
+        allEmails = allEmails.Distinct().ToList();
+
+        if (request != null && allEmails.Any())
+        {
+            await notificationService(NotificationTypeEnum.Email).SendAsync(new NotificationMessageModel()
+            {
+                Content = new Dictionary<string, object>
+                {
+                { "EmployeeName", "مدير الإمتثال" },
+                { "VisitNumber", visit?.VisitReferenceNumber?.ToString()  ?? ""},
+                { "LicensedEntityName", visit?.LicensedEntityName ?? "" },
+                { "ActionUrl", "#" }
+                },
+
+
+                ViewName = "TeamShortagesNotify.cshtml",
+                Subject = "تنبيه بنقص الفريق",
+                Body = $"سبب النقص: {request.ShortageReason}",
+                To = allEmails
+            });
+        }
+    }
+
+    public async Task SendSmsToSpecialistForTeamShortage(List<Guid> VisitDeatilasID)
+    {
+        var Request = unitOfWork.ComplianceRequestRepository.GetTeamShortageByVisitId(VisitDeatilasID).Result.FirstOrDefault();
+        var Specialist = unitOfWork.UserRepository.GetUsers([RoleEnum.ComplianceSpecialist]).Result.Model?.ToList();
+
+        var visit = GetComplianceVisitDetail(Request.ComplianceDetailsId).Result?.Model;
+
+
+        if (Specialist != null)
+        {
+            var SendTo = Specialist?.Where(c => !string.IsNullOrEmpty(c.MobileNumber)).ToList();
+            if (SendTo != null)
+            {
+                foreach(var item in SendTo)
+                {
+                    var mobileNumbers = new List<string> { item?.MobileNumber ?? "" };
+                    string messageBody =
+  $"عزيزي: مدير الامتثال، " +
+  $"تم تسجيل نقص في الفريق. " +
+  $"رقم الزيارة: {visit?.VisitReferenceNumber}, " +
+  $"تاريخ الزيارة: {visit?.VisitDate:yyyy-MM-dd}, " +
+  $"اسم الجهة: {visit?.LicensedEntityName}, " +
+  $"سبب النقص: {Request?.ShortageReason}.";
+
+                    var content = new Dictionary<string, string>() {
+                     { "{VisitDate}", Request?.VisitDate?.ToShortDateString() ?? ""},
+                };
+
+                    foreach (var pair in content)
+                    {
+                        messageBody = messageBody.Replace(pair.Key, pair.Value ?? string.Empty);
+                    }
+
+                    await notificationService(NotificationTypeEnum.SMS).SendAsync(
+                        new NotificationMessageModel()
+                        {
+                            To = mobileNumbers,
+                            Body = messageBody,
+                        }
+                    );
+                }
+            }
+        }
+    }
+
+    public async Task<ResponseResult<string>> ReturnLicenseNumber(long LicenseEntityID)
+    {
+       return await unitOfWork.ComplianceRequestRepository.ReturnLicenseNumber(LicenseEntityID);
+    }
+    #endregion
 }

@@ -1,5 +1,4 @@
-﻿using ComplianceAndPeformanceSystem.Core.Entities.ComplainceVisit;
-
+﻿
 namespace ComplianceAndPeformanceSystem.Core.Entities;
 
 public class ComplianceDetails : TrackedEntity
@@ -40,8 +39,6 @@ public class ComplianceDetails : TrackedEntity
     public virtual ICollection<ComplianceVisitSpecialist>? ComplianceVisitSpecialists { get; set; }
 
     public virtual ICollection<VisitStatusHistory>? VisitStatusHistory { get; set; }
-    public virtual ICollection<VisitDocument>? VisitDocuments { get; set; }
-
-
+    public virtual ICollection<ReportRequestActivity>? ReportActivities { get; set; }
 
 }
